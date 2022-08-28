@@ -14,7 +14,9 @@
 		63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63547EA828B91FE100A03730 /* Laword.xcdatamodeld */; };
 		63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAB28B91FE200A03730 /* Assets.xcassets */; };
 		63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAD28B91FE200A03730 /* LaunchScreen.storyboard */; };
-		63547EBF28B9264B00A03730 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63547EBE28B9264B00A03730 /* Word.swift */; };
+		63DB606B28BB1F21002ADD6E /* Word+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB606928BB1F21002ADD6E /* Word+CoreDataClass.swift */; };
+		63DB606C28BB1F21002ADD6E /* Word+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB606A28BB1F21002ADD6E /* Word+CoreDataProperties.swift */; };
+		63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB606D28BB2124002ADD6E /* DataStoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +29,9 @@
 		63547EAB28B91FE200A03730 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63547EAE28B91FE200A03730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63547EB028B91FE200A03730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		63547EBE28B9264B00A03730 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		63DB606928BB1F21002ADD6E /* Word+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+CoreDataClass.swift"; sourceTree = "<group>"; };
+		63DB606A28BB1F21002ADD6E /* Word+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		63DB606D28BB2124002ADD6E /* DataStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 		63547EB828B925D600A03730 /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
+				63DB606D28BB2124002ADD6E /* DataStoreManager.swift */,
 			);
 			path = ServiceLayer;
 			sourceTree = "<group>";
@@ -100,7 +105,8 @@
 		63547EB928B925EF00A03730 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				63547EBE28B9264B00A03730 /* Word.swift */,
+				63DB606928BB1F21002ADD6E /* Word+CoreDataClass.swift */,
+				63DB606A28BB1F21002ADD6E /* Word+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -193,10 +199,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */,
+				63DB606B28BB1F21002ADD6E /* Word+CoreDataClass.swift in Sources */,
 				63547EA428B91FE100A03730 /* MainViewController.swift in Sources */,
-				63547EBF28B9264B00A03730 /* Word.swift in Sources */,
 				63547EA028B91FE100A03730 /* AppDelegate.swift in Sources */,
+				63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */,
 				63547EA228B91FE100A03730 /* SceneDelegate.swift in Sources */,
+				63DB606C28BB1F21002ADD6E /* Word+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
