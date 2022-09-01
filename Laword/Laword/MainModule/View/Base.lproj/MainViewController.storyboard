@@ -19,7 +19,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="9HQ-YN-6Ar">
                                 <rect key="frame" x="260" y="513" width="124" height="180"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWO-NJ-AqC">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWO-NJ-AqC">
                                         <rect key="frame" x="0.0" y="0.0" width="124" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="124" id="LWx-ps-k7Z"/>
@@ -84,7 +84,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="9HQ-YN-6Ar" firstAttribute="top" secondItem="2pR-Vm-CBM" secondAttribute="bottom" constant="132" id="5h0-ax-1N8"/>
+                            <constraint firstItem="9HQ-YN-6Ar" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="469" id="Bb1-KD-bUk"/>
                             <constraint firstItem="2pR-Vm-CBM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="57" id="ECx-6a-BJo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9HQ-YN-6Ar" secondAttribute="trailing" constant="30" id="JMK-dN-fCl"/>
                             <constraint firstItem="2pR-Vm-CBM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="86" id="Qai-yZ-Za4"/>
