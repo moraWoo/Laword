@@ -19,7 +19,10 @@ class MainViewController: UIViewController {
     var selectedWord: Word!
     var wordDictionary: [String : AnyObject]!
     var count = 0
-    var maxCount: Int!
+    var countWords = 0 //Count total words loaded to DB
+    var maxCount = 3
+    
+    var wordKeys: [NSManagedObject] = []
     
     override func viewDidLoad() {
         
@@ -31,7 +34,7 @@ class MainViewController: UIViewController {
             let results = try context.fetch(fetchRequest)
             guard let selectedWord = results.first else { return }
             LabelFirst.text = selectedWord.word
-            LabelSecond.text = selectedWord.wordTranslation
+            LabelSecond.isHidden = true
         } catch {
             print(error.localizedDescription)
         }
@@ -57,25 +60,68 @@ class MainViewController: UIViewController {
             let wordDictionary = dictionary as! [String : AnyObject]
             selectedWord.word = wordDictionary["wordEN"] as? String
             selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
+            countWords += 1
+            
+        }
+        print("Всего загружено в базу: \(countWords) слова")
+    }
+    
+    private func saveKeys(word: String, key: String, wordTranslation: String) {
+        guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
+        let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
+        selectedWord.word = word
+        selectedWord.wordKey = key
+        selectedWord.wordTranslation = wordTranslation
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print("Не могу записать. \(error), \(error.userInfo)")
         }
     }
     
     @IBAction func Next(_ sender: Any) {
         print("count = \(count)")
+        print("Max Count = \(maxCount)")
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
+        
         do {
             let results = try context.fetch(fetchRequest)
             let selectedWord = results[count]
-            maxCount = results.count
             LabelFirst.text = selectedWord.word
             LabelSecond.text = selectedWord.wordTranslation
+            saveKeys(word: selectedWord.word!, key: "Showed", wordTranslation: selectedWord.wordTranslation!)
         } catch {
             print(error.localizedDescription)
         }
-        if count < maxCount - 1 {
-            count += 1
-        } else {
-            count = 0
+        
+        if LabelSecond.isHidden == true {
+            LabelSecond.isHidden = false
+            if count < maxCount - 1 {
+                count += 1
+            }
+        } else if LabelSecond.isHidden == false {
+            LabelSecond.isHidden = true
+            
+            if count < maxCount - 1 {
+                return
+            } else {
+                count = 0
+                
+                let request: NSFetchRequest<Word> = Word.fetchRequest()
+                let searchKey = "Showed"
+                request.predicate = NSPredicate(
+                    format: "%K = %@",
+                    argumentArray: [#keyPath(Word.wordKey), searchKey])
+                do {
+                    // Получить выборку
+                    let results = try context.fetch(request)
+                    for showed in results {
+                        print(showed.word)
+                    }
+                } catch let error as NSError {
+                    print("Не могу получить выборку: \(error), \(error.userInfo)")
+                }
+            }
         }
     }
 }
