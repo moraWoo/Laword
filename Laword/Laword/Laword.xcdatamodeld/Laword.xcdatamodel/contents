@@ -3,7 +3,7 @@
     <entity name="Word" representedClassName=".Word" syncable="YES">
         <attribute name="word" attributeType="String"/>
         <attribute name="wordKey" optional="YES" attributeType="String"/>
-        <attribute name="wordShowed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="wordShowed" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
         <attribute name="wordTranslation" attributeType="String"/>
     </entity>
     <elements>

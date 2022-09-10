@@ -2,7 +2,7 @@
 //  Word+CoreDataProperties.swift
 //  Laword
 //
-//  Created by Ildar Khabibullin on 28.08.2022.
+//  Created by Ildar Khabibullin on 10.09.2022.
 //
 //
 
@@ -19,7 +19,7 @@ extension Word {
     @NSManaged public var word: String?
     @NSManaged public var wordKey: String?
     @NSManaged public var wordTranslation: String?
-    @NSManaged public var wordShowed: Bool
+    @NSManaged public var wordShowed: NSNumber?
 
 }
 

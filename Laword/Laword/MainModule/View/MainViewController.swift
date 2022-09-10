@@ -24,7 +24,7 @@ class MainViewController: UIViewController {
     var wordDictionary: [String : AnyObject]!
     var count = 0
     var countWords = 0 //Count total words loaded to DB
-    var maxCount = 5
+    var maxCount = 100
     
     var wordKeys: [NSManagedObject] = []
     var fetchedWords: [Word?]!
@@ -34,10 +34,12 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
         getDataFromFile()
+        
         LabelFirst.isHidden = true
         LabelSecond.isHidden = true
-        LabelStart.text = "Нажмите, легко"
+        LabelStart.text = "Нажмите на кнопку 'Легко'"
         LabelStart.isHidden = false
         
         fetchedWords = getWords(showKey: false)
@@ -67,6 +69,7 @@ class MainViewController: UIViewController {
             
         }
         print("Всего загружено в базу: \(countWords) слова")
+        print(wordDictionary)
     }
       
     @IBAction func easyButton(_ sender: Any) {
@@ -163,7 +166,6 @@ class MainViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [weak self] _ in
             
-            
         }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [weak self] _ in
             self?.LabelFirst.isHidden = true
@@ -187,6 +189,10 @@ class MainViewController: UIViewController {
         do {
             let results = try context.fetch(fetchRequest)
             fetchedWords = results
+            print("Отобранные слова, которые еще не показывали:")
+            for showed in results {
+                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
+            }
         } catch {
             print(error.localizedDescription)
         }
@@ -199,7 +205,7 @@ class MainViewController: UIViewController {
         selectedWord.word = word
         selectedWord.wordKey = key
         selectedWord.wordTranslation = wordTranslation
-        selectedWord.wordShowed = wordShowed
+        selectedWord.wordShowed = wordShowed as NSNumber
         do {
             try context.save()
         } catch let error as NSError {
