@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="UserWord" representedClassName="UserWord" syncable="YES">
+        <attribute name="uword" optional="YES" attributeType="String"/>
+        <attribute name="uwordKey" optional="YES" attributeType="String"/>
+        <attribute name="uwordShowed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="uwordTranslation" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Word" representedClassName=".Word" syncable="YES">
         <attribute name="word" attributeType="String"/>
         <attribute name="wordKey" optional="YES" attributeType="String"/>
@@ -8,5 +14,6 @@
     </entity>
     <elements>
         <element name="Word" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="UserWord" positionX="-63" positionY="9" width="128" height="89"/>
     </elements>
 </model>

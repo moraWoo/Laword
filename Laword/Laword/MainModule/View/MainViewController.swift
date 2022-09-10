@@ -16,6 +16,8 @@ class MainViewController: UIViewController {
     @IBOutlet var EasyButton: UIButton!
     @IBOutlet var DifficultButton: UIButton!
     @IBOutlet var DontKnowButton: UIButton!
+    @IBOutlet var progressBar: UIProgressView!
+    
     
     //    var storeManager = DataStoreManager()
     //    var context = storeManager.persistentContainer.viewContext
@@ -24,12 +26,13 @@ class MainViewController: UIViewController {
     var wordDictionary: [String : AnyObject]!
     var count = 0
     var countWords = 0 //Count total words loaded to DB
-    var maxCount = 100
+    var maxCount = 5
     
     var wordKeys: [NSManagedObject] = []
     var fetchedWords: [Word?]!
     var selectedWord: Word!
     var toggle = true
+    var progressCount = 0.0
     
     override func viewDidLoad() {
         
@@ -39,11 +42,30 @@ class MainViewController: UIViewController {
         
         LabelFirst.isHidden = true
         LabelSecond.isHidden = true
-        LabelStart.text = "Нажмите на кнопку 'Легко'"
+        LabelStart.text = "Тапните по экрану, чтобы начать"
         LabelStart.isHidden = false
         
+        EasyButton.isHidden = true
+        DifficultButton.isHidden = true
+        DontKnowButton.isHidden = true
+        
         fetchedWords = getWords(showKey: false)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture))
+        view.addGestureRecognizer(tapRecognizer)
+        progressBar.isHidden = true
+        progressBar.progress = 0
     }
+    
+    @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
+        if EasyButton.isHidden == true {
+            view.resignFirstResponder()
+            print("Tapped")
+            guard let selectedWord = fetchedWords?[count] else { return }
+            showAnswers(selectedWord)
+        }
+    }
+    
     
     private func getDataFromFile() {
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
@@ -69,28 +91,32 @@ class MainViewController: UIViewController {
             
         }
         print("Всего загружено в базу: \(countWords) слова")
-        print(wordDictionary)
+        print(wordDictionary as Any)
     }
       
     @IBAction func easyButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "Easy"
-        showAnswers(selectedWord, key)
+        saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+        showAnswers(selectedWord)
     }
     
     @IBAction func difficultButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "Difficult"
-        showAnswers(selectedWord, key)
+        saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+        showAnswers(selectedWord)
     }
     
     @IBAction func dontKnowButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "DontKnow"
-        showAnswers(selectedWord, key)
+        saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+        showAnswers(selectedWord)
     }
     
-    private func showAnswers(_ selectedWord: Word, _ key: String) {
+    private func showAnswers(_ selectedWord: Word) {
+        progressBar.isHidden = false
         
         if LabelStart.isHidden == false {
             LabelStart.isHidden = true
@@ -99,15 +125,26 @@ class MainViewController: UIViewController {
             toggle = false
         }
         
-        if count <= maxCount {
+        if count < maxCount {
             LabelFirst.text = selectedWord.word
             LabelSecond.text = selectedWord.wordTranslation
+            
+            EasyButton.isHidden = true
+            DifficultButton.isHidden = true
+            DontKnowButton.isHidden = true
+            
             toggle.toggle()
             
             if toggle == false {
                 LabelSecond.isHidden = false
+                EasyButton.isHidden = false
+                DifficultButton.isHidden = false
+                DontKnowButton.isHidden = false
                 count += 1
-                saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+                progressCount = Double(count) / Double(maxCount)
+                print("Count: \(count), maxCount: \(maxCount), progressCount: \(progressCount)")
+                progressBar.progress = Float(progressCount)
+
             } else {
                 LabelSecond.isHidden = true
                 LabelFirst.text = selectedWord.word
@@ -142,7 +179,7 @@ class MainViewController: UIViewController {
         let request: NSFetchRequest<Word> = Word.fetchRequest()
         request.predicate = NSPredicate(
             format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordShowed), searchKey])
+            argumentArray: [#keyPath(Word.wordShowed), searchKey as NSNumber])
         do {
             // Получить выборку
             let results = try context.fetch(request)
@@ -157,12 +194,21 @@ class MainViewController: UIViewController {
     
     private func alertFinish() {
         let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Начать заново?", preferredStyle: .alert)
+        
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
             self?.count = 0
             self?.statisticWords("Easy")
             self?.statisticWords("Difficult")
             self?.statisticWords("DontKnow")
             self?.statisticShowWords(true)
+            self?.progressBar.progress = 0
+            self?.LabelSecond.isHidden = true
+            self?.LabelFirst.isHidden = true
+            self?.EasyButton.isHidden = true
+            self?.DifficultButton.isHidden = true
+            self?.DontKnowButton.isHidden = true
+            self?.LabelStart.isHidden = false
+            self?.LabelStart.text = "Тапните, чтобы начать заново"
         }))
         alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [weak self] _ in
             
@@ -170,11 +216,12 @@ class MainViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [weak self] _ in
             self?.LabelFirst.isHidden = true
             self?.LabelSecond.isHidden = true
-            self?.LabelStart.text = "Вы закончили. Хорошая работа!"
             self?.LabelStart.isHidden = false
+            self?.LabelStart.text = "Вы закончили. Хорошая работа!"
             self?.EasyButton.isHidden = true
             self?.DifficultButton.isHidden = true
             self?.DontKnowButton.isHidden = true
+            self?.progressBar.isHidden = true
         }))
         present(alert,animated: true)
     }
@@ -183,13 +230,13 @@ class MainViewController: UIViewController {
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
         var fetchedWords: [Word]!
         
-//        fetchRequest.predicate = NSPredicate(
-//            format: "%K = %d",
-//            argumentArray: [#keyPath(Word.wordShowed), showKey])
+        fetchRequest.predicate = NSPredicate(
+            format: "%K = %@",
+            argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
         do {
             let results = try context.fetch(fetchRequest)
             fetchedWords = results
-            print("Отобранные слова, которые еще не показывали:")
+            print("Отобранные слова, которые еще не показывали: \(fetchedWords.count)")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
