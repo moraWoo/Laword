@@ -19,6 +19,7 @@ extension Word {
     @NSManaged public var word: String?
     @NSManaged public var wordKey: String?
     @NSManaged public var wordTranslation: String?
+    @NSManaged public var wordShowed: Bool
 
 }
 

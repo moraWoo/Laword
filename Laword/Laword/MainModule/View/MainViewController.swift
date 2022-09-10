@@ -12,32 +12,35 @@ class MainViewController: UIViewController {
     
     @IBOutlet var LabelFirst: UILabel!
     @IBOutlet var LabelSecond: UILabel!
+    @IBOutlet var LabelStart: UILabel!
+    @IBOutlet var EasyButton: UIButton!
+    @IBOutlet var DifficultButton: UIButton!
+    @IBOutlet var DontKnowButton: UIButton!
     
     //    var storeManager = DataStoreManager()
     //    var context = storeManager.persistentContainer.viewContext
     lazy var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var selectedWord: Word!
+
     var wordDictionary: [String : AnyObject]!
     var count = 0
     var countWords = 0 //Count total words loaded to DB
-    var maxCount = 3
+    var maxCount = 5
     
     var wordKeys: [NSManagedObject] = []
+    var fetchedWords: [Word?]!
+    var selectedWord: Word!
+    var toggle = true
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         getDataFromFile()
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
+        LabelFirst.isHidden = true
+        LabelSecond.isHidden = true
+        LabelStart.text = "Нажмите, легко"
+        LabelStart.isHidden = false
         
-        do {
-            let results = try context.fetch(fetchRequest)
-            guard let selectedWord = results.first else { return }
-            LabelFirst.text = selectedWord.word
-            LabelSecond.isHidden = true
-        } catch {
-            print(error.localizedDescription)
-        }
+        fetchedWords = getWords(showKey: false)
     }
     
     private func getDataFromFile() {
@@ -65,63 +68,142 @@ class MainViewController: UIViewController {
         }
         print("Всего загружено в базу: \(countWords) слова")
     }
+      
+    @IBAction func easyButton(_ sender: Any) {
+        guard let selectedWord = fetchedWords?[count] else { return }
+        let key = "Easy"
+        showAnswers(selectedWord, key)
+    }
     
-    private func saveKeys(word: String, key: String, wordTranslation: String) {
+    @IBAction func difficultButton(_ sender: Any) {
+        guard let selectedWord = fetchedWords?[count] else { return }
+        let key = "Difficult"
+        showAnswers(selectedWord, key)
+    }
+    
+    @IBAction func dontKnowButton(_ sender: Any) {
+        guard let selectedWord = fetchedWords?[count] else { return }
+        let key = "DontKnow"
+        showAnswers(selectedWord, key)
+    }
+    
+    private func showAnswers(_ selectedWord: Word, _ key: String) {
+        
+        if LabelStart.isHidden == false {
+            LabelStart.isHidden = true
+            LabelFirst.isHidden = false
+            LabelFirst.text = selectedWord.word
+            toggle = false
+        }
+        
+        if count <= maxCount {
+            LabelFirst.text = selectedWord.word
+            LabelSecond.text = selectedWord.wordTranslation
+            toggle.toggle()
+            
+            if toggle == false {
+                LabelSecond.isHidden = false
+                count += 1
+                saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+            } else {
+                LabelSecond.isHidden = true
+                LabelFirst.text = selectedWord.word
+            }
+            print(selectedWord.word as Any)
+            print(selectedWord.wordTranslation as Any)
+            print("Count: \(count)")
+            print("Toggle: \(toggle)")
+        } else {
+            alertFinish()
+        }
+    }
+    
+    private func statisticWords(_ searchKey: String) {
+        let request: NSFetchRequest<Word> = Word.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "%K = %@",
+            argumentArray: [#keyPath(Word.wordKey), searchKey])
+        do {
+            // Получить выборку
+            let results = try context.fetch(request)
+            print("Просмотренные слова по ключу \(searchKey)")
+            for showed in results {
+                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
+            }
+        } catch let error as NSError {
+            print("Не могу получить выборку: \(error), \(error.userInfo)")
+        }
+    }
+    
+    private func statisticShowWords(_ searchKey: Bool) {
+        let request: NSFetchRequest<Word> = Word.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "%K = %@",
+            argumentArray: [#keyPath(Word.wordShowed), searchKey])
+        do {
+            // Получить выборку
+            let results = try context.fetch(request)
+            print("Все просмотренные слова:")
+            for showed in results {
+                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
+            }
+        } catch let error as NSError {
+            print("Не могу получить выборку: \(error), \(error.userInfo)")
+        }
+    }
+    
+    private func alertFinish() {
+        let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Начать заново?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
+            self?.count = 0
+            self?.statisticWords("Easy")
+            self?.statisticWords("Difficult")
+            self?.statisticWords("DontKnow")
+            self?.statisticShowWords(true)
+        }))
+        alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [weak self] _ in
+            
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [weak self] _ in
+            self?.LabelFirst.isHidden = true
+            self?.LabelSecond.isHidden = true
+            self?.LabelStart.text = "Вы закончили. Хорошая работа!"
+            self?.LabelStart.isHidden = false
+            self?.EasyButton.isHidden = true
+            self?.DifficultButton.isHidden = true
+            self?.DontKnowButton.isHidden = true
+        }))
+        present(alert,animated: true)
+    }
+    
+    private func getWords(showKey: Bool) -> [Word?] {
+        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
+        var fetchedWords: [Word]!
+        
+//        fetchRequest.predicate = NSPredicate(
+//            format: "%K = %d",
+//            argumentArray: [#keyPath(Word.wordShowed), showKey])
+        do {
+            let results = try context.fetch(fetchRequest)
+            fetchedWords = results
+        } catch {
+            print(error.localizedDescription)
+        }
+        return fetchedWords
+    }
+    
+    private func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool) {
         guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
         let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
         selectedWord.word = word
         selectedWord.wordKey = key
         selectedWord.wordTranslation = wordTranslation
+        selectedWord.wordShowed = wordShowed
         do {
             try context.save()
         } catch let error as NSError {
             print("Не могу записать. \(error), \(error.userInfo)")
-        }
-    }
-    
-    @IBAction func Next(_ sender: Any) {
-        print("count = \(count)")
-        print("Max Count = \(maxCount)")
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            let selectedWord = results[count]
-            LabelFirst.text = selectedWord.word
-            LabelSecond.text = selectedWord.wordTranslation
-            saveKeys(word: selectedWord.word!, key: "Showed", wordTranslation: selectedWord.wordTranslation!)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        if LabelSecond.isHidden == true {
-            LabelSecond.isHidden = false
-            if count < maxCount - 1 {
-                count += 1
-            }
-        } else if LabelSecond.isHidden == false {
-            LabelSecond.isHidden = true
-            
-            if count < maxCount - 1 {
-                return
-            } else {
-                count = 0
-                
-                let request: NSFetchRequest<Word> = Word.fetchRequest()
-                let searchKey = "Showed"
-                request.predicate = NSPredicate(
-                    format: "%K = %@",
-                    argumentArray: [#keyPath(Word.wordKey), searchKey])
-                do {
-                    // Получить выборку
-                    let results = try context.fetch(request)
-                    for showed in results {
-                        print(showed.word)
-                    }
-                } catch let error as NSError {
-                    print("Не могу получить выборку: \(error), \(error.userInfo)")
-                }
-            }
         }
     }
 }

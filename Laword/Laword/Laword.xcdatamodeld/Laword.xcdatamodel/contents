@@ -3,9 +3,10 @@
     <entity name="Word" representedClassName=".Word" syncable="YES">
         <attribute name="word" attributeType="String"/>
         <attribute name="wordKey" optional="YES" attributeType="String"/>
+        <attribute name="wordShowed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="wordTranslation" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Word" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Word" positionX="-63" positionY="-18" width="128" height="89"/>
     </elements>
 </model>

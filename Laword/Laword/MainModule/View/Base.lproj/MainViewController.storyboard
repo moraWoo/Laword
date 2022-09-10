@@ -30,10 +30,10 @@
                                             <color key="titleColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="Next:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9wk-1m-QRL"/>
+                                            <action selector="easyButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bwf-OF-5ZS"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZH9-8n-bXT">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZH9-8n-bXT">
                                         <rect key="frame" x="0.0" y="66" width="124" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="124" id="cRv-N6-Zlh"/>
@@ -43,8 +43,11 @@
                                         <state key="normal" title="Трудно">
                                             <color key="titleColor" systemColor="linkColor"/>
                                         </state>
+                                        <connections>
+                                            <action selector="difficultButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pIQ-5Q-ssb"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcV-I8-7bU">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcV-I8-7bU">
                                         <rect key="frame" x="0.0" y="132" width="124" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="124" id="55d-jd-Djm"/>
@@ -54,11 +57,14 @@
                                         <state key="normal" title="Не знаю">
                                             <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="dontKnowButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J5z-1i-A07"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="179" translatesAutoresizingMaskIntoConstraints="NO" id="2pR-Vm-CBM">
-                                <rect key="frame" x="57" y="130" width="300" height="251"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="2pR-Vm-CBM">
+                                <rect key="frame" x="57" y="130" width="300" height="308"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PmZ-Oe-qI6">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="36"/>
@@ -69,8 +75,17 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9zL-aJ-xYE">
+                                        <rect key="frame" x="0.0" y="136" width="300" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="8tQ-K9-jbR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ep9-0r-c31">
-                                        <rect key="frame" x="0.0" y="215" width="300" height="36"/>
+                                        <rect key="frame" x="0.0" y="272" width="300" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="uIa-YP-1aF"/>
                                         </constraints>
@@ -92,8 +107,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="DifficultButton" destination="ZH9-8n-bXT" id="c2s-aY-yIR"/>
+                        <outlet property="DontKnowButton" destination="kcV-I8-7bU" id="UAQ-CB-7Xg"/>
+                        <outlet property="EasyButton" destination="hWO-NJ-AqC" id="8zA-SG-w0o"/>
                         <outlet property="LabelFirst" destination="PmZ-Oe-qI6" id="DC7-tD-S0x"/>
                         <outlet property="LabelSecond" destination="Ep9-0r-c31" id="Yzu-oi-ejk"/>
+                        <outlet property="LabelStart" destination="9zL-aJ-xYE" id="wbd-fe-3Fu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
