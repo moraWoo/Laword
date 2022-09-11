@@ -19,28 +19,19 @@ class MainViewController: UIViewController {
     @IBOutlet var progressBar: UIProgressView!
     @IBOutlet weak var countOfLearningWords: UILabel!
     
+    var presenter: MainViewPresenterProtocol!
     
-    //    var storeManager = DataStoreManager()
-    //    var context = storeManager.persistentContainer.viewContext
-    lazy var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
-    var wordDictionary: [String : AnyObject]!
     var count = 0
-    var countWords = 0 //Count total words loaded to DB
     var maxCount = 5
     
     var wordKeys: [NSManagedObject] = []
-    var fetchedWords: [Word?]!
+    var fetchedWords: [Word]!
     var selectedWord: Word!
     var toggle = true
     var progressCount = 0.0
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
-        getDataFromFile()
-        
         LabelFirst.isHidden = true
         LabelSecond.isHidden = true
         LabelStart.text = "Тапните по экрану, чтобы начать"
@@ -50,8 +41,8 @@ class MainViewController: UIViewController {
         DifficultButton.isHidden = true
         DontKnowButton.isHidden = true
         
-        fetchedWords = getWords(showKey: false)
-        
+        fetchedWords = presenter.getWords()
+
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         progressBar.isHidden = true
@@ -68,52 +59,25 @@ class MainViewController: UIViewController {
         }
     }
     
-    
-    private func getDataFromFile() {
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "word != nil")
-        var records = 0
-        do {
-            records = try context.count(for: fetchRequest)
-            print("Is Data there already?")
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        
-        guard records == 0 else { return }
-        
-        guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
-        for dictionary in dataArray {
-            guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-            let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
-            let wordDictionary = dictionary as! [String : AnyObject]
-            selectedWord.word = wordDictionary["wordEN"] as? String
-            selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
-            countWords += 1
-            
-        }
-        print("Всего загружено в базу: \(countWords) слова")
-        print(wordDictionary as Any)
-    }
-      
     @IBAction func easyButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "Easy"
-        saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
         showAnswers(selectedWord)
+        print("Easy written")
     }
     
     @IBAction func difficultButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "Difficult"
-        saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
         showAnswers(selectedWord)
     }
     
     @IBAction func dontKnowButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "DontKnow"
-        saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
+        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true)
         showAnswers(selectedWord)
     }
     
@@ -163,49 +127,15 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func statisticWords(_ searchKey: String) {
-        let request: NSFetchRequest<Word> = Word.fetchRequest()
-        request.predicate = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordKey), searchKey])
-        do {
-            // Получить выборку
-            let results = try context.fetch(request)
-            print("Просмотренные слова по ключу \(searchKey)")
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch let error as NSError {
-            print("Не могу получить выборку: \(error), \(error.userInfo)")
-        }
-    }
-    
-    private func statisticShowWords(_ searchKey: Bool) {
-        let request: NSFetchRequest<Word> = Word.fetchRequest()
-        request.predicate = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordShowed), searchKey as NSNumber])
-        do {
-            // Получить выборку
-            let results = try context.fetch(request)
-            print("Все просмотренные слова:")
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch let error as NSError {
-            print("Не могу получить выборку: \(error), \(error.userInfo)")
-        }
-    }
-    
     private func alertFinish() {
         let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Начать заново?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
             self?.count = 0
-            self?.statisticWords("Easy")
-            self?.statisticWords("Difficult")
-            self?.statisticWords("DontKnow")
-            self?.statisticShowWords(true)
+            self?.presenter.statisticWords("Easy")
+            self?.presenter.statisticWords("Difficult")
+            self?.presenter.statisticWords("DontKnow")
+            self?.presenter.statisticShowWords(true)
             self?.progressBar.progress = 0
             self?.LabelSecond.isHidden = true
             self?.LabelFirst.isHidden = true
@@ -215,8 +145,8 @@ class MainViewController: UIViewController {
             self?.LabelStart.isHidden = false
             self?.LabelStart.text = "Тапните, чтобы начать заново"
         }))
-        alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [weak self] _ in
-            
+        alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { _ in
+            print("Показал новые")
         }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [weak self] _ in
             self?.LabelFirst.isHidden = true
@@ -230,38 +160,14 @@ class MainViewController: UIViewController {
         }))
         present(alert,animated: true)
     }
-    
-    private func getWords(showKey: Bool) -> [Word?] {
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-        var fetchedWords: [Word]!
-        
-        fetchRequest.predicate = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
-        do {
-            let results = try context.fetch(fetchRequest)
-            fetchedWords = results
-            print("Отобранные слова, которые еще не показывали: \(fetchedWords.count)")
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        return fetchedWords
+}
+
+extension MainViewController: MainViewProtocol {
+    func getWords(){
+        print("getWords from MainController")
     }
-    
-    private func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool) {
-        guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-        let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
-        selectedWord.word = word
-        selectedWord.wordKey = key
-        selectedWord.wordTranslation = wordTranslation
-        selectedWord.wordShowed = wordShowed as NSNumber
-        do {
-            try context.save()
-        } catch let error as NSError {
-            print("Не могу записать. \(error), \(error.userInfo)")
-        }
+
+    func getDataFromFile() {
+        print("getDataFromFile fromMainController")
     }
 }
