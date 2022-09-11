@@ -17,6 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet var DifficultButton: UIButton!
     @IBOutlet var DontKnowButton: UIButton!
     @IBOutlet var progressBar: UIProgressView!
+    @IBOutlet weak var countOfLearningWords: UILabel!
     
     
     //    var storeManager = DataStoreManager()
@@ -55,6 +56,7 @@ class MainViewController: UIViewController {
         view.addGestureRecognizer(tapRecognizer)
         progressBar.isHidden = true
         progressBar.progress = 0
+        countOfLearningWords.isHidden = true
     }
     
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
@@ -117,11 +119,14 @@ class MainViewController: UIViewController {
     
     private func showAnswers(_ selectedWord: Word) {
         progressBar.isHidden = false
+        countOfLearningWords.isHidden = false
+
         
         if LabelStart.isHidden == false {
             LabelStart.isHidden = true
             LabelFirst.isHidden = false
             LabelFirst.text = selectedWord.word
+            countOfLearningWords.text = String(count + 1) + "/" + String(maxCount)
             toggle = false
         }
         
@@ -144,7 +149,7 @@ class MainViewController: UIViewController {
                 progressCount = Double(count) / Double(maxCount)
                 print("Count: \(count), maxCount: \(maxCount), progressCount: \(progressCount)")
                 progressBar.progress = Float(progressCount)
-
+                countOfLearningWords.text = String(count) + "/" + String(maxCount)
             } else {
                 LabelSecond.isHidden = true
                 LabelFirst.text = selectedWord.word
