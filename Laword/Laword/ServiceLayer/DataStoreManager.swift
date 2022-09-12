@@ -10,14 +10,14 @@ import CoreData
 
 protocol DataStoreManagerProtocol {
     func getWords(showKey: Bool) -> [Word]
-    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool)
+    func getShownWords(wordShowNow: String) -> [Word]
+    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String)
     func getDataFromFile()
     func statisticWords(_ searchKey: String)
     func statisticShowWords(_ searchKey: Bool)
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
-    
     var countWords = 0
     var wordDictionary: [String : AnyObject]!
     
@@ -52,10 +52,11 @@ class DataStoreManager: DataStoreManagerProtocol {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
         var fetchedWords: [Word]!
-        
+       
         fetchRequest.predicate = NSPredicate(
             format: "%K = %@",
             argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
+        
         do {
             let results = try context.fetch(fetchRequest)
             fetchedWords = results
@@ -68,6 +69,29 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         return fetchedWords
     }
+    
+    func getShownWords(wordShowNow: String) -> [Word] {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
+        var fetchedShowedNowWords: [Word]!
+       
+        fetchRequest.predicate = NSPredicate(
+            format: "%K = %@",
+            argumentArray: [#keyPath(Word.wordShowedNow), wordShowNow])
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            fetchedShowedNowWords = results
+            print("Отобранные слова, которые еще не показывали: \(fetchedShowedNowWords.count)")
+            for showed in results {
+                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return fetchedShowedNowWords
+    }
+    
     
     // MARK: - Get data from file
     func getDataFromFile() {
@@ -99,7 +123,7 @@ class DataStoreManager: DataStoreManagerProtocol {
     }
         
     // MARK: - Save keys according to different buttons tapped (Easy, Difficult, DontKnow)
-    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool) {
+    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String) {
         let context = persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
         let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
@@ -107,6 +131,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         selectedWord.wordKey = key
         selectedWord.wordTranslation = wordTranslation
         selectedWord.wordShowed = wordShowed as NSNumber
+        selectedWord.wordShowedNow = wordShowNow
         do {
             try context.save()
         } catch let error as NSError {

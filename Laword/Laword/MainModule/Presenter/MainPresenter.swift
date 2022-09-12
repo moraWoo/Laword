@@ -14,16 +14,19 @@ protocol MainViewProtocol: AnyObject { //Output
 
 protocol MainViewPresenterProtocol: AnyObject { //Input
     init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol)
-    func getWords() -> [Word]?
+    func getWords(_ searchKey: Bool) -> [Word]?
+    func getShownWords(_ wordShowNow: String) -> [Word]?
     func getDataFromFile()
-    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool)
+    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String)
     func statisticWords( _ : String)
     func statisticShowWords( _ : Bool)
     var fetchedWords: [Word]? { get set }
+    var fetchedShowedWords: [Word]? { get set }
 }
 
 class MainPresenter: MainViewPresenterProtocol {
-    
+
+    var fetchedShowedWords: [Word]?
     var fetchedWords: [Word]?
     weak var view: MainViewProtocol?
     let dataStoreManager: DataStoreManagerProtocol!
@@ -35,18 +38,22 @@ class MainPresenter: MainViewPresenterProtocol {
         getDataFromFile()
     }
     
-    func getWords() -> [Word]? {
-        fetchedWords = dataStoreManager.getWords(showKey: false)
+    func getWords(_ searchKey: Bool) -> [Word]? {
+        fetchedWords = dataStoreManager.getWords(showKey: searchKey)
         return fetchedWords
     }
-
-    func getDataFromFile()  {
-        dataStoreManager.getDataFromFile()
-        print("Загружены слова в презентер")
+    
+    func getShownWords(_ wordShowNow: String) -> [Word]? {
+        fetchedShowedWords = dataStoreManager.getShownWords(wordShowNow: wordShowNow)
+        return fetchedShowedWords
     }
     
-    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool) {
-        dataStoreManager.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: wordShowed)
+    func getDataFromFile()  {
+        dataStoreManager.getDataFromFile()
+    }
+    
+    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String) {
+        dataStoreManager.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: wordShowed, wordShowNow: wordShowNow)
     }
 
     func statisticWords(_ searchKey: String) {

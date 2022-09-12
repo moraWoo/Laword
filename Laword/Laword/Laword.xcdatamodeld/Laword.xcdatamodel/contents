@@ -10,10 +10,11 @@
         <attribute name="word" attributeType="String"/>
         <attribute name="wordKey" optional="YES" attributeType="String"/>
         <attribute name="wordShowed" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
+        <attribute name="wordShowedNow" optional="YES" attributeType="String" defaultValueString="No"/>
         <attribute name="wordTranslation" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Word" positionX="-63" positionY="-18" width="128" height="89"/>
         <element name="UserWord" positionX="-63" positionY="9" width="128" height="89"/>
+        <element name="Word" positionX="-63" positionY="-18" width="128" height="104"/>
     </elements>
 </model>
