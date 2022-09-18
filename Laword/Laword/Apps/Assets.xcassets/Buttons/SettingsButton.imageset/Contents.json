@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Кнопка _Настройка_.svg",
+      "filename" : "Кнопка _Settings.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Кнопка _Настройка_-1.svg",
+      "filename" : "Кнопка _Settings-1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Кнопка _Настройка_-2.svg",
+      "filename" : "Кнопка _Settings-2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
