@@ -12,12 +12,26 @@ class MainViewController: UIViewController {
     
     @IBOutlet var LabelFirst: UILabel!
     @IBOutlet var LabelSecond: UILabel!
+    @IBOutlet var WordTranscription: UILabel!
+
     @IBOutlet var LabelStart: UILabel!
+
     @IBOutlet var EasyButton: UIButton!
     @IBOutlet var DifficultButton: UIButton!
     @IBOutlet var DontKnowButton: UIButton!
+
     @IBOutlet var progressBar: UIProgressView!
     @IBOutlet weak var countOfLearningWords: UILabel!
+    
+    @IBOutlet var EasyLabel: UILabel!
+    @IBOutlet var EasyLabel1: UILabel!
+    
+    @IBOutlet var DifficultLabel: UILabel!
+    @IBOutlet var DifficultLabel1: UILabel!
+    
+    @IBOutlet var DontKnowLabel: UILabel!
+    @IBOutlet var DontKnowLabel1: UILabel!
+    
     
     var presenter: MainViewPresenterProtocol!
     
@@ -44,6 +58,15 @@ class MainViewController: UIViewController {
         DifficultButton.isHidden = true
         DontKnowButton.isHidden = true
         
+        EasyLabel.isHidden = true
+        EasyLabel1.isHidden = true
+        DifficultLabel.isHidden = true
+        DifficultLabel1.isHidden = true
+        DontKnowLabel.isHidden = true
+        DontKnowLabel1.isHidden = true
+        
+        WordTranscription.isHidden = true
+        
         fetchedWords = presenter.getWords(false)
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture))
@@ -51,6 +74,7 @@ class MainViewController: UIViewController {
         progressBar.isHidden = true
         progressBar.progress = 0
         countOfLearningWords.isHidden = true
+        
     }
     
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
@@ -105,13 +129,29 @@ class MainViewController: UIViewController {
             DifficultButton.isHidden = true
             DontKnowButton.isHidden = true
             
+            EasyLabel.isHidden = true
+            EasyLabel1.isHidden = true
+            DifficultLabel.isHidden = true
+            DifficultLabel1.isHidden = true
+            DontKnowLabel.isHidden = true
+            DontKnowLabel1.isHidden = true
+            
             toggle.toggle()
             
             if toggle == false {
                 LabelSecond.isHidden = false
+                
                 EasyButton.isHidden = false
                 DifficultButton.isHidden = false
                 DontKnowButton.isHidden = false
+                
+                EasyLabel.isHidden = false
+                EasyLabel1.isHidden = false
+                DifficultLabel.isHidden = false
+                DifficultLabel1.isHidden = false
+                DontKnowLabel.isHidden = false
+                DontKnowLabel1.isHidden = false
+                
                 count += 1
                 progressCount = Double(count) / Double(maxCount)
                 print("Count: \(count), maxCount: \(maxCount), progressCount: \(progressCount)")
@@ -143,12 +183,24 @@ class MainViewController: UIViewController {
             self.progressBar.progress = 0
             self.LabelSecond.isHidden = true
             self.LabelFirst.isHidden = true
+            
             self.EasyButton.isHidden = true
             self.DifficultButton.isHidden = true
             self.DontKnowButton.isHidden = true
+                     
+            self.EasyLabel.isHidden = true
+            self.EasyLabel1.isHidden = true
+            self.DifficultLabel.isHidden = true
+            self.DifficultLabel1.isHidden = true
+            self.DontKnowLabel.isHidden = true
+            self.DontKnowLabel1.isHidden = true
+            
+            
             self.LabelStart.isHidden = false
             self.LabelStart.text = "Тапните, чтобы начать заново"
             self.fetchedShownWords = presenter.getShownWords(self.yesKey)
+            
+
         }))
         alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [self] _ in
             print("Показал новые")
@@ -161,13 +213,20 @@ class MainViewController: UIViewController {
             self.LabelSecond.isHidden = true
             self.LabelStart.isHidden = false
             self.LabelStart.text = "Вы закончили. Хорошая работа!"
+            
             self.EasyButton.isHidden = true
             self.DifficultButton.isHidden = true
             self.DontKnowButton.isHidden = true
+            
+            self.EasyLabel.isHidden = true
+            self.EasyLabel1.isHidden = true
+            self.DifficultLabel.isHidden = true
+            self.DifficultLabel1.isHidden = true
+            self.DontKnowLabel.isHidden = true
+            self.DontKnowLabel1.isHidden = true
+            
             self.progressBar.isHidden = true
             self.countOfLearningWords.isHidden = true
-            
-
         }))
         present(alert,animated: true)
     }

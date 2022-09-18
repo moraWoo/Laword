@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Dictionaries" representedClassName="Dictionaries" syncable="YES" codeGenerationType="class">
-        <attribute name="countOfDictionaries" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="dictionary" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dictionary" inverseName="dictionaries" inverseEntity="Dictionary"/>
-    </entity>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Dictionary" representedClassName="Dictionary" syncable="YES">
         <attribute name="countAllWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="countDontKnowWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -13,7 +8,6 @@
         <attribute name="countNewWords" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="pic" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
-        <relationship name="dictionaries" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dictionaries" inverseName="dictionary" inverseEntity="Dictionaries"/>
         <relationship name="word" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="dictionary" inverseEntity="Word"/>
     </entity>
     <entity name="Word" representedClassName=".Word" syncable="YES">
@@ -25,8 +19,7 @@
         <relationship name="dictionary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dictionary" inverseName="word" inverseEntity="Dictionary"/>
     </entity>
     <elements>
-        <element name="Dictionary" positionX="-526.5390625" positionY="-42.64453125" width="124.65234375" height="164"/>
-        <element name="Dictionaries" positionX="-599.69140625" positionY="-252.9375" width="128" height="74"/>
+        <element name="Dictionary" positionX="-526.5390625" positionY="-42.64453125" width="124.65234375" height="149"/>
         <element name="Word" positionX="-454.375" positionY="-255.1484375" width="128" height="119"/>
     </elements>
 </model>

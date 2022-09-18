@@ -18,12 +18,6 @@ protocol DataStoreManagerProtocol {
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
-    var countWords = 0
-    var wordDictionary: [String : AnyObject]!
-    
-    var fetchedWords: [Word]!
-    var selectedWord: Word!
-    
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Laword")
@@ -92,12 +86,12 @@ class DataStoreManager: DataStoreManagerProtocol {
         return fetchedShowedNowWords
     }
     
-    
     // MARK: - Get data from file
     func getDataFromFile() {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "word != nil")
+        
         var records = 0
         do {
             records = try context.count(for: fetchRequest)
@@ -108,18 +102,34 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         guard records == 0 else { return }
         
+        let dictionaryDB = Dictionary(context: context)
+        dictionaryDB.name = "BaseDictionary"
+        
         guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
+        
         for dictionary in dataArray {
             guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-            let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
-            let wordDictionary = dictionary as! [String : AnyObject]
+            guard let selectedWord = NSManagedObject(entity: entity, insertInto: context) as? Word else { return }
+            guard let wordDictionary = dictionary as? [String: AnyObject] else { return }
+
             selectedWord.word = wordDictionary["wordEN"] as? String
             selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
-            countWords += 1
             
+            selectedWord.dictionary = dictionaryDB //Write for each word to the dictionary #1
         }
-        print("Всего загружено в базу: \(countWords) слова")
-        print(wordDictionary as Any)
+
+        //Show words in context
+        do {
+            let results = try context.fetch(fetchRequest)
+            let dictName = results[0].dictionary?.name
+            print("Всего загружено в базу: \(results.count) слов, в словарь: \(String(describing: dictName))")
+            print("Следующие слова были загружены в словарь: \(String(describing: dictName))")
+            for showed in results {
+                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
     }
         
     // MARK: - Save keys according to different buttons tapped (Easy, Difficult, DontKnow)

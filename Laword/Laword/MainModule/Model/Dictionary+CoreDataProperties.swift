@@ -2,7 +2,7 @@
 //  Dictionary+CoreDataProperties.swift
 //  Laword
 //
-//  Created by Ильдар on 18.09.2022.
+//  Created by Ildar Khabibullin on 18.09.2022.
 //
 //
 
@@ -16,15 +16,14 @@ extension Dictionary {
         return NSFetchRequest<Dictionary>(entityName: "Dictionary")
     }
 
-    @NSManaged public var name: String?
     @NSManaged public var countAllWords: Int16
-    @NSManaged public var countNewWords: Int16
     @NSManaged public var countDontKnowWords: Int16
-    @NSManaged public var countHardWords: Int16
     @NSManaged public var countEasyWords: Int16
+    @NSManaged public var countHardWords: Int16
+    @NSManaged public var countNewWords: Int16
+    @NSManaged public var name: String?
     @NSManaged public var pic: Data?
     @NSManaged public var word: NSSet?
-    @NSManaged public var dictionaries: Dictionaries?
 
 }
 
