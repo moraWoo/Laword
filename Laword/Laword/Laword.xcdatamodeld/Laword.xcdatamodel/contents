@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="UserWord" representedClassName="UserWord" syncable="YES">
-        <attribute name="uword" optional="YES" attributeType="String"/>
-        <attribute name="uwordKey" optional="YES" attributeType="String"/>
-        <attribute name="uwordShowed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="uwordTranslation" optional="YES" attributeType="String"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Dictionaries" representedClassName="Dictionaries" syncable="YES" codeGenerationType="class">
+        <attribute name="countOfDictionaries" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="dictionary" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dictionary" inverseName="dictionaries" inverseEntity="Dictionary"/>
+    </entity>
+    <entity name="Dictionary" representedClassName="Dictionary" syncable="YES">
+        <attribute name="countAllWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="countDontKnowWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="countEasyWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="countHardWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="countNewWords" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="pic" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="dictionaries" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dictionaries" inverseName="dictionary" inverseEntity="Dictionaries"/>
+        <relationship name="word" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="dictionary" inverseEntity="Word"/>
     </entity>
     <entity name="Word" representedClassName=".Word" syncable="YES">
         <attribute name="word" attributeType="String"/>
@@ -12,9 +22,11 @@
         <attribute name="wordShowed" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
         <attribute name="wordShowedNow" optional="YES" attributeType="String" defaultValueString="No"/>
         <attribute name="wordTranslation" attributeType="String"/>
+        <relationship name="dictionary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dictionary" inverseName="word" inverseEntity="Dictionary"/>
     </entity>
     <elements>
-        <element name="UserWord" positionX="-63" positionY="9" width="128" height="89"/>
-        <element name="Word" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="Dictionary" positionX="-526.5390625" positionY="-42.64453125" width="124.65234375" height="164"/>
+        <element name="Dictionaries" positionX="-599.69140625" positionY="-252.9375" width="128" height="74"/>
+        <element name="Word" positionX="-454.375" positionY="-255.1484375" width="128" height="119"/>
     </elements>
 </model>
