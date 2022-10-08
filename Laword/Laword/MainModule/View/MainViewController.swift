@@ -14,6 +14,10 @@ class MainViewController: UIViewController {
     @IBOutlet var LabelSecond: UILabel!
     @IBOutlet var WordTranscription: UILabel!
 
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var nameOfVocabulary: UILabel!
+    @IBOutlet weak var countOfWords: UILabel!
     @IBOutlet var LabelStart: UILabel!
 
     @IBOutlet var EasyButton: UIButton!
@@ -24,13 +28,13 @@ class MainViewController: UIViewController {
     @IBOutlet weak var countOfLearningWords: UILabel!
     
     @IBOutlet var EasyLabel: UILabel!
-    @IBOutlet var EasyLabel1: UILabel!
+    @IBOutlet var EasySecondLabel: UILabel!
     
     @IBOutlet var DifficultLabel: UILabel!
-    @IBOutlet var DifficultLabel1: UILabel!
+    @IBOutlet var DifficultSecondLabel: UILabel!
     
     @IBOutlet var DontKnowLabel: UILabel!
-    @IBOutlet var DontKnowLabel1: UILabel!
+    @IBOutlet var DontKnowSecondLabel: UILabel!
     
     
     var presenter: MainViewPresenterProtocol!
@@ -49,32 +53,16 @@ class MainViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        LabelFirst.isHidden = true
-        LabelSecond.isHidden = true
+
         LabelStart.text = "Тапните по экрану, чтобы начать"
         LabelStart.isHidden = false
         
-        EasyButton.isHidden = true
-        DifficultButton.isHidden = true
-        DontKnowButton.isHidden = true
-        
-        EasyLabel.isHidden = true
-        EasyLabel1.isHidden = true
-        DifficultLabel.isHidden = true
-        DifficultLabel1.isHidden = true
-        DontKnowLabel.isHidden = true
-        DontKnowLabel1.isHidden = true
-        
-        WordTranscription.isHidden = true
-        
+        hideEverything()
         fetchedWords = presenter.getWords(false)
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
-        progressBar.isHidden = true
         progressBar.progress = 0
-        countOfLearningWords.isHidden = true
-        
     }
     
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
@@ -83,6 +71,7 @@ class MainViewController: UIViewController {
             print("Tapped")
             guard let selectedWord = fetchedWords?[count] else { return }
             showAnswers(selectedWord)
+            showTopButtonsAndInformation()
         }
     }
     
@@ -111,7 +100,6 @@ class MainViewController: UIViewController {
     private func showAnswers(_ selectedWord: Word) {
         progressBar.isHidden = false
         countOfLearningWords.isHidden = false
-
         
         if LabelStart.isHidden == false {
             LabelStart.isHidden = true
@@ -125,33 +113,11 @@ class MainViewController: UIViewController {
             LabelFirst.text = selectedWord.word
             LabelSecond.text = selectedWord.wordTranslation
             
-            EasyButton.isHidden = true
-            DifficultButton.isHidden = true
-            DontKnowButton.isHidden = true
-            
-            EasyLabel.isHidden = true
-            EasyLabel1.isHidden = true
-            DifficultLabel.isHidden = true
-            DifficultLabel1.isHidden = true
-            DontKnowLabel.isHidden = true
-            DontKnowLabel1.isHidden = true
-            
+            hideFunctionButtonsAndLabels()
             toggle.toggle()
             
             if toggle == false {
-                LabelSecond.isHidden = false
-                
-                EasyButton.isHidden = false
-                DifficultButton.isHidden = false
-                DontKnowButton.isHidden = false
-                
-                EasyLabel.isHidden = false
-                EasyLabel1.isHidden = false
-                DifficultLabel.isHidden = false
-                DifficultLabel1.isHidden = false
-                DontKnowLabel.isHidden = false
-                DontKnowLabel1.isHidden = false
-                
+                showFunctionButtonsAndLabels()
                 count += 1
                 progressCount = Double(count) / Double(maxCount)
                 print("Count: \(count), maxCount: \(maxCount), progressCount: \(progressCount)")
@@ -172,6 +138,7 @@ class MainViewController: UIViewController {
     
     private func alertFinish() {
         let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Начать заново?", preferredStyle: .alert)
+        
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [self] _ in
             self.count = 0
             self.presenter.statisticWords("Easy")
@@ -179,54 +146,22 @@ class MainViewController: UIViewController {
             self.presenter.statisticWords("DontKnow")
             self.presenter.statisticShowWords(true)
             
-
-            self.progressBar.progress = 0
-            self.LabelSecond.isHidden = true
-            self.LabelFirst.isHidden = true
-            
-            self.EasyButton.isHidden = true
-            self.DifficultButton.isHidden = true
-            self.DontKnowButton.isHidden = true
-                     
-            self.EasyLabel.isHidden = true
-            self.EasyLabel1.isHidden = true
-            self.DifficultLabel.isHidden = true
-            self.DifficultLabel1.isHidden = true
-            self.DontKnowLabel.isHidden = true
-            self.DontKnowLabel1.isHidden = true
-            
-            
+            hideEverything()
+    
             self.LabelStart.isHidden = false
             self.LabelStart.text = "Тапните, чтобы начать заново"
             self.fetchedShownWords = presenter.getShownWords(self.yesKey)
-            
-
         }))
+        
         alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [self] _ in
             print("Показал новые")
             self.fetchedWords = presenter.getWords(false)
             print("fetchedWords: \(String(describing: fetchedWords))")
-            
                     }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
-            self.LabelFirst.isHidden = true
-            self.LabelSecond.isHidden = true
+            hideEverything()
             self.LabelStart.isHidden = false
             self.LabelStart.text = "Вы закончили. Хорошая работа!"
-            
-            self.EasyButton.isHidden = true
-            self.DifficultButton.isHidden = true
-            self.DontKnowButton.isHidden = true
-            
-            self.EasyLabel.isHidden = true
-            self.EasyLabel1.isHidden = true
-            self.DifficultLabel.isHidden = true
-            self.DifficultLabel1.isHidden = true
-            self.DontKnowLabel.isHidden = true
-            self.DontKnowLabel1.isHidden = true
-            
-            self.progressBar.isHidden = true
-            self.countOfLearningWords.isHidden = true
         }))
         present(alert,animated: true)
     }
@@ -239,5 +174,67 @@ extension MainViewController: MainViewProtocol {
 
     func getDataFromFile() {
         print("getDataFromFile fromMainController")
+    }
+}
+
+extension MainViewController {
+    func hideEverything() {
+        LabelFirst.isHidden = true
+        LabelSecond.isHidden = true
+         
+        settingsButton.isHidden = true
+        menuButton.isHidden = true
+        nameOfVocabulary.isHidden = true
+        countOfWords.isHidden = true
+        
+        EasyButton.isHidden = true
+        DifficultButton.isHidden = true
+        DontKnowButton.isHidden = true
+        
+        EasyLabel.isHidden = true
+        EasySecondLabel.isHidden = true
+        DifficultLabel.isHidden = true
+        DifficultSecondLabel.isHidden = true
+        DontKnowLabel.isHidden = true
+        DontKnowSecondLabel.isHidden = true
+        
+        WordTranscription.isHidden = true
+        countOfLearningWords.isHidden = true
+        progressBar.isHidden = true
+    }
+    
+    func showTopButtonsAndInformation() {
+        settingsButton.isHidden = false
+        menuButton.isHidden = false
+        nameOfVocabulary.isHidden = false
+        countOfWords.isHidden = false
+    }
+    
+    func hideFunctionButtonsAndLabels() {
+        EasyButton.isHidden = true
+        DifficultButton.isHidden = true
+        DontKnowButton.isHidden = true
+        
+        EasyLabel.isHidden = true
+        EasySecondLabel.isHidden = true
+        DifficultLabel.isHidden = true
+        DifficultSecondLabel.isHidden = true
+        DontKnowLabel.isHidden = true
+        DontKnowSecondLabel.isHidden = true
+    }
+    
+    func showFunctionButtonsAndLabels() {
+        LabelSecond.isHidden = false
+        
+        EasyButton.isHidden = false
+        DifficultButton.isHidden = false
+        DontKnowButton.isHidden = false
+        
+        EasyLabel.isHidden = false
+        EasySecondLabel.isHidden = false
+        DifficultLabel.isHidden = false
+        DifficultSecondLabel.isHidden = false
+        DontKnowLabel.isHidden = false
+        DontKnowSecondLabel.isHidden = false
     }
 }
