@@ -2,7 +2,7 @@
 //  Dictionary+CoreDataClass.swift
 //  Laword
 //
-//  Created by Ildar Khabibullin on 18.09.2022.
+//  Created by Ildar Khabibullin on 09.10.2022.
 //
 //
 

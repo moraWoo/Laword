@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Dictionary" representedClassName="Dictionary" syncable="YES">
         <attribute name="countAllWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="countDontKnowWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -11,6 +11,12 @@
         <relationship name="word" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="dictionary" inverseEntity="Word"/>
     </entity>
     <entity name="Word" representedClassName=".Word" syncable="YES">
+        <attribute name="easinessFactor" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="interval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="nextDate" optional="YES" attributeType="Date" defaultDateTimeInterval="687006540" usesScalarValueType="NO"/>
+        <attribute name="previousDate" attributeType="Date" defaultDateTimeInterval="687006540" usesScalarValueType="NO"/>
+        <attribute name="repetition" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="word" attributeType="String"/>
         <attribute name="wordKey" optional="YES" attributeType="String"/>
         <attribute name="wordShowed" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="NO"/>
@@ -18,8 +24,4 @@
         <attribute name="wordTranslation" attributeType="String"/>
         <relationship name="dictionary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dictionary" inverseName="word" inverseEntity="Dictionary"/>
     </entity>
-    <elements>
-        <element name="Dictionary" positionX="-526.5390625" positionY="-42.64453125" width="124.65234375" height="149"/>
-        <element name="Word" positionX="-454.375" positionY="-255.1484375" width="128" height="119"/>
-    </elements>
 </model>
