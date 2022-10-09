@@ -16,6 +16,7 @@
 		63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAB28B91FE200A03730 /* Assets.xcassets */; };
 		63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAD28B91FE200A03730 /* LaunchScreen.storyboard */; };
 		6365129528CE4E6800A13ABF /* MainViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6365129428CE4E6800A13ABF /* MainViewController1.xib */; };
+		6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387995928F2F49B00D9590F /* SM2Manager.swift */; };
 		63AEFB5428F2E23600878813 /* Word+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AEFB5028F2E23600878813 /* Word+CoreDataClass.swift */; };
 		63AEFB5528F2E23600878813 /* Word+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AEFB5128F2E23600878813 /* Word+CoreDataProperties.swift */; };
 		63AEFB5628F2E23600878813 /* Dictionary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AEFB5228F2E23600878813 /* Dictionary+CoreDataClass.swift */; };
@@ -37,6 +38,7 @@
 		63547EAE28B91FE200A03730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63547EB028B91FE200A03730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6365129428CE4E6800A13ABF /* MainViewController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController1.xib; sourceTree = "<group>"; };
+		6387995928F2F49B00D9590F /* SM2Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Manager.swift; sourceTree = "<group>"; };
 		63AEFB5028F2E23600878813 /* Word+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+CoreDataClass.swift"; sourceTree = "<group>"; };
 		63AEFB5128F2E23600878813 /* Word+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63AEFB5228F2E23600878813 /* Dictionary+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				63DB606D28BB2124002ADD6E /* DataStoreManager.swift */,
+				6387995928F2F49B00D9590F /* SM2Manager.swift */,
 			);
 			path = ServiceLayer;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */,
 				63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */,
 				63547EA428B91FE100A03730 /* MainViewController.swift in Sources */,
 				63AEFB5528F2E23600878813 /* Word+CoreDataProperties.swift in Sources */,
