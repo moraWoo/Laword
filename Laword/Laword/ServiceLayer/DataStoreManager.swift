@@ -8,10 +8,25 @@
 import Foundation
 import CoreData
 
+public enum Grade: Int {
+    /// complete blackout.
+    case null
+    /// incorrect response; the correct one remembered
+    case bad
+    /// incorrect response; where the correct one seemed easy to recall
+    case fail
+    /// correct response recalled with serious difficulty
+    case pass
+    /// correct response after a hesitation
+    case good
+    /// perfect response
+    case bright
+}
+
 protocol DataStoreManagerProtocol {
-    func getWords(showKey: Bool) -> [Word]
+    func getWords(showKey: Bool, currentDateTime: TimeInterval) -> [Word]
     func getShownWords(wordShowNow: String) -> [Word]
-    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String)
+    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade)
     func getDataFromFile()
     func statisticWords(_ searchKey: String)
     func statisticShowWords(_ searchKey: Bool)
@@ -42,14 +57,30 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
     }
     
-    func getWords(showKey: Bool) -> [Word] {
+    func getWords(showKey: Bool, currentDateTime: TimeInterval) -> [Word] {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
         var fetchedWords: [Word]!
-       
-        fetchRequest.predicate = NSPredicate(
+        
+        let predicateOfUnshowedWords = NSPredicate(
             format: "%K = %@",
             argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
+        
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+        
+        let dateFrom = calendar.startOfDay(for: Date())
+        let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom)
+        
+        let fromPredicate = NSPredicate(format: "%@ >= %K", dateFrom as NSDate, #keyPath(Word.nextDate))
+        let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Word.nextDate), dateTo! as NSDate)
+        let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate,toPredicate,predicateOfUnshowedWords])
+        fetchRequest.predicate = dateAndUnshowedPredicate
+
+
+//        fetchRequest.predicate = NSPredicate(
+//            format: "%K = %@",
+//            argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
         
         do {
             let results = try context.fetch(fetchRequest)
@@ -133,20 +164,69 @@ class DataStoreManager: DataStoreManagerProtocol {
     }
         
     // MARK: - Save keys according to different buttons tapped (Easy, Difficult, DontKnow)
-    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String) {
+    func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {
+
+        
         let context = persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
         let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
+        
         selectedWord.word = word
         selectedWord.wordKey = key
         selectedWord.wordTranslation = wordTranslation
         selectedWord.wordShowed = wordShowed as NSNumber
         selectedWord.wordShowedNow = wordShowNow
+        
+        let timeInterval = Date().timeIntervalSince1970
+        
+        sm2Algorythm(flashcard: selectedWord, grade: grade, currentDateTime: timeInterval)
+        
         do {
             try context.save()
         } catch let error as NSError {
             print("Не могу записать. \(error), \(error.userInfo)")
         }
+    }
+    
+    func sm2Algorythm(flashcard: Word, grade: Grade, currentDateTime: TimeInterval) {
+        let maxQuality = 5
+        let easinessFactor = 1.3
+        
+        let cardGrade = grade.rawValue
+        
+        if cardGrade < 3 {
+            flashcard.repetition = 0
+            flashcard.interval = 0
+        } else {
+            let qualityFactor = Double(maxQuality - cardGrade) // CardGrade.bright.rawValue - grade
+            let newEasinessFactor = flashcard.easinessFactor + (0.1 - qualityFactor * (0.08 + qualityFactor * 0.02))
+            if newEasinessFactor < easinessFactor {
+                flashcard.easinessFactor = easinessFactor
+            } else {
+                flashcard.easinessFactor = newEasinessFactor
+            }
+            flashcard.repetition += 1
+            switch flashcard.repetition {
+                case 1:
+                    flashcard.interval = 1
+                case 2:
+                    flashcard.interval = 6
+                default:
+                    let newInterval = ceil(Double(flashcard.repetition - 1) * flashcard.easinessFactor)
+                    flashcard.interval = Int32(newInterval)
+            }
+        }
+        if cardGrade == 3 {
+            flashcard.interval = 0
+        }
+        let seconds = 60
+        let minutes = 60
+        let hours = 24
+        let dayMultiplier = seconds * minutes * hours
+        let extraDays = Int32(dayMultiplier) * flashcard.interval
+        let newNexDatetime = currentDateTime + Double(extraDays)
+        flashcard.previousDate = flashcard.nextDate
+        flashcard.nextDate = Date(timeIntervalSince1970: newNexDatetime)
     }
     
     func statisticWords(_ searchKey: String) {

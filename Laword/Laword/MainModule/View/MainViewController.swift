@@ -49,16 +49,17 @@ class MainViewController: UIViewController {
     var toggle = true
     var progressCount = 0.0
     let yesKey = "Yes"
-    
+    let dateTime = Date().timeIntervalSince1970
   
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
         LabelStart.text = "Тапните по экрану, чтобы начать"
         LabelStart.isHidden = false
         
         hideEverything()
-        fetchedWords = presenter.getWords(false)
+        fetchedWords = presenter.getWords(false, dateTime)
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
@@ -78,7 +79,7 @@ class MainViewController: UIViewController {
     @IBAction func easyButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "Easy"
-        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes")
+        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes", grade: Grade.bright)
         showAnswers(selectedWord)
         print("Easy written")
     }
@@ -86,14 +87,14 @@ class MainViewController: UIViewController {
     @IBAction func difficultButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "Difficult"
-        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes")
+        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes", grade: Grade.good)
         showAnswers(selectedWord)
     }
     
     @IBAction func dontKnowButton(_ sender: Any) {
         guard let selectedWord = fetchedWords?[count] else { return }
         let key = "DontKnow"
-        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes")
+        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes", grade: Grade.null)
         showAnswers(selectedWord)
     }
     
@@ -154,10 +155,22 @@ class MainViewController: UIViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [self] _ in
-            print("Показал новые")
-            self.fetchedWords = presenter.getWords(false)
+
+            self.count = 0
+            self.presenter.statisticWords("Easy")
+            self.presenter.statisticWords("Difficult")
+            self.presenter.statisticWords("DontKnow")
+            self.presenter.statisticShowWords(true)
+            
+            hideEverything()
+    
+            self.LabelStart.isHidden = false
+            self.LabelStart.text = "Тапните, чтобы начать заново"
+            
+            self.fetchedWords = presenter.getWords(false, dateTime)
             print("fetchedWords: \(String(describing: fetchedWords))")
                     }))
+        
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
             hideEverything()
             self.LabelStart.isHidden = false
