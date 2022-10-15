@@ -36,7 +36,6 @@ class MainViewController: UIViewController {
     @IBOutlet var DontKnowLabel: UILabel!
     @IBOutlet var DontKnowSecondLabel: UILabel!
     
-    
     var presenter: MainViewPresenterProtocol!
     
     var count = 0
@@ -54,13 +53,13 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         LabelStart.text = "Тапните по экрану, чтобы начать"
         LabelStart.isHidden = false
         
         hideEverything()
+        
         fetchedWords = presenter.getWords(false, dateTime)
-
+        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         progressBar.progress = 0
@@ -107,6 +106,9 @@ class MainViewController: UIViewController {
             LabelFirst.isHidden = false
             LabelFirst.text = selectedWord.word
             countOfLearningWords.text = String(count + 1) + "/" + String(maxCount)
+            progressCount = Double(count) / Double(maxCount)
+            print("Count: \(count), maxCount: \(maxCount), progressCount: \(progressCount)")
+            progressBar.progress = Float(progressCount)
             toggle = false
         }
         
@@ -138,34 +140,14 @@ class MainViewController: UIViewController {
     }
     
     private func alertFinish() {
-        let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Начать заново?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Показать новые?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [self] _ in
             self.count = 0
-            self.presenter.statisticWords("Easy")
-            self.presenter.statisticWords("Difficult")
-            self.presenter.statisticWords("DontKnow")
-            self.presenter.statisticShowWords(true)
-            
             hideEverything()
     
             self.LabelStart.isHidden = false
-            self.LabelStart.text = "Тапните, чтобы начать заново"
-            self.fetchedShownWords = presenter.getShownWords(self.yesKey)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Нет,показать новые", style: .default, handler: { [self] _ in
-
-            self.count = 0
-            self.presenter.statisticWords("Easy")
-            self.presenter.statisticWords("Difficult")
-            self.presenter.statisticWords("DontKnow")
-            self.presenter.statisticShowWords(true)
-            
-            hideEverything()
-    
-            self.LabelStart.isHidden = false
-            self.LabelStart.text = "Тапните, чтобы начать заново"
+            self.LabelStart.text = "Тапните, чтобы начать"
             
             self.fetchedWords = presenter.getWords(false, dateTime)
             print("fetchedWords: \(String(describing: fetchedWords))")

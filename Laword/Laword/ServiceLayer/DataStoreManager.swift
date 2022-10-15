@@ -33,6 +33,12 @@ protocol DataStoreManagerProtocol {
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
+    var countWords = 0
+    var wordDictionary: [String : AnyObject]!
+    
+    var fetchedWords: [Word]!
+    var selectedWord: Word!
+    
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Laword")
@@ -76,11 +82,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Word.nextDate), dateTo! as NSDate)
         let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate,toPredicate,predicateOfUnshowedWords])
         fetchRequest.predicate = dateAndUnshowedPredicate
-
-
-//        fetchRequest.predicate = NSPredicate(
-//            format: "%K = %@",
-//            argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
         
         do {
             let results = try context.fetch(fetchRequest)
@@ -94,83 +95,27 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         return fetchedWords
     }
-    
-    func getShownWords(wordShowNow: String) -> [Word] {
-        let context = persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-        var fetchedShowedNowWords: [Word]!
-       
-        fetchRequest.predicate = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordShowedNow), wordShowNow])
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            fetchedShowedNowWords = results
-            print("Отобранные слова, которые еще не показывали: \(fetchedShowedNowWords.count)")
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        return fetchedShowedNowWords
-    }
-    
-    // MARK: - Get data from file
-    func getDataFromFile() {
-        let context = persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "word != nil")
-        
-        var records = 0
-        do {
-            records = try context.count(for: fetchRequest)
-            print("Is Data there already?")
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        
-        guard records == 0 else { return }
-        
-        let dictionaryDB = Dictionary(context: context)
-        dictionaryDB.name = "BaseDictionary"
-        
-        guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
-        
-        for dictionary in dataArray {
-            guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-            guard let selectedWord = NSManagedObject(entity: entity, insertInto: context) as? Word else { return }
-            guard let wordDictionary = dictionary as? [String: AnyObject] else { return }
-
-            selectedWord.word = wordDictionary["wordEN"] as? String
-            selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
-            
-            selectedWord.dictionary = dictionaryDB //Write for each word to the dictionary #1
-        }
-
-        //Show words in context
-        do {
-            let results = try context.fetch(fetchRequest)
-            let dictName = results[0].dictionary?.name
-            print("Всего загружено в базу: \(results.count) слов, в словарь: \(String(describing: dictName))")
-            print("Следующие слова были загружены в словарь: \(String(describing: dictName))")
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-        
+           
     // MARK: - Save keys according to different buttons tapped (Easy, Difficult, DontKnow)
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {
-
         
         let context = persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-        let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
+        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
         
+        let wordPredicate = NSPredicate(format: "word == %@", word)
+        let translationPredicate = NSPredicate(format: "wordTranslation == %@", wordTranslation)
+        let wordAndTraslationPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [wordPredicate,translationPredicate])
+        fetchRequest.predicate = wordAndTraslationPredicate
+
+        do {
+            let results = try context.fetch(fetchRequest)
+            fetchedWords = results
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        selectedWord = fetchedWords[0]
+               
         selectedWord.word = word
         selectedWord.wordKey = key
         selectedWord.wordTranslation = wordTranslation
@@ -184,7 +129,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             try context.save()
         } catch let error as NSError {
-            print("Не могу записать. \(error), \(error.userInfo)")
+            print("Не могу записать. \(error), \(error.userInfo), \(error.localizedDescription)")
         }
     }
     
@@ -263,5 +208,57 @@ class DataStoreManager: DataStoreManagerProtocol {
         } catch let error as NSError {
             print("Не могу получить выборку: \(error), \(error.userInfo)")
         }
+    }
+    
+    func getShownWords(wordShowNow: String) -> [Word] {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
+        var fetchedShowedNowWords: [Word]!
+       
+        fetchRequest.predicate = NSPredicate(
+            format: "%K = %@",
+            argumentArray: [#keyPath(Word.wordShowedNow), wordShowNow])
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            fetchedShowedNowWords = results
+            print("Отобранные слова, которые еще не показывали: \(fetchedShowedNowWords.count)")
+            for showed in results {
+                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return fetchedShowedNowWords
+    }
+    
+    
+    // MARK: - Get data from file
+    func getDataFromFile() {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "word != nil")
+        var records = 0
+        do {
+            records = try context.count(for: fetchRequest)
+            print("Is Data there already?")
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+        guard records == 0 else { return }
+        
+        guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
+        for dictionary in dataArray {
+            guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
+            let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
+            let wordDictionary = dictionary as! [String : AnyObject]
+            selectedWord.word = wordDictionary["wordEN"] as? String
+            selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
+            countWords += 1
+            
+        }
+        print("Всего загружено в базу: \(countWords) слова")
+        print(wordDictionary as Any)
     }
 }
