@@ -13,17 +13,17 @@ class MainViewController: UIViewController {
     @IBOutlet var LabelFirst: UILabel!
     @IBOutlet var LabelSecond: UILabel!
     @IBOutlet var WordTranscription: UILabel!
-
+    
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var nameOfVocabulary: UILabel!
     @IBOutlet weak var countOfWords: UILabel!
     @IBOutlet var LabelStart: UILabel!
-
+    
     @IBOutlet var EasyButton: UIButton!
     @IBOutlet var DifficultButton: UIButton!
     @IBOutlet var DontKnowButton: UIButton!
-
+    
     @IBOutlet var progressBar: UIProgressView!
     @IBOutlet weak var countOfLearningWords: UILabel!
     
@@ -37,122 +37,90 @@ class MainViewController: UIViewController {
     @IBOutlet var DontKnowSecondLabel: UILabel!
     
     var presenter: MainViewPresenterProtocol!
-    
     var count = 0
-    var maxCount = 5
-    
-    var wordKeys: [NSManagedObject] = []
+    let maxCount = 5
     var fetchedWords: [Word]!
-    var fetchedShownWords: [Word]!
-    var selectedWord: Word!
-    var toggle = true
     var progressCount = 0.0
-    let yesKey = "Yes"
     let dateTime = Date().timeIntervalSince1970
-  
+    var selectedWord: Word!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        LabelStart.text = "Тапните по экрану, чтобы начать"
-        LabelStart.isHidden = false
+        progressBar.progress = 0
         
         hideEverything()
+        startLearning()
         
-        fetchedWords = presenter.getWords(false, dateTime)
-        
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
-        progressBar.progress = 0
+    }
+    
+    func startLearning() {
+        fetchedWords = presenter.getWords(false, dateTime)
+        guard let selectedWord = fetchedWords?[count] else { return }
+        LabelFirst.text = selectedWord.word
+        LabelSecond.text = selectedWord.wordTranslation
+        
+        showTopButtonsAndInformation()
+        countProgressBar()
     }
     
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
-        if EasyButton.isHidden == true {
-            view.resignFirstResponder()
-            print("Tapped")
-            guard let selectedWord = fetchedWords?[count] else { return }
-            showAnswers(selectedWord)
-            showTopButtonsAndInformation()
-        }
-    }
-    
-    @IBAction func easyButton(_ sender: Any) {
+        view.resignFirstResponder()
         guard let selectedWord = fetchedWords?[count] else { return }
-        let key = "Easy"
-        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes", grade: Grade.bright)
-        showAnswers(selectedWord)
-        print("Easy written")
+        showAnswers("showWordFirst", selectedWord)
     }
     
-    @IBAction func difficultButton(_ sender: Any) {
-        guard let selectedWord = fetchedWords?[count] else { return }
-        let key = "Difficult"
-        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes", grade: Grade.good)
-        showAnswers(selectedWord)
-    }
-    
-    @IBAction func dontKnowButton(_ sender: Any) {
-        guard let selectedWord = fetchedWords?[count] else { return }
-        let key = "DontKnow"
-        presenter.saveKeys(word: selectedWord.word!, key: key, wordTranslation: selectedWord.wordTranslation!, wordShowed: true, wordShowNow: "Yes", grade: Grade.null)
-        showAnswers(selectedWord)
-    }
-    
-    private func showAnswers(_ selectedWord: Word) {
-        progressBar.isHidden = false
-        countOfLearningWords.isHidden = false
-        
-        if LabelStart.isHidden == false {
-            LabelStart.isHidden = true
-            LabelFirst.isHidden = false
-            LabelFirst.text = selectedWord.word
-            countOfLearningWords.text = String(count + 1) + "/" + String(maxCount)
-            progressCount = Double(count) / Double(maxCount)
-            print("Count: \(count), maxCount: \(maxCount), progressCount: \(progressCount)")
-            progressBar.progress = Float(progressCount)
-            toggle = false
-        }
-        
-        if count < maxCount {
-            LabelFirst.text = selectedWord.word
-            LabelSecond.text = selectedWord.wordTranslation
-            
-            hideFunctionButtonsAndLabels()
-            toggle.toggle()
-            
-            if toggle == false {
-                showFunctionButtonsAndLabels()
-                count += 1
-                progressCount = Double(count) / Double(maxCount)
-                print("Count: \(count), maxCount: \(maxCount), progressCount: \(progressCount)")
-                progressBar.progress = Float(progressCount)
-                countOfLearningWords.text = String(count) + "/" + String(maxCount)
-            } else {
-                LabelSecond.isHidden = true
-                LabelFirst.text = selectedWord.word
-            }
-            print(selectedWord.word as Any)
-            print(selectedWord.wordTranslation as Any)
-            print("Count: \(count)")
-            print("Toggle: \(toggle)")
+    @IBAction func buttonPressed(_ sender: UIButton) {
+        if sender.tag == 0 {
+            afterButtonPressed(key: "Easy", grade: .bright)
+        } else if sender.tag == 1 {
+            afterButtonPressed(key: "Difficult", grade: .good)
         } else {
-            alertFinish()
+            afterButtonPressed(key: "DontKnow", grade: .null)
         }
+    }
+
+    func afterButtonPressed(key: String, grade: Grade) {
+        guard let selectedWord = fetchedWords?[count] else { return }
+        showAnswers("showWordSecond", selectedWord)
+        guard let word = selectedWord.word else { return }
+        guard let wordTranslation = selectedWord.wordTranslation else { return }
+        presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+        countProgressBar()
+        count += 1
+    }
+    
+    private func showAnswers(_ viewState: String, _ selectedWord: Word) {
+        switch viewState {
+            case "showWordFirst":
+                showTopButtonsAndInformation()
+                showFunctionButtonsAndLabels()
+            default:
+                if count < maxCount {
+                    showFunctionButtonsAndLabels()
+                    hideFunctionButtonsAndLabels()
+                    LabelFirst.text = selectedWord.word
+                    LabelSecond.text = selectedWord.wordTranslation
+                 } else {
+                    alertFinish()
+            }
+        }
+    }
+ 
+    func countProgressBar() {
+        progressCount = Double(count) / Double(maxCount)
+        progressBar.progress = Float(progressCount)
+        countOfLearningWords.text = String(count) + "/" + String(maxCount)
     }
     
     private func alertFinish() {
         let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Показать новые?", preferredStyle: .alert)
-        
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [self] _ in
             self.count = 0
             hideEverything()
-    
-            self.LabelStart.isHidden = false
-            self.LabelStart.text = "Тапните, чтобы начать"
-            
-            self.fetchedWords = presenter.getWords(false, dateTime)
-            print("fetchedWords: \(String(describing: fetchedWords))")
-                    }))
-        
+            startLearning()
+        }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
             hideEverything()
             self.LabelStart.isHidden = false
@@ -164,11 +132,11 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MainViewProtocol {
     func getWords(){
-        print("getWords from MainController")
+        //        print("getWords from MainController")
     }
-
+    
     func getDataFromFile() {
-        print("getDataFromFile fromMainController")
+        //        print("getDataFromFile fromMainController")
     }
 }
 
@@ -176,7 +144,7 @@ extension MainViewController {
     func hideEverything() {
         LabelFirst.isHidden = true
         LabelSecond.isHidden = true
-         
+        
         settingsButton.isHidden = true
         menuButton.isHidden = true
         nameOfVocabulary.isHidden = true
@@ -203,6 +171,10 @@ extension MainViewController {
         menuButton.isHidden = false
         nameOfVocabulary.isHidden = false
         countOfWords.isHidden = false
+        LabelFirst.isHidden = false
+        LabelStart.isHidden = true
+        progressBar.isHidden = false
+        countOfLearningWords.isHidden = false
     }
     
     func hideFunctionButtonsAndLabels() {
@@ -216,6 +188,8 @@ extension MainViewController {
         DifficultSecondLabel.isHidden = true
         DontKnowLabel.isHidden = true
         DontKnowSecondLabel.isHidden = true
+        LabelSecond.isHidden = true
+        
     }
     
     func showFunctionButtonsAndLabels() {
@@ -231,5 +205,41 @@ extension MainViewController {
         DifficultSecondLabel.isHidden = false
         DontKnowLabel.isHidden = false
         DontKnowSecondLabel.isHidden = false
+    }
+}
+
+extension UIView {
+    
+    fileprivate struct AssociatedObjectKeys {
+        static var tapGestureRecognizer = "MyAssociatedObjectKeyForTapGesture"
+    }
+    
+    fileprivate typealias Action = (() -> Void)?
+    
+    fileprivate var tapGestureRecognizerAction: Action? {
+        set {
+            if let newValue = newValue {
+                objc_setAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            }
+        }
+        get {
+            let tapGestureRecognizerActionInstance = objc_getAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer) as? Action
+            return tapGestureRecognizerActionInstance
+        }
+    }
+    
+    public func addTapGestureRecognizer(action: (() -> Void)?) {
+        self.isUserInteractionEnabled = true
+        self.tapGestureRecognizerAction = action
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        self.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc fileprivate func handleTapGesture(sender: UITapGestureRecognizer) {
+        if let action = self.tapGestureRecognizerAction {
+            action?()
+        } else {
+            print("no action")
+        }
     }
 }

@@ -35,9 +35,9 @@ protocol DataStoreManagerProtocol {
 class DataStoreManager: DataStoreManagerProtocol {
     var countWords = 0
     var wordDictionary: [String : AnyObject]!
-    
+//    var sm2protocol: SM2ManagerProtocol!
     var fetchedWords: [Word]!
-    var selectedWord: Word!
+    var selectedWord: Word?
     
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
@@ -86,10 +86,10 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             let results = try context.fetch(fetchRequest)
             fetchedWords = results
-            print("Отобранные слова, которые еще не показывали: \(fetchedWords.count)")
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
+//            print("Отобранные слова, которые еще не показывали: \(fetchedWords.count)")
+//            for showed in results {
+//                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
+//            }
         } catch {
             print(error.localizedDescription)
         }
@@ -114,7 +114,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             print(error.localizedDescription)
         }
         
-        selectedWord = fetchedWords[0]
+        guard let selectedWord = fetchedWords.first else { return }
                
         selectedWord.word = word
         selectedWord.wordKey = key
@@ -124,6 +124,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         let timeInterval = Date().timeIntervalSince1970
         
+//        sm2protocol.sm2Algorythm(flashcard: selectedWord, grade: grade, currentDateTime: timeInterval)
         sm2Algorythm(flashcard: selectedWord, grade: grade, currentDateTime: timeInterval)
         
         do {
@@ -183,7 +184,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             // Получить выборку
             let results = try context.fetch(request)
-            print("Просмотренные слова по ключу \(searchKey)")
+//            print("Просмотренные слова по ключу \(searchKey)")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -201,7 +202,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             // Получить выборку
             let results = try context.fetch(request)
-            print("Все просмотренные слова:")
+//            print("Все просмотренные слова:")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -222,7 +223,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             let results = try context.fetch(fetchRequest)
             fetchedShowedNowWords = results
-            print("Отобранные слова, которые еще не показывали: \(fetchedShowedNowWords.count)")
+//            print("Отобранные слова, которые еще не показывали: \(fetchedShowedNowWords.count)")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -241,7 +242,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         var records = 0
         do {
             records = try context.count(for: fetchRequest)
-            print("Is Data there already?")
+//            print("Is Data there already?")
         } catch let error as NSError {
             print(error.localizedDescription)
         }
@@ -258,7 +259,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             countWords += 1
             
         }
-        print("Всего загружено в базу: \(countWords) слова")
-        print(wordDictionary as Any)
+//        print("Всего загружено в базу: \(countWords) слова")
+//        print(wordDictionary as Any)
     }
 }

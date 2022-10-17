@@ -123,7 +123,7 @@
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" image="EasyButton"/>
                                     <connections>
-                                        <action selector="easyButton:" destination="-1" eventType="touchUpInside" id="9qj-sK-0DT"/>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="9R4-fh-My2"/>
                                     </connections>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zkH-Qn-SJf">
@@ -190,7 +190,7 @@
                                         <constraint firstAttribute="height" constant="37.5" id="dK0-De-2ol"/>
                                     </constraints>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ha-dd-tx6">
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ha-dd-tx6">
                                     <rect key="frame" x="216" y="0.0" width="60" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="60" id="8XD-u4-h7u"/>
@@ -199,7 +199,7 @@
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" image="HardButton"/>
                                     <connections>
-                                        <action selector="difficultButton:" destination="-1" eventType="touchUpInside" id="dYB-re-aWc"/>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="8EX-Ka-jvA"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -242,7 +242,7 @@
                                         <constraint firstAttribute="width" constant="150" id="vQG-4a-PQ9"/>
                                     </constraints>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIs-9g-VdC">
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIs-9g-VdC">
                                     <rect key="frame" x="216" y="0.0" width="60" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="60" id="Wrt-CB-h6T"/>
@@ -251,7 +251,7 @@
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" image="DontKnowButton"/>
                                     <connections>
-                                        <action selector="dontKnowButton:" destination="-1" eventType="touchUpInside" id="QxT-2P-Qv4"/>
+                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="k6Q-Z3-hGu"/>
                                     </connections>
                                 </button>
                             </subviews>
