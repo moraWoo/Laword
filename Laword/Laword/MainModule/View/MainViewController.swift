@@ -82,13 +82,31 @@ class MainViewController: UIViewController {
     }
 
     func afterButtonPressed(key: String, grade: Grade) {
-        guard let selectedWord = fetchedWords?[count] else { return }
-        showAnswers("showWordSecond", selectedWord)
-        guard let word = selectedWord.word else { return }
-        guard let wordTranslation = selectedWord.wordTranslation else { return }
-        presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
-        countProgressBar()
-        count += 1
+        
+        if count == 0 {
+            guard let selectedWord = fetchedWords?[count] else { return }
+            guard let word = selectedWord.word else { return }
+            guard let wordTranslation = selectedWord.wordTranslation else { return }
+            presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+            
+            count += 1
+            guard let selectedWord = fetchedWords?[count] else { return }
+            showAnswers("showWordSecond", selectedWord)
+
+            guard let word = selectedWord.word else { return }
+            guard let wordTranslation = selectedWord.wordTranslation else { return }
+            presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+            countProgressBar()
+            
+        } else {
+            count += 1
+            guard let selectedWord = fetchedWords?[count] else { return }
+            showAnswers("showWordSecond", selectedWord)
+            guard let word = selectedWord.word else { return }
+            guard let wordTranslation = selectedWord.wordTranslation else { return }
+            presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+            countProgressBar()
+        }
     }
     
     private func showAnswers(_ viewState: String, _ selectedWord: Word) {
