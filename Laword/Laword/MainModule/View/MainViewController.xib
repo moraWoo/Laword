@@ -39,7 +39,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="spe-Ls-V3J">
-                    <rect key="frame" x="8" y="135.00000000000003" width="374" height="274.66666666666674"/>
+                    <rect key="frame" x="8" y="88" width="374" height="274.66666666666669"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vocabulary" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-hP-dO3">
                             <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
@@ -71,7 +71,7 @@
                     </subviews>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="CkW-9v-o7h">
-                    <rect key="frame" x="107" y="58.999999999999993" width="200" height="30.666666666666664"/>
+                    <rect key="frame" x="107" y="12" width="200" height="30.666666666666671"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Базовый словарь" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zzl-yt-Njb">
                             <rect key="frame" x="0.0" y="0.0" width="200" height="14.333333333333334"/>
@@ -83,7 +83,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="250 / 4963" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-7m-gzI">
-                            <rect key="frame" x="68.333333333333343" y="16.333333333333329" width="63.333333333333343" height="14.333333333333336"/>
+                            <rect key="frame" x="68.333333333333343" y="16.333333333333332" width="63.333333333333343" height="14.333333333333332"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -91,7 +91,7 @@
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJK-tl-6dK">
-                    <rect key="frame" x="20" y="59" width="28" height="28"/>
+                    <rect key="frame" x="20" y="12" width="28" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="28" id="ED2-a7-LkG"/>
                         <constraint firstAttribute="height" constant="28" id="wmo-io-PJx"/>
@@ -100,16 +100,19 @@
                     <buttonConfiguration key="configuration" style="plain" image="SettingsButton"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gr0-cf-IB1">
-                    <rect key="frame" x="342" y="60" width="28" height="28"/>
+                    <rect key="frame" x="342" y="13" width="28" height="28"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="1Mf-OL-gZ0"/>
                         <constraint firstAttribute="width" constant="28" id="rI6-7o-Vdt"/>
                     </constraints>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" image="MenuButton"/>
+                    <connections>
+                        <action selector="dictionaryList:" destination="-1" eventType="touchUpInside" id="I4c-hh-lbj"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Iob-yY-GVT">
-                    <rect key="frame" x="86" y="532.33333333333337" width="276" height="223"/>
+                    <rect key="frame" x="86" y="566.33333333333337" width="276" height="223"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2v-pO-QNb">
                             <rect key="frame" x="0.0" y="0.0" width="276" height="60"/>
@@ -267,19 +270,19 @@
                     </subviews>
                 </stackView>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-Df-QA6">
-                    <rect key="frame" x="20" y="801.33333333333337" width="278" height="2.6666666666666288"/>
+                    <rect key="frame" x="20" y="835.33333333333337" width="278" height="2.6666666666666288"/>
                     <color key="tintColor" red="0.25490196078431371" green="0.36078431372549019" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="progressTintColor" red="0.25490196078431371" green="0.36078431372549019" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="trackTintColor" red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                 </progressView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYW-cv-AfC">
-                    <rect key="frame" x="333" y="795.66666666666663" width="31" height="14.333333333333371"/>
+                    <rect key="frame" x="333" y="829.66666666666663" width="31" height="14.333333333333371"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" systemColor="systemGrayColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8g3-KT-w1v">
-                    <rect key="frame" x="8" y="407" width="374" height="43"/>
+                    <rect key="frame" x="8" y="400.66666666666669" width="374" height="43"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="374" id="ccs-zc-hKy"/>
                     </constraints>

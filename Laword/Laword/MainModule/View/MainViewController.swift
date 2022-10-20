@@ -43,6 +43,7 @@ class MainViewController: UIViewController {
     var progressCount = 0.0
     let dateTime = Date().timeIntervalSince1970
     var selectedWord: Word?
+    var dictionaryName: String
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,11 +54,13 @@ class MainViewController: UIViewController {
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+        
     }
     
     func startLearning() {
         guard let fetchedWords = presenter?.getWords(false, dateTime) else { return }
         selectedWord = fetchedWords[count]
+        dictionaryName = selectedWord?.dictionary?.name ?? "default"
         guard let selectedWord = selectedWord else { return }
         LabelFirst.text = selectedWord.word
         LabelSecond.text = selectedWord.wordTranslation
@@ -70,6 +73,11 @@ class MainViewController: UIViewController {
         view.resignFirstResponder()
         guard let selectedWord = fetchedWords?[count] else { return }
         showAnswers("showWordFirst", selectedWord)
+    }
+    
+    @IBAction func dictionaryListButton(_ sender: UIButton) {
+        let dictionaryListViewController = ModuleBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
+        present(DictionaryListCollectionViewController, animated: true)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -149,7 +157,9 @@ class MainViewController: UIViewController {
         present(alert,animated: true)
     }
 }
-
+    @IBAction func dictionaryList(_ sender: Any) {
+    }
+    
 extension MainViewController: MainViewProtocol {
     func getWords(){
         //        print("getWords from MainController")
