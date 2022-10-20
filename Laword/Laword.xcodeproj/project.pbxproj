@@ -19,11 +19,13 @@
 		63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63547EA828B91FE100A03730 /* Laword.xcdatamodeld */; };
 		63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAB28B91FE200A03730 /* Assets.xcassets */; };
 		63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAD28B91FE200A03730 /* LaunchScreen.storyboard */; };
-		6365129528CE4E6800A13ABF /* MainViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6365129428CE4E6800A13ABF /* MainViewController1.xib */; };
 		6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387995928F2F49B00D9590F /* SM2Manager.swift */; };
 		63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB606D28BB2124002ADD6E /* DataStoreManager.swift */; };
 		63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FA28CE237A00D34438 /* MainPresenter.swift */; };
 		63F402FD28CE25CA00D34438 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FC28CE25CA00D34438 /* Builder.swift */; };
+		63F637A428FE9D1400193D28 /* DictionaryListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F637A328FE9D1400193D28 /* DictionaryListPresenter.swift */; };
+		63F637AB28FE9EFF00193D28 /* DictionaryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F637A928FE9EFF00193D28 /* DictionaryListViewController.swift */; };
+		63F637AC28FE9EFF00193D28 /* DictionaryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63F637AA28FE9EFF00193D28 /* DictionaryListViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,11 +43,13 @@
 		63547EAB28B91FE200A03730 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63547EAE28B91FE200A03730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63547EB028B91FE200A03730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6365129428CE4E6800A13ABF /* MainViewController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController1.xib; sourceTree = "<group>"; };
 		6387995928F2F49B00D9590F /* SM2Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Manager.swift; sourceTree = "<group>"; };
 		63DB606D28BB2124002ADD6E /* DataStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreManager.swift; sourceTree = "<group>"; };
 		63F402FA28CE237A00D34438 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		63F402FC28CE25CA00D34438 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		63F637A328FE9D1400193D28 /* DictionaryListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListPresenter.swift; sourceTree = "<group>"; };
+		63F637A928FE9EFF00193D28 /* DictionaryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListViewController.swift; sourceTree = "<group>"; };
+		63F637AA28FE9EFF00193D28 /* DictionaryListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryListViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				63F402FC28CE25CA00D34438 /* Builder.swift */,
+				63F637A728FE9ECB00193D28 /* DictionaryListModule */,
 				63547EB828B925D600A03730 /* ServiceLayer */,
 				63547EB728B925C600A03730 /* MainModule */,
 				63547EB628B9210900A03730 /* Apps */,
@@ -143,7 +148,32 @@
 			children = (
 				63547EA328B91FE100A03730 /* MainViewController.swift */,
 				6316D44428D77D650022C373 /* MainViewController.xib */,
-				6365129428CE4E6800A13ABF /* MainViewController1.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63F637A628FE9EC300193D28 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				63F637A328FE9D1400193D28 /* DictionaryListPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		63F637A728FE9ECB00193D28 /* DictionaryListModule */ = {
+			isa = PBXGroup;
+			children = (
+				63F637A828FE9EE000193D28 /* View */,
+				63F637A628FE9EC300193D28 /* Presenter */,
+			);
+			path = DictionaryListModule;
+			sourceTree = "<group>";
+		};
+		63F637A828FE9EE000193D28 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63F637A928FE9EFF00193D28 /* DictionaryListViewController.swift */,
+				63F637AA28FE9EFF00193D28 /* DictionaryListViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,8 +237,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6316D44528D77D650022C373 /* MainViewController.xib in Resources */,
-				6365129528CE4E6800A13ABF /* MainViewController1.xib in Resources */,
 				63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */,
+				63F637AC28FE9EFF00193D28 /* DictionaryListViewController.xib in Resources */,
 				63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */,
 				6335B10F28BFC2760023C33A /* wordsdef.plist in Resources */,
 			);
@@ -228,10 +258,12 @@
 				63F402FD28CE25CA00D34438 /* Builder.swift in Sources */,
 				63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */,
 				63256F2E28FC331800D2319C /* Dictionary+CoreDataProperties.swift in Sources */,
+				63F637A428FE9D1400193D28 /* DictionaryListPresenter.swift in Sources */,
 				63547EA028B91FE100A03730 /* AppDelegate.swift in Sources */,
 				63256F2D28FC331800D2319C /* Dictionary+CoreDataClass.swift in Sources */,
 				63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */,
 				63547EA228B91FE100A03730 /* SceneDelegate.swift in Sources */,
+				63F637AB28FE9EFF00193D28 /* DictionaryListViewController.swift in Sources */,
 				63256F3028FC331800D2319C /* Word+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

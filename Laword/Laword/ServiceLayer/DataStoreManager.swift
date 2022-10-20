@@ -77,8 +77,9 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         let dateFrom = calendar.startOfDay(for: Date())
         let dateTo = calendar.date(byAdding: .day, value: 1, to: dateFrom)
-        
+       
         let fromPredicate = NSPredicate(format: "%@ >= %K", dateFrom as NSDate, #keyPath(Word.nextDate))
+        
         let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Word.nextDate), dateTo! as NSDate)
         let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate,toPredicate,predicateOfUnshowedWords])
         fetchRequest.predicate = dateAndUnshowedPredicate
@@ -86,10 +87,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             let results = try context.fetch(fetchRequest)
             fetchedWords = results
-//            print("Отобранные слова, которые еще не показывали: \(fetchedWords.count)")
-//            for showed in results {
-//                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-//            }
         } catch {
             print(error.localizedDescription)
         }
@@ -182,9 +179,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             format: "%K = %@",
             argumentArray: [#keyPath(Word.wordKey), searchKey])
         do {
-            // Получить выборку
             let results = try context.fetch(request)
-//            print("Просмотренные слова по ключу \(searchKey)")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -200,9 +195,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             format: "%K = %@",
             argumentArray: [#keyPath(Word.wordShowed), searchKey as NSNumber])
         do {
-            // Получить выборку
             let results = try context.fetch(request)
-//            print("Все просмотренные слова:")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -219,11 +212,9 @@ class DataStoreManager: DataStoreManagerProtocol {
         fetchRequest.predicate = NSPredicate(
             format: "%K = %@",
             argumentArray: [#keyPath(Word.wordShowedNow), wordShowNow])
-        
         do {
             let results = try context.fetch(fetchRequest)
             fetchedShowedNowWords = results
-//            print("Отобранные слова, которые еще не показывали: \(fetchedShowedNowWords.count)")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -233,7 +224,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         return fetchedShowedNowWords
     }
     
-    
     // MARK: - Get data from file
     func getDataFromFile() {
         let context = persistentContainer.viewContext
@@ -242,7 +232,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         var records = 0
         do {
             records = try context.count(for: fetchRequest)
-//            print("Is Data there already?")
         } catch let error as NSError {
             print(error.localizedDescription)
         }
@@ -252,14 +241,11 @@ class DataStoreManager: DataStoreManagerProtocol {
         guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
         for dictionary in dataArray {
             guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-            let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
-            let wordDictionary = dictionary as! [String : AnyObject]
+            guard let selectedWord = NSManagedObject(entity: entity, insertInto: context) as? Word else { return }
+            guard let wordDictionary = dictionary as? [String : AnyObject] else { return }
             selectedWord.word = wordDictionary["wordEN"] as? String
             selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
             countWords += 1
-            
         }
-//        print("Всего загружено в базу: \(countWords) слова")
-//        print(wordDictionary as Any)
     }
 }

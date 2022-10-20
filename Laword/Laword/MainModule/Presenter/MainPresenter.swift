@@ -25,10 +25,11 @@ protocol MainViewPresenterProtocol: AnyObject { //Input
 }
 
 class MainPresenter: MainViewPresenterProtocol {
+    weak var view: MainViewProtocol?
 
     var fetchedShowedWords: [Word]?
     var fetchedWords: [Word]?
-    weak var view: MainViewProtocol?
+    
     let dataStoreManager: DataStoreManagerProtocol!
     let dateTime = Date().timeIntervalSince1970
     

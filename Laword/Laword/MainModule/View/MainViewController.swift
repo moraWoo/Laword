@@ -36,13 +36,13 @@ class MainViewController: UIViewController {
     @IBOutlet var DontKnowLabel: UILabel!
     @IBOutlet var DontKnowSecondLabel: UILabel!
     
-    var presenter: MainViewPresenterProtocol!
+    var presenter: MainViewPresenterProtocol?
     var count = 0
     let maxCount = 5
-    var fetchedWords: [Word]!
+    var fetchedWords: [Word]?
     var progressCount = 0.0
     let dateTime = Date().timeIntervalSince1970
-    var selectedWord: Word!
+    var selectedWord: Word?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +56,9 @@ class MainViewController: UIViewController {
     }
     
     func startLearning() {
-        fetchedWords = presenter.getWords(false, dateTime)
-        guard let selectedWord = fetchedWords?[count] else { return }
+        guard let fetchedWords = presenter?.getWords(false, dateTime) else { return }
+        selectedWord = fetchedWords[count]
+        guard let selectedWord = selectedWord else { return }
         LabelFirst.text = selectedWord.word
         LabelSecond.text = selectedWord.wordTranslation
         
@@ -87,7 +88,7 @@ class MainViewController: UIViewController {
             guard let selectedWord = fetchedWords?[count] else { return }
             guard let word = selectedWord.word else { return }
             guard let wordTranslation = selectedWord.wordTranslation else { return }
-            presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+            presenter?.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
             
             count += 1
             guard let selectedWord = fetchedWords?[count] else { return }
@@ -95,7 +96,8 @@ class MainViewController: UIViewController {
 
             guard let word = selectedWord.word else { return }
             guard let wordTranslation = selectedWord.wordTranslation else { return }
-            presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+            presenter?.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+            
             countProgressBar()
             
         } else {
@@ -104,7 +106,7 @@ class MainViewController: UIViewController {
             showAnswers("showWordSecond", selectedWord)
             guard let word = selectedWord.word else { return }
             guard let wordTranslation = selectedWord.wordTranslation else { return }
-            presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
+            presenter?.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
             countProgressBar()
         }
     }
