@@ -20,6 +20,12 @@
 		63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAB28B91FE200A03730 /* Assets.xcassets */; };
 		63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAD28B91FE200A03730 /* LaunchScreen.storyboard */; };
 		6365129528CE4E6800A13ABF /* MainViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6365129428CE4E6800A13ABF /* MainViewController1.xib */; };
+		6372A073290324CC00889958 /* DictionaryListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A072290324CC00889958 /* DictionaryListPresenter.swift */; };
+		6372A0792903258200889958 /* DictionaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */; };
+		6372A07A2903258200889958 /* DictionaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6372A0782903258200889958 /* DictionaryCollectionViewCell.xib */; };
+		6372A07D290325BC00889958 /* DictionaryListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A07B290325BC00889958 /* DictionaryListCollectionViewController.swift */; };
+		6372A07E290325BC00889958 /* DictionaryListCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6372A07C290325BC00889958 /* DictionaryListCollectionViewController.xib */; };
+		6372A0802903262800889958 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A07F2903262800889958 /* HeaderCollectionReusableView.swift */; };
 		6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387995928F2F49B00D9590F /* SM2Manager.swift */; };
 		63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB606D28BB2124002ADD6E /* DataStoreManager.swift */; };
 		63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FA28CE237A00D34438 /* MainPresenter.swift */; };
@@ -42,6 +48,12 @@
 		63547EAE28B91FE200A03730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63547EB028B91FE200A03730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6365129428CE4E6800A13ABF /* MainViewController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController1.xib; sourceTree = "<group>"; };
+		6372A072290324CC00889958 /* DictionaryListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListPresenter.swift; sourceTree = "<group>"; };
+		6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryCollectionViewCell.swift; sourceTree = "<group>"; };
+		6372A0782903258200889958 /* DictionaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryCollectionViewCell.xib; sourceTree = "<group>"; };
+		6372A07B290325BC00889958 /* DictionaryListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListCollectionViewController.swift; sourceTree = "<group>"; };
+		6372A07C290325BC00889958 /* DictionaryListCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryListCollectionViewController.xib; sourceTree = "<group>"; };
+		6372A07F2903262800889958 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		6387995928F2F49B00D9590F /* SM2Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Manager.swift; sourceTree = "<group>"; };
 		63DB606D28BB2124002ADD6E /* DataStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreManager.swift; sourceTree = "<group>"; };
 		63F402FA28CE237A00D34438 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
@@ -79,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				63F402FC28CE25CA00D34438 /* Builder.swift */,
+				6372A075290324E800889958 /* DictionaryListModule */,
 				63547EB828B925D600A03730 /* ServiceLayer */,
 				63547EB728B925C600A03730 /* MainModule */,
 				63547EB628B9210900A03730 /* Apps */,
@@ -148,6 +161,35 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		6372A074290324D300889958 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				6372A072290324CC00889958 /* DictionaryListPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		6372A075290324E800889958 /* DictionaryListModule */ = {
+			isa = PBXGroup;
+			children = (
+				6372A076290324FA00889958 /* View */,
+				6372A074290324D300889958 /* Presenter */,
+			);
+			path = DictionaryListModule;
+			sourceTree = "<group>";
+		};
+		6372A076290324FA00889958 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */,
+				6372A0782903258200889958 /* DictionaryCollectionViewCell.xib */,
+				6372A07B290325BC00889958 /* DictionaryListCollectionViewController.swift */,
+				6372A07C290325BC00889958 /* DictionaryListCollectionViewController.xib */,
+				6372A07F2903262800889958 /* HeaderCollectionReusableView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -206,9 +248,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6372A07A2903258200889958 /* DictionaryCollectionViewCell.xib in Resources */,
 				6316D44528D77D650022C373 /* MainViewController.xib in Resources */,
 				6365129528CE4E6800A13ABF /* MainViewController1.xib in Resources */,
 				63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */,
+				6372A07E290325BC00889958 /* DictionaryListCollectionViewController.xib in Resources */,
 				63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */,
 				6335B10F28BFC2760023C33A /* wordsdef.plist in Resources */,
 			);
@@ -221,13 +265,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6372A0802903262800889958 /* HeaderCollectionReusableView.swift in Sources */,
 				6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */,
 				63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */,
 				63547EA428B91FE100A03730 /* MainViewController.swift in Sources */,
 				63256F2F28FC331800D2319C /* Word+CoreDataClass.swift in Sources */,
+				6372A07D290325BC00889958 /* DictionaryListCollectionViewController.swift in Sources */,
 				63F402FD28CE25CA00D34438 /* Builder.swift in Sources */,
 				63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */,
 				63256F2E28FC331800D2319C /* Dictionary+CoreDataProperties.swift in Sources */,
+				6372A073290324CC00889958 /* DictionaryListPresenter.swift in Sources */,
+				6372A0792903258200889958 /* DictionaryCollectionViewCell.swift in Sources */,
 				63547EA028B91FE100A03730 /* AppDelegate.swift in Sources */,
 				63256F2D28FC331800D2319C /* Dictionary+CoreDataClass.swift in Sources */,
 				63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */,

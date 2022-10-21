@@ -80,6 +80,15 @@ class MainViewController: UIViewController {
             afterButtonPressed(key: "DontKnow", grade: .null)
         }
     }
+    
+    @IBAction func dictionaryListButton(_ sender: Any) {
+        let dictionaryName = "Base1"
+        let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
+//        present(dictionaryListVC, animated: true)
+       
+//        navigationController?.pushViewController(dictionaryListVC, animated: true)
+    }
+    
 
     func afterButtonPressed(key: String, grade: Grade) {
         

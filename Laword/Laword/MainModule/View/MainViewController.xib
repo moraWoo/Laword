@@ -107,6 +107,9 @@
                     </constraints>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" image="MenuButton"/>
+                    <connections>
+                        <action selector="dictionaryListButton:" destination="-1" eventType="touchUpInside" id="PKn-2O-mlV"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Iob-yY-GVT">
                     <rect key="frame" x="86" y="532.33333333333337" width="276" height="223"/>

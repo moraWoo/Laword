@@ -9,6 +9,7 @@ import UIKit
 
 protocol Builder {
     static func createMainModule() -> UIViewController
+    static func createDictionaryListModule(dictionaryName: String) -> UICollectionViewController
 }
 
 class ModelBuilder: Builder {
@@ -19,4 +20,17 @@ class ModelBuilder: Builder {
         view.presenter = presenter
         return view
     }
+    
+    static func createDictionaryListModule(dictionaryName: String) -> UICollectionViewController {
+//            let view = DictionaryListCollectionViewController()
+//            let dataStoreManager = DataStoreManager()
+//            let presenter = DictionaryListPresenter(view: view, dataStoreManager: dataStoreManager, dictionaryName: dictionaryName)
+//            view.presenter = presenter
+//            return view
+        let view = DictionaryListCollectionViewController(nibName: "DictionaryListCollectionViewController", bundle: nil)
+        let dataStoreManager = DataStoreManager()
+        let presenter = DictionaryListPresenter(view: view, dataStoreManager: dataStoreManager, dictionaryName: dictionaryName)
+        view.presenter = presenter
+        return view
+        }
 }
