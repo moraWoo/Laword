@@ -25,11 +25,7 @@
                 <outlet property="LabelStart" destination="8g3-KT-w1v" id="OBK-Zf-j9d"/>
                 <outlet property="WordTranscription" destination="f5n-G6-3vt" id="Xzx-kH-vcz"/>
                 <outlet property="countOfLearningWords" destination="gYW-cv-AfC" id="DnE-Ny-3jS"/>
-                <outlet property="countOfWords" destination="Ohc-7m-gzI" id="Syn-AR-rgi"/>
-                <outlet property="menuButton" destination="Gr0-cf-IB1" id="jx5-u3-N75"/>
-                <outlet property="nameOfVocabulary" destination="Zzl-yt-Njb" id="P6J-WT-PDc"/>
                 <outlet property="progressBar" destination="ajW-Df-QA6" id="0LP-Oa-xpq"/>
-                <outlet property="settingsButton" destination="OJK-tl-6dK" id="FUJ-qS-zgC"/>
                 <outlet property="view" destination="iN0-l3-epB" id="FvG-JR-wnk"/>
             </connections>
         </placeholder>
@@ -70,47 +66,6 @@
                         </label>
                     </subviews>
                 </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="CkW-9v-o7h">
-                    <rect key="frame" x="107" y="58.999999999999993" width="200" height="30.666666666666664"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Базовый словарь" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zzl-yt-Njb">
-                            <rect key="frame" x="0.0" y="0.0" width="200" height="14.333333333333334"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="200" id="D7S-Ac-1oT"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="250 / 4963" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-7m-gzI">
-                            <rect key="frame" x="68.333333333333343" y="16.333333333333329" width="63.333333333333343" height="14.333333333333336"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJK-tl-6dK">
-                    <rect key="frame" x="20" y="59" width="28" height="28"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="28" id="ED2-a7-LkG"/>
-                        <constraint firstAttribute="height" constant="28" id="wmo-io-PJx"/>
-                    </constraints>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="SettingsButton"/>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gr0-cf-IB1">
-                    <rect key="frame" x="342" y="60" width="28" height="28"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="28" id="1Mf-OL-gZ0"/>
-                        <constraint firstAttribute="width" constant="28" id="rI6-7o-Vdt"/>
-                    </constraints>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="MenuButton"/>
-                    <connections>
-                        <action selector="dictionaryListButton:" destination="-1" eventType="touchUpInside" id="PKn-2O-mlV"/>
-                    </connections>
-                </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Iob-yY-GVT">
                     <rect key="frame" x="86" y="532.33333333333337" width="276" height="223"/>
                     <subviews>
@@ -294,18 +249,12 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Gr0-cf-IB1" secondAttribute="trailing" constant="20" id="1iN-rp-S5F"/>
                 <constraint firstItem="ajW-Df-QA6" firstAttribute="top" secondItem="Iob-yY-GVT" secondAttribute="bottom" constant="46" id="2HT-zf-6kZ"/>
-                <constraint firstItem="Gr0-cf-IB1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="13" id="98C-qD-fYx"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gYW-cv-AfC" secondAttribute="trailing" constant="26" id="9N2-fC-iaN"/>
                 <constraint firstItem="8g3-KT-w1v" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="CVn-Sr-ADN"/>
-                <constraint firstItem="CkW-9v-o7h" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="12" id="EOO-I0-ThP"/>
                 <constraint firstItem="spe-Ls-V3J" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="88" id="L1G-co-xE7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gYW-cv-AfC" secondAttribute="bottom" id="U8Q-ND-UXD"/>
-                <constraint firstItem="OJK-tl-6dK" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="12" id="VeL-LL-8zT"/>
                 <constraint firstItem="ajW-Df-QA6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="XaB-NP-nEZ"/>
-                <constraint firstItem="CkW-9v-o7h" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="107" id="cbO-bj-IQP"/>
-                <constraint firstItem="OJK-tl-6dK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="deu-TB-W6K"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Iob-yY-GVT" secondAttribute="trailing" constant="28" id="eqj-tp-lm2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ajW-Df-QA6" secondAttribute="bottom" constant="7" id="mRg-uG-Jdu"/>
                 <constraint firstItem="spe-Ls-V3J" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="oh0-o1-8dB"/>
@@ -319,8 +268,6 @@
         <image name="DontKnowButton" width="60" height="60"/>
         <image name="EasyButton" width="60" height="60"/>
         <image name="HardButton" width="60" height="60"/>
-        <image name="MenuButton" width="28" height="28"/>
-        <image name="SettingsButton" width="28" height="28"/>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

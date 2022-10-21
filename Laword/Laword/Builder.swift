@@ -22,11 +22,6 @@ class ModelBuilder: Builder {
     }
     
     static func createDictionaryListModule(dictionaryName: String) -> UICollectionViewController {
-//            let view = DictionaryListCollectionViewController()
-//            let dataStoreManager = DataStoreManager()
-//            let presenter = DictionaryListPresenter(view: view, dataStoreManager: dataStoreManager, dictionaryName: dictionaryName)
-//            view.presenter = presenter
-//            return view
         let view = DictionaryListCollectionViewController(nibName: "DictionaryListCollectionViewController", bundle: nil)
         let dataStoreManager = DataStoreManager()
         let presenter = DictionaryListPresenter(view: view, dataStoreManager: dataStoreManager, dictionaryName: dictionaryName)

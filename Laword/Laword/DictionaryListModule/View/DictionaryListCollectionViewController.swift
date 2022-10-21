@@ -58,7 +58,7 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         let imageName = photos[indexPath.item]
         let image = UIImage(named: imageName)
         
-        cell.photosImageView.layer.cornerRadius = 15
+        cell.photosImageView.layer.cornerRadius = 10
         cell.photosImageView.layer.masksToBounds = true
 
         cell.photosImageView.image = image

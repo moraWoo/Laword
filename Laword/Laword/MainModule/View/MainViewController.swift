@@ -18,6 +18,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var nameOfVocabulary: UILabel!
     @IBOutlet weak var countOfWords: UILabel!
+    
     @IBOutlet var LabelStart: UILabel!
     
     @IBOutlet var EasyButton: UIButton!
@@ -44,15 +45,46 @@ class MainViewController: UIViewController {
     let dateTime = Date().timeIntervalSince1970
     var selectedWord: Word!
     
+    lazy var titleStackView: UIStackView = {
+        let titleLabel = UILabel()
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
+        titleLabel.font = .systemFont(ofSize: 16)
+        titleLabel.text = "Базовый словарь"
+        let subtitleLabel = UILabel()
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.text = "250 / 4963"
+        subtitleLabel.font = .systemFont(ofSize: 12)
+        subtitleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        addButtonsAndLabelsToNavigatorBar()
+        navigationItem.titleView = titleStackView
         progressBar.progress = 0
-        
+               
         hideEverything()
         startLearning()
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        if view.traitCollection.horizontalSizeClass == .compact {
+            titleStackView.axis = .vertical
+            titleStackView.spacing = UIStackView.spacingUseDefault
+        } else {
+            titleStackView.axis = .horizontal
+            titleStackView.spacing = 20.0
+        }
     }
     
     func startLearning() {
@@ -65,10 +97,41 @@ class MainViewController: UIViewController {
         countProgressBar()
     }
     
+    func addButtonsAndLabelsToNavigatorBar() {
+        let settingsButton = UIButton(type: .custom)
+        settingsButton.setImage(UIImage(named: "SettingsButton"), for: .normal)
+        settingsButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        settingsButton.addTarget(self, action: #selector(settingsButtonTap), for: .touchUpInside)
+        let settingsButtonItem = UIBarButtonItem(customView: settingsButton)
+        
+        let menuButton = UIButton(type: .custom)
+        menuButton.setImage(UIImage(named: "MenuButton"), for: .normal)
+        menuButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        menuButton.addTarget(self, action: #selector(menuButtonTap), for: .touchUpInside)
+        let menuButtonItem = UIBarButtonItem(customView: menuButton)
+        
+        self.navigationItem.setLeftBarButtonItems([settingsButtonItem], animated: true)
+        self.navigationItem.setRightBarButtonItems([menuButtonItem], animated: true)
+        
+
+    }
+    
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
         view.resignFirstResponder()
         guard let selectedWord = fetchedWords?[count] else { return }
         showAnswers("showWordFirst", selectedWord)
+    }
+    
+    @objc private func menuButtonTap(sender: UIButton) {
+        let dictionaryName = "Base1"
+        let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
+        navigationController?.pushViewController(dictionaryListVC, animated: true)
+    }
+    
+    @objc private func settingsButtonTap(sender: UIButton) {
+        let dictionaryName = "Base1"
+        let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
+        navigationController?.pushViewController(dictionaryListVC, animated: true)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -84,10 +147,10 @@ class MainViewController: UIViewController {
     @IBAction func dictionaryListButton(_ sender: Any) {
         let dictionaryName = "Base1"
         let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
-//        present(dictionaryListVC, animated: true)
-       
-//        navigationController?.pushViewController(dictionaryListVC, animated: true)
+        navigationController?.pushViewController(dictionaryListVC, animated: true)
     }
+    
+    
     
 
     func afterButtonPressed(key: String, grade: Grade) {
@@ -172,11 +235,11 @@ extension MainViewController {
         LabelFirst.isHidden = true
         LabelSecond.isHidden = true
         
-        settingsButton.isHidden = true
-        menuButton.isHidden = true
-        nameOfVocabulary.isHidden = true
-        countOfWords.isHidden = true
-        
+//        settingsButton.isHidden = true
+//        menuButton.isHidden = true
+//        nameOfVocabulary.isHidden = true
+//        countOfWords.isHidden = true
+//
         EasyButton.isHidden = true
         DifficultButton.isHidden = true
         DontKnowButton.isHidden = true
@@ -194,10 +257,10 @@ extension MainViewController {
     }
     
     func showTopButtonsAndInformation() {
-        settingsButton.isHidden = false
-        menuButton.isHidden = false
-        nameOfVocabulary.isHidden = false
-        countOfWords.isHidden = false
+//        settingsButton.isHidden = false
+//        menuButton.isHidden = false
+//        nameOfVocabulary.isHidden = false
+//        countOfWords.isHidden = false
         LabelFirst.isHidden = false
         LabelStart.isHidden = true
         progressBar.isHidden = false
@@ -232,41 +295,5 @@ extension MainViewController {
         DifficultSecondLabel.isHidden = false
         DontKnowLabel.isHidden = false
         DontKnowSecondLabel.isHidden = false
-    }
-}
-
-extension UIView {
-    
-    fileprivate struct AssociatedObjectKeys {
-        static var tapGestureRecognizer = "MyAssociatedObjectKeyForTapGesture"
-    }
-    
-    fileprivate typealias Action = (() -> Void)?
-    
-    fileprivate var tapGestureRecognizerAction: Action? {
-        set {
-            if let newValue = newValue {
-                objc_setAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            }
-        }
-        get {
-            let tapGestureRecognizerActionInstance = objc_getAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer) as? Action
-            return tapGestureRecognizerActionInstance
-        }
-    }
-    
-    public func addTapGestureRecognizer(action: (() -> Void)?) {
-        self.isUserInteractionEnabled = true
-        self.tapGestureRecognizerAction = action
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
-        self.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    @objc fileprivate func handleTapGesture(sender: UITapGestureRecognizer) {
-        if let action = self.tapGestureRecognizerAction {
-            action?()
-        } else {
-            print("no action")
-        }
     }
 }

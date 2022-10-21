@@ -19,7 +19,6 @@
 		63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63547EA828B91FE100A03730 /* Laword.xcdatamodeld */; };
 		63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAB28B91FE200A03730 /* Assets.xcassets */; };
 		63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAD28B91FE200A03730 /* LaunchScreen.storyboard */; };
-		6365129528CE4E6800A13ABF /* MainViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6365129428CE4E6800A13ABF /* MainViewController1.xib */; };
 		6372A073290324CC00889958 /* DictionaryListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A072290324CC00889958 /* DictionaryListPresenter.swift */; };
 		6372A0792903258200889958 /* DictionaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */; };
 		6372A07A2903258200889958 /* DictionaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6372A0782903258200889958 /* DictionaryCollectionViewCell.xib */; };
@@ -47,7 +46,6 @@
 		63547EAB28B91FE200A03730 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63547EAE28B91FE200A03730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63547EB028B91FE200A03730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6365129428CE4E6800A13ABF /* MainViewController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController1.xib; sourceTree = "<group>"; };
 		6372A072290324CC00889958 /* DictionaryListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListPresenter.swift; sourceTree = "<group>"; };
 		6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		6372A0782903258200889958 /* DictionaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 			children = (
 				63547EA328B91FE100A03730 /* MainViewController.swift */,
 				6316D44428D77D650022C373 /* MainViewController.xib */,
-				6365129428CE4E6800A13ABF /* MainViewController1.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -250,7 +247,6 @@
 			files = (
 				6372A07A2903258200889958 /* DictionaryCollectionViewCell.xib in Resources */,
 				6316D44528D77D650022C373 /* MainViewController.xib in Resources */,
-				6365129528CE4E6800A13ABF /* MainViewController1.xib in Resources */,
 				63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */,
 				6372A07E290325BC00889958 /* DictionaryListCollectionViewController.xib in Resources */,
 				63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */,
