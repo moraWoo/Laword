@@ -20,8 +20,6 @@ class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
     weak var view: DictionaryListViewProtocol?
     let dataStoreManager: DataStoreManagerProtocol!
     var dictionaryName: String?
-    var fetchedShowedWords: [Word]?
-    var fetchedWords: [Word]?
     
     required init(view: DictionaryListViewProtocol, dataStoreManager: DataStoreManagerProtocol, dictionaryName: String?) {
         self.view = view

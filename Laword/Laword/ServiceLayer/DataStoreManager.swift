@@ -245,6 +245,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             guard let wordDictionary = dictionary as? [String : AnyObject] else { return }
             selectedWord.word = wordDictionary["wordEN"] as? String
             selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
+            
             countWords += 1
         }
     }

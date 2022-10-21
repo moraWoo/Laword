@@ -36,14 +36,15 @@ class MainViewController: UIViewController {
     @IBOutlet var DontKnowLabel: UILabel!
     @IBOutlet var DontKnowSecondLabel: UILabel!
     
-    var presenter: MainViewPresenterProtocol?
+    var presenter: MainViewPresenterProtocol!
+//    var presenterOfDictionaryList: DictionaryListViewPresenterProtocol?
     var count = 0
     let maxCount = 5
     var fetchedWords: [Word]?
     var progressCount = 0.0
     let dateTime = Date().timeIntervalSince1970
     var selectedWord: Word?
-    var dictionaryName: String
+//    var dictionaryName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +61,7 @@ class MainViewController: UIViewController {
     func startLearning() {
         guard let fetchedWords = presenter?.getWords(false, dateTime) else { return }
         selectedWord = fetchedWords[count]
-        dictionaryName = selectedWord?.dictionary?.name ?? "default"
+//        dictionaryName = selectedWord?.dictionary?.name ?? "default"
         guard let selectedWord = selectedWord else { return }
         LabelFirst.text = selectedWord.word
         LabelSecond.text = selectedWord.wordTranslation
@@ -76,8 +77,9 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func dictionaryListButton(_ sender: UIButton) {
-        let dictionaryListViewController = ModuleBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
-        present(DictionaryListCollectionViewController, animated: true)
+        let dictionaryName = "Base1"
+        let dictionaryListVC = ModuleBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
+        navigationController?.pushViewController(dictionaryListVC, animated: true)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -157,8 +159,6 @@ class MainViewController: UIViewController {
         present(alert,animated: true)
     }
 }
-    @IBAction func dictionaryList(_ sender: Any) {
-    }
     
 extension MainViewController: MainViewProtocol {
     func getWords(){
@@ -235,41 +235,5 @@ extension MainViewController {
         DifficultSecondLabel.isHidden = false
         DontKnowLabel.isHidden = false
         DontKnowSecondLabel.isHidden = false
-    }
-}
-
-extension UIView {
-    
-    fileprivate struct AssociatedObjectKeys {
-        static var tapGestureRecognizer = "MyAssociatedObjectKeyForTapGesture"
-    }
-    
-    fileprivate typealias Action = (() -> Void)?
-    
-    fileprivate var tapGestureRecognizerAction: Action? {
-        set {
-            if let newValue = newValue {
-                objc_setAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-            }
-        }
-        get {
-            let tapGestureRecognizerActionInstance = objc_getAssociatedObject(self, &AssociatedObjectKeys.tapGestureRecognizer) as? Action
-            return tapGestureRecognizerActionInstance
-        }
-    }
-    
-    public func addTapGestureRecognizer(action: (() -> Void)?) {
-        self.isUserInteractionEnabled = true
-        self.tapGestureRecognizerAction = action
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
-        self.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    @objc fileprivate func handleTapGesture(sender: UITapGestureRecognizer) {
-        if let action = self.tapGestureRecognizerAction {
-            action?()
-        } else {
-            print("no action")
-        }
     }
 }
