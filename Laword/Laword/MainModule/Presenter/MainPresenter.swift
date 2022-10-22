@@ -36,6 +36,7 @@ class MainPresenter: MainViewPresenterProtocol {
         self.view = view
         self.dataStoreManager = dataStoreManager
         fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime)
+        //You can add new files of dictionaries with words
         getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000OxfordWords")
         getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "20words")
     }

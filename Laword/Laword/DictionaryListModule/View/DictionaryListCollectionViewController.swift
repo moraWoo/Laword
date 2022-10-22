@@ -9,25 +9,21 @@ import UIKit
 
 import UIKit
 
-//let reuseIdentifier = "newCell"
-
 class DictionaryListCollectionViewController: UICollectionViewController {
 
     let itemsPerRow: CGFloat = 2
     let sectionInserts = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     
-    let photos = ["sanfransisco", "newyork"]
+    let photos = ["sanfransisco", "newyork", "newyork", "newyork", "newyork", "newyork"]
     
     let labelOfSection = ["Базовые словари", "Пользовательские словари"]
-    let nameOfDictionary = ["Dictionary 1", "Dictionary 2"]
-    let countOfWordsInDictionary = ["1 / 100", "230 / 370"]
+    let nameOfDictionary = ["Dictionary 1", "Dictionary 2", "Dictionary 3", "Dictionary 4", "Dictionary 5", "Dictionary 6"]
+    let countOfWordsInDictionary = ["1 / 100", "230 / 370", "230 / 370", "230 / 370", "230 / 370", "230 / 370"]
     
     var presenter: DictionaryListViewPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        presenter.setDictionaryName()
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
@@ -41,12 +37,20 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        let tappedCell = collectionView.cellForItem(at: indexPath) as! DictionaryCollectionViewCell
+        
+        guard let nameOfDictionary = tappedCell.nameOfDictionary else { return }
+        
+        print("Нажата следующая ячейка: \(nameOfDictionary)")
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -60,6 +64,8 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         
         cell.photosImageView.layer.cornerRadius = 10
         cell.photosImageView.layer.masksToBounds = true
+        
+        cell.tag = indexPath.item
 
         cell.photosImageView.image = image
         return cell

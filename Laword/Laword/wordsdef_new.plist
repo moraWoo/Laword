@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>wordEN</key>
+		<string>abandon </string>
+		<key>wordRU</key>
+		<string> оставить,забросить</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abate </string>
+		<key>wordRU</key>
+		<string> уменьшаться, ослабевать</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abduct </string>
+		<key>wordRU</key>
+		<string> похищать</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abide </string>
+		<key>wordRU</key>
+		<string> смириться, выносить</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>aboard </string>
+		<key>wordRU</key>
+		<string> на борту</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abolish </string>
+		<key>wordRU</key>
+		<string> упразднять</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abound </string>
+		<key>wordRU</key>
+		<string> изобиловать</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abrupt </string>
+		<key>wordRU</key>
+		<string> крутой, резкий</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>absent </string>
+		<key>wordRU</key>
+		<string> отсутствующий</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>absorb </string>
+		<key>wordRU</key>
+		<string> впитывать, поглощать</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abundant </string>
+		<key>wordRU</key>
+		<string> обильный</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abuse </string>
+		<key>wordRU</key>
+		<string> оскорблять, бранить, брань</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abuse </string>
+		<key>wordRU</key>
+		<string> злоупотреблять</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>abuse </string>
+		<key>wordRU</key>
+		<string> насилие, домогательство</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>accessory </string>
+		<key>wordRU</key>
+		<string> принадлежность, аксессуар</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>acclaim </string>
+		<key>wordRU</key>
+		<string> приветствовать, аплодировать</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>accomplish </string>
+		<key>wordRU</key>
+		<string> выполнить, завершить</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>accord </string>
+		<key>wordRU</key>
+		<string> согласие</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>according to </string>
+		<key>wordRU</key>
+		<string> в соответствии</string>
+	</dict>
+	<dict>
+		<key>wordEN</key>
+		<string>account </string>
+		<key>wordRU</key>
+		<string> счёт (в банке)</string>
+	</dict>
+</array>
+</plist>
