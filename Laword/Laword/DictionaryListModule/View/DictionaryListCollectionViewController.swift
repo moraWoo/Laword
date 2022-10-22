@@ -24,7 +24,7 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.scrollDirection = .vertical

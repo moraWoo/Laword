@@ -108,7 +108,6 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="zkH-Qn-SJf" firstAttribute="width" secondItem="X2v-pO-QNb" secondAttribute="width" multiplier="0.543478" id="98N-Ec-8iy"/>
                                 <constraint firstItem="zkH-Qn-SJf" firstAttribute="height" secondItem="X2v-pO-QNb" secondAttribute="height" multiplier="0.625" id="GQF-n2-0fe"/>
@@ -161,7 +160,6 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="2Ha-dd-tx6" secondAttribute="trailing" id="Dqx-Vm-J19"/>
                                 <constraint firstItem="ojo-cm-qY9" firstAttribute="centerY" secondItem="OKZ-a7-fQJ" secondAttribute="centerY" id="Il6-WM-Vio"/>
@@ -213,7 +211,6 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="zon-LH-xSW" firstAttribute="centerY" secondItem="9Vj-Xh-abr" secondAttribute="centerY" id="I4g-YQ-od5"/>
                                 <constraint firstItem="zon-LH-xSW" firstAttribute="top" secondItem="9Vj-Xh-abr" secondAttribute="top" constant="12" id="UtR-Sw-CiC"/>
@@ -247,7 +244,6 @@
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ajW-Df-QA6" firstAttribute="top" secondItem="Iob-yY-GVT" secondAttribute="bottom" constant="46" id="2HT-zf-6kZ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gYW-cv-AfC" secondAttribute="trailing" constant="26" id="9N2-fC-iaN"/>

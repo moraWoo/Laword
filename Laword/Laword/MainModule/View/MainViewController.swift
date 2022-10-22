@@ -8,6 +8,30 @@
 import UIKit
 import CoreData
 
+enum ColorSchemeOption {
+    case dark
+    case light
+}
+
+enum ColorAppearence {
+    static let backgroudColor = SchemeColor(dark: Dark.backgroundColor, light: Light.backgroundColor)
+    static let textColorOfCountWords = SchemeColor(dark: Dark.textColorOfCountWords, light: Light.textColorOfCountWords)
+    static let textColor = SchemeColor(dark: Dark.textColor, light: Light.textColor)
+    
+    private enum Light {
+        static let backgroundColor = UIColor.white
+        static let textColorOfCountWords = UIColor.gray
+        static let textColor = UIColor.black
+    }
+    
+    private enum Dark {
+        static let backgroundColor = UIColor.black
+        static let textColorOfCountWords = UIColor.gray
+        static let textColor = UIColor.white
+    }
+}
+
+
 class MainViewController: UIViewController {
     
     @IBOutlet var LabelFirst: UILabel!
@@ -48,14 +72,16 @@ class MainViewController: UIViewController {
     lazy var titleStackView: UIStackView = {
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
-        titleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
+//        titleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
+        titleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         titleLabel.font = .systemFont(ofSize: 16)
         titleLabel.text = "Базовый словарь"
         let subtitleLabel = UILabel()
         subtitleLabel.textAlignment = .center
         subtitleLabel.text = "250 / 4963"
         subtitleLabel.font = .systemFont(ofSize: 12)
-        subtitleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
+//        subtitleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
+        subtitleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
         return stackView
@@ -69,7 +95,7 @@ class MainViewController: UIViewController {
         progressBar.progress = 0
                
         hideEverything()
-        startLearning()
+        startLearning("5000OxfordWords")
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
@@ -90,19 +116,33 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        countOfLearningWords.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+        EasySecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+        DifficultSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+        DontKnowSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+        
+        EasyLabel.textColor = ColorAppearence.textColor.uiColor()
+        DifficultLabel.textColor = ColorAppearence.textColor.uiColor()
+        DontKnowLabel.textColor = ColorAppearence.textColor.uiColor()
+        
+        LabelFirst.textColor = ColorAppearence.textColor.uiColor()
+        LabelSecond.textColor = ColorAppearence.textColor.uiColor()
+        WordTranscription.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
                
         hideEverything()
-        startLearning()
+        startLearning("5000OxfordWords")
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+        
     }
     
-    func startLearning() {
-        fetchedWords = presenter.getWords(false, dateTime)
+    func startLearning(_ dictionaryName: String) {
+        fetchedWords = presenter.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName)
         guard let selectedWord = fetchedWords?[count] else { return }
         let result = selectedWord.dictionary?.name
         print("======== \(String(describing: result))")
@@ -220,12 +260,16 @@ class MainViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [self] _ in
             self.count = 0
             hideEverything()
-            startLearning()
+            startLearning("5000OxfordWords")
         }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
-            hideEverything()
-            self.LabelStart.isHidden = false
-            self.LabelStart.text = "Вы закончили. Хорошая работа!"
+//            hideEverything()
+//            self.LabelStart.isHidden = false
+//            self.LabelStart.text = "Вы закончили. Хорошая работа!"
+            let dictionaryName = "Base1"
+
+            let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
+            navigationController?.pushViewController(dictionaryListVC, animated: true)
         }))
         present(alert,animated: true)
     }
@@ -308,3 +352,5 @@ extension MainViewController {
         DontKnowSecondLabel.isHidden = false
     }
 }
+
+

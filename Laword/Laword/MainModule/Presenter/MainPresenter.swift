@@ -14,36 +14,37 @@ protocol MainViewProtocol: AnyObject { //Output
 
 protocol MainViewPresenterProtocol: AnyObject { //Input
     init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol)
-    func getWords(_ searchKey: Bool,_ currentDateTime: TimeInterval) -> [Word]?
+    func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word]
     func getShownWords(_ wordShowNow: String) -> [Word]?
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade)
     func statisticWords( _ : String)
     func statisticShowWords( _ : Bool)
-    var fetchedWords: [Word]? { get set }
+    var fetchedWords: [Word]! { get set }
     var fetchedShowedWords: [Word]? { get set }
+    var dictionaryName: String? { get set }
 }
 
 class MainPresenter: MainViewPresenterProtocol {
 
     var fetchedShowedWords: [Word]?
-    var fetchedWords: [Word]?
+    var fetchedWords: [Word]!
     weak var view: MainViewProtocol?
     let dataStoreManager: DataStoreManagerProtocol!
     let dateTime = Date().timeIntervalSince1970
-
+    var dictionaryName: String?
     
     required init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol) {
         self.view = view
         self.dataStoreManager = dataStoreManager
-        fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime)
+        fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName ?? "5000OxfordWords")
         //You can add new files of dictionaries with words
         getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000OxfordWords")
         getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "20words")
     }
     
-    func getWords(_ searchKey: Bool, _ dateTime: TimeInterval) -> [Word]? {
-        fetchedWords = dataStoreManager.getWords(showKey: searchKey, currentDateTime: dateTime)
+    func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
+        fetchedWords = dataStoreManager.getWords(showKey: showKey, currentDateTime: dateTime, dictionaryName: dictionaryName)
         return fetchedWords
     }
     

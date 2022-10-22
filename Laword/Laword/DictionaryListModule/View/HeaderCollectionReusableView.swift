@@ -12,7 +12,7 @@ class HeaderCollectionReusableView: UICollectionReusableView {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = ColorAppearence.textColor.uiColor()
         label.font = .systemFont(ofSize: 20)
         label.textAlignment = .center
         return label
@@ -28,3 +28,4 @@ class HeaderCollectionReusableView: UICollectionReusableView {
         label.frame = bounds
     }
 }
+

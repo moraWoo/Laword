@@ -20,6 +20,7 @@
 		63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAB28B91FE200A03730 /* Assets.xcassets */; };
 		63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAD28B91FE200A03730 /* LaunchScreen.storyboard */; };
 		635FE2FD290409A700564B7B /* wordsdef_new.plist in Resources */ = {isa = PBXBuildFile; fileRef = 635FE2FC290409A700564B7B /* wordsdef_new.plist */; };
+		635FE30129046F0800564B7B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FE30029046F0800564B7B /* Colors.swift */; };
 		6372A073290324CC00889958 /* DictionaryListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A072290324CC00889958 /* DictionaryListPresenter.swift */; };
 		6372A0792903258200889958 /* DictionaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */; };
 		6372A07A2903258200889958 /* DictionaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6372A0782903258200889958 /* DictionaryCollectionViewCell.xib */; };
@@ -48,6 +49,7 @@
 		63547EAE28B91FE200A03730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63547EB028B91FE200A03730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		635FE2FC290409A700564B7B /* wordsdef_new.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = wordsdef_new.plist; sourceTree = "<group>"; };
+		635FE30029046F0800564B7B /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		6372A072290324CC00889958 /* DictionaryListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListPresenter.swift; sourceTree = "<group>"; };
 		6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		6372A0782903258200889958 /* DictionaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				63F402FC28CE25CA00D34438 /* Builder.swift */,
+				635FE30029046F0800564B7B /* Colors.swift */,
 				6372A075290324E800889958 /* DictionaryListModule */,
 				63547EB828B925D600A03730 /* ServiceLayer */,
 				63547EB728B925C600A03730 /* MainModule */,
@@ -268,6 +271,7 @@
 				6372A0802903262800889958 /* HeaderCollectionReusableView.swift in Sources */,
 				6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */,
 				63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */,
+				635FE30129046F0800564B7B /* Colors.swift in Sources */,
 				63547EA428B91FE100A03730 /* MainViewController.swift in Sources */,
 				63256F2F28FC331800D2319C /* Word+CoreDataClass.swift in Sources */,
 				6372A07D290325BC00889958 /* DictionaryListCollectionViewController.swift in Sources */,

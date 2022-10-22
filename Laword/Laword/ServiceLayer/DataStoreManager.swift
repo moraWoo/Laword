@@ -24,7 +24,7 @@ public enum Grade: Int {
 }
 
 protocol DataStoreManagerProtocol {
-    func getWords(showKey: Bool, currentDateTime: TimeInterval) -> [Word]
+    func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word]
     func getShownWords(wordShowNow: String) -> [Word]
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade)
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)
@@ -67,7 +67,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
     }
     
-    func getWords(showKey: Bool, currentDateTime: TimeInterval) -> [Word] {
+    func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
         var fetchedWords: [Word]!
