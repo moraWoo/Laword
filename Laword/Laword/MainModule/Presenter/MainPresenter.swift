@@ -16,7 +16,7 @@ protocol MainViewPresenterProtocol: AnyObject { //Input
     init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol)
     func getWords(_ searchKey: Bool,_ currentDateTime: TimeInterval) -> [Word]?
     func getShownWords(_ wordShowNow: String) -> [Word]?
-    func getDataFromFile()
+    func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade)
     func statisticWords( _ : String)
     func statisticShowWords( _ : Bool)
@@ -36,7 +36,8 @@ class MainPresenter: MainViewPresenterProtocol {
         self.view = view
         self.dataStoreManager = dataStoreManager
         fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime)
-        getDataFromFile()
+        getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000OxfordWords")
+        getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "20words")
     }
     
     func getWords(_ searchKey: Bool, _ dateTime: TimeInterval) -> [Word]? {
@@ -49,8 +50,9 @@ class MainPresenter: MainViewPresenterProtocol {
         return fetchedShowedWords
     }
     
-    func getDataFromFile()  {
-        dataStoreManager.getDataFromFile()
+    func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)  {
+        dataStoreManager.getDataFromFile(nameOfFileDictionary: nameOfFileDictionary, nameOfDictionary: nameOfDictionary)
+        
     }
     
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {

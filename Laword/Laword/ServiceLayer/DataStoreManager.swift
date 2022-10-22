@@ -27,7 +27,7 @@ protocol DataStoreManagerProtocol {
     func getWords(showKey: Bool, currentDateTime: TimeInterval) -> [Word]
     func getShownWords(wordShowNow: String) -> [Word]
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade)
-    func getDataFromFile()
+    func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)
     func statisticWords(_ searchKey: String)
     func statisticShowWords(_ searchKey: Bool)
 }
@@ -72,6 +72,10 @@ class DataStoreManager: DataStoreManagerProtocol {
             format: "%K = %@",
             argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
         
+        let predicateOfDictionary = NSPredicate(
+            format: "%K = %@",
+            argumentArray: [#keyPath(Word.dictionary.name), "5000OxfordWords"])
+        
         var calendar = Calendar.current
         calendar.timeZone = NSTimeZone.local
         
@@ -80,7 +84,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         let fromPredicate = NSPredicate(format: "%@ >= %K", dateFrom as NSDate, #keyPath(Word.nextDate))
         let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Word.nextDate), dateTo! as NSDate)
-        let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate,toPredicate,predicateOfUnshowedWords])
+        let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate, predicateOfUnshowedWords, predicateOfDictionary])
         fetchRequest.predicate = dateAndUnshowedPredicate
         
         do {
@@ -231,11 +235,10 @@ class DataStoreManager: DataStoreManagerProtocol {
     
     
     // MARK: - Get data from file
-    func getDataFromFile() {
-        let dictionaryName = "5000OxfordWords"
+    func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String) {
         let context = persistentContainer.viewContext
         let fetchRequestDictionary: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
-        fetchRequestDictionary.predicate = NSPredicate(format: "name = %@", dictionaryName)
+        fetchRequestDictionary.predicate = NSPredicate(format: "name = %@", nameOfDictionary)
                 
         var records = 0
         do {
@@ -245,46 +248,26 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         
         guard records == 0 else { return }
-               
-        guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
+           
+        guard let entityDictionary = NSEntityDescription.entity(forEntityName: "Dictionary", in: context) else { return }
+        let selectedDict = NSManagedObject(entity: entityDictionary, insertInto: context) as! Dictionary
+        
+        selectedDict.name = nameOfDictionary
+        
+        guard let pathToFile = Bundle.main.path(forResource: nameOfFileDictionary, ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
         for dictionary in dataArray {
         
-            guard let entity2 = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-            let selectedWord = NSManagedObject(entity: entity2, insertInto: context) as! Word
+            guard let entityWord = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
+            let selectedWord = NSManagedObject(entity: entityWord, insertInto: context) as! Word
             let wordDictionary = dictionary as! [String : AnyObject]
             
             selectedWord.word = wordDictionary["wordEN"] as? String
             selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
             
-            guard let entity = NSEntityDescription.entity(forEntityName: "Dictionary", in: context) else { return }
-            let selectedDict = NSManagedObject(entity: entity, insertInto: context) as! Dictionary
-            
-            selectedDict.name = "5000OxfordWords"
+
             selectedWord.dictionary = selectedDict
             
             countWords += 1
         }
-
-//        let context = persistentContainer.viewContext
-//        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "word != nil")
-//        var records = 0
-//        do {
-//            records = try context.count(for: fetchRequest)
-//        } catch let error as NSError {
-//            print(error.localizedDescription)
-//        }
-//
-//        guard records == 0 else { return }
-//
-//        guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
-//        for dictionary in dataArray {
-//            guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-//            let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
-//            let wordDictionary = dictionary as! [String : AnyObject]
-//            selectedWord.word = wordDictionary["wordEN"] as? String
-//            selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
-//            countWords += 1
-//        }
     }
 }
