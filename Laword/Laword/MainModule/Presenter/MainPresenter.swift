@@ -31,6 +31,7 @@ class MainPresenter: MainViewPresenterProtocol {
     weak var view: MainViewProtocol?
     let dataStoreManager: DataStoreManagerProtocol!
     let dateTime = Date().timeIntervalSince1970
+
     
     required init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol) {
         self.view = view
@@ -53,7 +54,6 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)  {
         dataStoreManager.getDataFromFile(nameOfFileDictionary: nameOfFileDictionary, nameOfDictionary: nameOfDictionary)
-        
     }
     
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {
@@ -67,4 +67,7 @@ class MainPresenter: MainViewPresenterProtocol {
     func statisticShowWords(_ searchKey: Bool) {
         dataStoreManager.statisticShowWords(searchKey)
     }
+
+
+
 }

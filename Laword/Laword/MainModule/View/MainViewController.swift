@@ -87,11 +87,25 @@ class MainViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        addButtonsAndLabelsToNavigatorBar()
+        navigationItem.titleView = titleStackView
+        progressBar.progress = 0
+               
+        hideEverything()
+        startLearning()
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        view.addGestureRecognizer(tapRecognizer)
+    }
+    
     func startLearning() {
         fetchedWords = presenter.getWords(false, dateTime)
         guard let selectedWord = fetchedWords?[count] else { return }
         let result = selectedWord.dictionary?.name
-        print("======== \(result)")
+        print("======== \(String(describing: result))")
         LabelFirst.text = selectedWord.word
         LabelSecond.text = selectedWord.wordTranslation
         

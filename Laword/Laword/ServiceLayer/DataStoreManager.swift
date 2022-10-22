@@ -30,6 +30,7 @@ protocol DataStoreManagerProtocol {
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)
     func statisticWords(_ searchKey: String)
     func statisticShowWords(_ searchKey: Bool)
+    func getNamesOfDictionary() -> [String]?
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
@@ -38,6 +39,9 @@ class DataStoreManager: DataStoreManagerProtocol {
 //    var sm2protocol: SM2ManagerProtocol!
     var fetchedWords: [Word]!
     var selectedWord: Word?
+    
+    var namesOfDictionary: [String]? = []
+    var countOfDictionaries: Int?
     
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
@@ -184,7 +188,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             // Получить выборку
             let results = try context.fetch(request)
-//            print("Просмотренные слова по ключу \(searchKey)")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -200,9 +203,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             format: "%K = %@",
             argumentArray: [#keyPath(Word.wordShowed), searchKey as NSNumber])
         do {
-            // Получить выборку
             let results = try context.fetch(request)
-//            print("Все просмотренные слова:")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -223,7 +224,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             let results = try context.fetch(fetchRequest)
             fetchedShowedNowWords = results
-//            print("Отобранные слова, которые еще не показывали: \(fetchedShowedNowWords.count)")
             for showed in results {
                 print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
             }
@@ -233,6 +233,27 @@ class DataStoreManager: DataStoreManagerProtocol {
         return fetchedShowedNowWords
     }
     
+    func getNamesOfDictionary() -> [String]? {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for nameOfDict in results {
+                guard let name = nameOfDict.name else { return [] }
+                namesOfDictionary?.append(name)
+                countOfDictionaries = namesOfDictionary?.count
+                print("============ Наименование словарей: \(String(describing: nameOfDict.name))")
+                print("============ Массив словарей: \(String(describing: namesOfDictionary)), количество: \(String(describing: countOfDictionaries))")
+            }
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return namesOfDictionary
+    }
     
     // MARK: - Get data from file
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String) {
@@ -263,8 +284,6 @@ class DataStoreManager: DataStoreManagerProtocol {
             
             selectedWord.word = wordDictionary["wordEN"] as? String
             selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
-            
-
             selectedWord.dictionary = selectedDict
             
             countWords += 1

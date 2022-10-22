@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 class DictionaryListCollectionViewController: UICollectionViewController {
 
     let itemsPerRow: CGFloat = 2
@@ -19,6 +17,8 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     let labelOfSection = ["Базовые словари", "Пользовательские словари"]
     let nameOfDictionary = ["Dictionary 1", "Dictionary 2", "Dictionary 3", "Dictionary 4", "Dictionary 5", "Dictionary 6"]
     let countOfWordsInDictionary = ["1 / 100", "230 / 370", "230 / 370", "230 / 370", "230 / 370", "230 / 370"]
+    
+    var namesOfDicts: [String] = []
     
     var presenter: DictionaryListViewPresenterProtocol!
     
@@ -50,15 +50,23 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         
         guard let nameOfDictionary = tappedCell.nameOfDictionary else { return }
         
+        
         print("Нажата следующая ячейка: \(nameOfDictionary)")
+        
+        _ = navigationController?.popToRootViewController(animated: true)
+        
+        
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dictionaryCell", for: indexPath) as! DictionaryCollectionViewCell
         
-        cell.nameOfDictionary.text = nameOfDictionary[indexPath.row]
+        namesOfDicts = presenter.getNamesOfDictionary() ?? [""]
+        cell.nameOfDictionary.text = namesOfDicts[indexPath.row]
+        
         cell.countOfWordsInCurrentDictionary.text = countOfWordsInDictionary[indexPath.row]
 
+        
         let imageName = photos[indexPath.item]
         let image = UIImage(named: imageName)
         
@@ -111,5 +119,8 @@ extension DictionaryListCollectionViewController: UICollectionViewDelegateFlowLa
 extension DictionaryListCollectionViewController: DictionaryListViewProtocol {
     func setDictionaryName(dictionaryName: String) {
         // dictionaryName.text = dictionaryName?.body
+    }
+    func getNamesOfDictionary() -> [String]? {
+        return []
     }
 }
