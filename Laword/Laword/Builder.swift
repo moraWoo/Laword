@@ -10,6 +10,7 @@ import UIKit
 protocol Builder {
     static func createMainModule() -> UIViewController
     static func createDictionaryListModule(dictionaryName: String) -> UICollectionViewController
+    static func createSettingsModule() -> UIViewController
 }
 
 class ModelBuilder: Builder {
@@ -27,5 +28,14 @@ class ModelBuilder: Builder {
         let presenter = DictionaryListPresenter(view: view, dataStoreManager: dataStoreManager, dictionaryName: dictionaryName)
         view.presenter = presenter
         return view
-        }
+    }
+    
+    static func createSettingsModule() -> UIViewController {
+        let view = SettingsViewController()
+        let dataStoreManager = DataStoreManager()
+        let presenter = SettingsPresenter(view: view, dataStoreManager: dataStoreManager)
+        view.presenter = presenter
+        return view
+    }
+    
 }

@@ -31,6 +31,9 @@
 		63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB606D28BB2124002ADD6E /* DataStoreManager.swift */; };
 		63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FA28CE237A00D34438 /* MainPresenter.swift */; };
 		63F402FD28CE25CA00D34438 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FC28CE25CA00D34438 /* Builder.swift */; };
+		77F75560290485B0009A87D5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F7555E290485B0009A87D5 /* SettingsViewController.swift */; };
+		77F75566290486B4009A87D5 /* ModelOfSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F75565290486B4009A87D5 /* ModelOfSettings.swift */; };
+		77F7556929048844009A87D5 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F7556829048843009A87D5 /* SettingsPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		63DB606D28BB2124002ADD6E /* DataStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreManager.swift; sourceTree = "<group>"; };
 		63F402FA28CE237A00D34438 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		63F402FC28CE25CA00D34438 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		77F7555E290485B0009A87D5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		77F75565290486B4009A87D5 /* ModelOfSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelOfSettings.swift; sourceTree = "<group>"; };
+		77F7556829048843009A87D5 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 			children = (
 				63F402FC28CE25CA00D34438 /* Builder.swift */,
 				635FE30029046F0800564B7B /* Colors.swift */,
+				77F75562290485BC009A87D5 /* SettingsModule */,
 				6372A075290324E800889958 /* DictionaryListModule */,
 				63547EB828B925D600A03730 /* ServiceLayer */,
 				63547EB728B925C600A03730 /* MainModule */,
@@ -193,6 +200,40 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		77F75562290485BC009A87D5 /* SettingsModule */ = {
+			isa = PBXGroup;
+			children = (
+				77F75567290486BC009A87D5 /* Model */,
+				77F75564290485D3009A87D5 /* Presenter */,
+				77F75563290485C9009A87D5 /* View */,
+			);
+			path = SettingsModule;
+			sourceTree = "<group>";
+		};
+		77F75563290485C9009A87D5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				77F7555E290485B0009A87D5 /* SettingsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		77F75564290485D3009A87D5 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				77F7556829048843009A87D5 /* SettingsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		77F75567290486BC009A87D5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				77F75565290486B4009A87D5 /* ModelOfSettings.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -284,7 +325,10 @@
 				63256F2D28FC331800D2319C /* Dictionary+CoreDataClass.swift in Sources */,
 				63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */,
 				63547EA228B91FE100A03730 /* SceneDelegate.swift in Sources */,
+				77F75566290486B4009A87D5 /* ModelOfSettings.swift in Sources */,
 				63256F3028FC331800D2319C /* Word+CoreDataProperties.swift in Sources */,
+				77F75560290485B0009A87D5 /* SettingsViewController.swift in Sources */,
+				77F7556929048844009A87D5 /* SettingsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

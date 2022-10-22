@@ -183,9 +183,8 @@ class MainViewController: UIViewController {
     }
     
     @objc private func settingsButtonTap(sender: UIButton) {
-        let dictionaryName = "Base1"
-        let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
-        navigationController?.pushViewController(dictionaryListVC, animated: true)
+        let settingsVC = ModelBuilder.createSettingsModule()
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
