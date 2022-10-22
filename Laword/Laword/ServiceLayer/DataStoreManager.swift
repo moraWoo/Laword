@@ -86,16 +86,12 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             let results = try context.fetch(fetchRequest)
             fetchedWords = results
-//            print("Отобранные слова, которые еще не показывали: \(fetchedWords.count)")
-//            for showed in results {
-//                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-//            }
         } catch {
             print(error.localizedDescription)
         }
         return fetchedWords
     }
-           
+        
     // MARK: - Save keys according to different buttons tapped (Easy, Difficult, DontKnow)
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {
         
@@ -236,30 +232,59 @@ class DataStoreManager: DataStoreManagerProtocol {
     
     // MARK: - Get data from file
     func getDataFromFile() {
+        let dictionaryName = "5000OxfordWords"
         let context = persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "word != nil")
+        let fetchRequestDictionary: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
+        fetchRequestDictionary.predicate = NSPredicate(format: "name = %@", dictionaryName)
+                
         var records = 0
         do {
-            records = try context.count(for: fetchRequest)
-//            print("Is Data there already?")
+            records = try context.count(for: fetchRequestDictionary)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
         
         guard records == 0 else { return }
-        
+               
         guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
         for dictionary in dataArray {
-            guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
-            let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
+        
+            guard let entity2 = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
+            let selectedWord = NSManagedObject(entity: entity2, insertInto: context) as! Word
             let wordDictionary = dictionary as! [String : AnyObject]
+            
             selectedWord.word = wordDictionary["wordEN"] as? String
             selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
-            countWords += 1
             
+            guard let entity = NSEntityDescription.entity(forEntityName: "Dictionary", in: context) else { return }
+            let selectedDict = NSManagedObject(entity: entity, insertInto: context) as! Dictionary
+            
+            selectedDict.name = "5000OxfordWords"
+            selectedWord.dictionary = selectedDict
+            
+            countWords += 1
         }
-//        print("Всего загружено в базу: \(countWords) слова")
-//        print(wordDictionary as Any)
+
+//        let context = persistentContainer.viewContext
+//        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "word != nil")
+//        var records = 0
+//        do {
+//            records = try context.count(for: fetchRequest)
+//        } catch let error as NSError {
+//            print(error.localizedDescription)
+//        }
+//
+//        guard records == 0 else { return }
+//
+//        guard let pathToFile = Bundle.main.path(forResource: "wordsdef", ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
+//        for dictionary in dataArray {
+//            guard let entity = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
+//            let selectedWord = NSManagedObject(entity: entity, insertInto: context) as! Word
+//            let wordDictionary = dictionary as! [String : AnyObject]
+//            selectedWord.word = wordDictionary["wordEN"] as? String
+//            selectedWord.wordTranslation = wordDictionary["wordRU"] as? String
+//            countWords += 1
+//        }
     }
 }

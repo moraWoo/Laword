@@ -63,7 +63,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -90,6 +90,8 @@ class MainViewController: UIViewController {
     func startLearning() {
         fetchedWords = presenter.getWords(false, dateTime)
         guard let selectedWord = fetchedWords?[count] else { return }
+        let result = selectedWord.dictionary?.name
+        print("======== \(result)")
         LabelFirst.text = selectedWord.word
         LabelSecond.text = selectedWord.wordTranslation
         
@@ -112,8 +114,6 @@ class MainViewController: UIViewController {
         
         self.navigationItem.setLeftBarButtonItems([settingsButtonItem], animated: true)
         self.navigationItem.setRightBarButtonItems([menuButtonItem], animated: true)
-        
-
     }
     
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
@@ -150,9 +150,6 @@ class MainViewController: UIViewController {
         navigationController?.pushViewController(dictionaryListVC, animated: true)
     }
     
-    
-    
-
     func afterButtonPressed(key: String, grade: Grade) {
         
         if count == 0 {

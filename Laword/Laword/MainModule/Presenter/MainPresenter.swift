@@ -64,6 +64,4 @@ class MainPresenter: MainViewPresenterProtocol {
     func statisticShowWords(_ searchKey: Bool) {
         dataStoreManager.statisticShowWords(searchKey)
     }
-    
-    
 }
