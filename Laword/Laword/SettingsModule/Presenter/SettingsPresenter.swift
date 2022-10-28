@@ -20,7 +20,7 @@ protocol SettingsViewPresenterProtocol: AnyObject {
 }
 
 class SettingsPresenter: SettingsViewPresenterProtocol {
-    weak var view: SettingsViewProtocol?
+    weak var view: SettingsViewProtocol!
     let dataStoreManager: DataStoreManagerProtocol!
 
     required init(view: SettingsViewProtocol, dataStoreManager: DataStoreManagerProtocol) {

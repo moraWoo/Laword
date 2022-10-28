@@ -20,6 +20,7 @@ class ModelBuilder: Builder {
         let presenter = MainPresenter(view: view, dataStoreManager: dataStoreManager)
         view.presenter = presenter
         return view
+        
     }
     
     static func createDictionaryListModule(dictionaryName: String) -> UICollectionViewController {
@@ -32,6 +33,7 @@ class ModelBuilder: Builder {
     
     static func createSettingsModule() -> UIViewController {
         let view = SettingsViewController()
+//        var view = SettingsViewController(nibName: "SettingViewController", bundle: nil)
         let dataStoreManager = DataStoreManager()
         let presenter = SettingsPresenter(view: view, dataStoreManager: dataStoreManager)
         view.presenter = presenter

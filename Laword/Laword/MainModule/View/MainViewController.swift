@@ -62,6 +62,7 @@ class MainViewController: UIViewController {
     @IBOutlet var DontKnowSecondLabel: UILabel!
     
     var presenter: MainViewPresenterProtocol!
+    var presenterSettings: SettingsViewPresenterProtocol!
     var count = 0
     let maxCount = 5
     var fetchedWords: [Word]!
@@ -184,7 +185,14 @@ class MainViewController: UIViewController {
     
     @objc private func settingsButtonTap(sender: UIButton) {
         let settingsVC = ModelBuilder.createSettingsModule()
+//        present(settingsVC, animated: true)
         navigationController?.pushViewController(settingsVC, animated: true)
+    }
+    
+    @IBAction func dictionaryListButton(_ sender: Any) {
+        let dictionaryName = "Base1"
+        let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
+        navigationController?.pushViewController(dictionaryListVC, animated: true)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -197,11 +205,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func dictionaryListButton(_ sender: Any) {
-        let dictionaryName = "Base1"
-        let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
-        navigationController?.pushViewController(dictionaryListVC, animated: true)
-    }
     
     func afterButtonPressed(key: String, grade: Grade) {
         
