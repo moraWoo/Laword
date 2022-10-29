@@ -10,34 +10,21 @@ import UIKit
 class SettingsViewController: UIViewController, SettingsViewProtocol {
         let modelObjects = [
             
-            HeaderItem(title: "Devices", symbols: [
-                SFSymbolItem(name: "iphone.homebutton"),
-                SFSymbolItem(name: "pc"),
-                SFSymbolItem(name: "headphones"),
-            ]),
-            
-            HeaderItem(title: "Weather", symbols: [
-                SFSymbolItem(name: "sun.min"),
-                SFSymbolItem(name: "sunset.fill"),
-            ]),
-            
-            HeaderItem(title: "Nature", symbols: [
-                SFSymbolItem(name: "drop.fill"),
-                SFSymbolItem(name: "flame"),
-                SFSymbolItem(name: "bolt.circle.fill"),
-                SFSymbolItem(name: "tortoise.fill"),
-            ]),
+            HeaderItem(title: "Внешний вид", symbols: [
+                SFSymbolItem(name: "Темная тема", imageName: "powersleep"),
+                SFSymbolItem(name: "Кнопки слева", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
+                SFSymbolItem(name: "Язык", imageName: "globe"),
+            ])
         ]
         
         var collectionView: UICollectionView!
         var dataSource: UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>!
         var presenter: SettingsViewPresenterProtocol!
 
-        
         override func viewDidLoad() {
             super.viewDidLoad()
             
-            self.title = "Declarative Header & Footer"
+            self.title = "Настройки"
 
             // MARK: Create list layout
             var layoutConfig = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
@@ -47,7 +34,10 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
 
             // MARK: Configure collection view
             collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: listLayout)
+            collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
             view.addSubview(collectionView)
+            view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+            
 
             // Make collection view take up the entire view
             collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +56,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 var configuration = cell.defaultContentConfiguration()
                 configuration.image = symbolItem.image
                 configuration.text = symbolItem.name
+
                 cell.contentConfiguration = configuration
             }
 
@@ -77,6 +68,19 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,
                                                                         for: indexPath,
                                                                         item: symbolItem)
+                let switchInCell = UISwitch()
+                switchInCell.isOn = true
+                
+//                switchInCell.center = CGPoint(x: cell.bounds.size.width  / 2, y: cell.bounds.size.height / 2)
+//                let boundsOfCell = cell.layer
+                switchInCell.layer.frame = CGRect(x: cell.frame.size.width - 100, y: cell.frame., width: 100, height: 100)
+//                cell.translatesAutoresizingMaskIntoConstraints = false
+                cell.addSubview(switchInCell)
+                
+//                switchInCell.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0).isActive = true
+//                switchInCell.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+//                switchInCell.widthAnchor.constraint(equalToConstant: 100).isActive = true
+//                switchInCell.heightAnchor.constraint(equalToConstant: 100).isActive = true
                 return cell
             }
             
@@ -94,8 +98,9 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 
                 // Customize header appearance to make it more eye-catching
                 configuration.textProperties.font = .boldSystemFont(ofSize: 16)
-                configuration.textProperties.color = .systemBlue
+                configuration.textProperties.color = ColorAppearence.textColor.uiColor()
                 configuration.directionalLayoutMargins = .init(top: 20.0, leading: 0.0, bottom: 10.0, trailing: 0.0)
+                
                 
                 // Apply the configuration to header view
                 headerView.contentConfiguration = configuration

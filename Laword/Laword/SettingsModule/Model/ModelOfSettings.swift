@@ -24,10 +24,12 @@ struct HeaderItem: Hashable {
 
 struct SFSymbolItem: Hashable {
     let name: String
+    let imageName: String
     let image: UIImage
     
-    init(name: String) {
+    init(name: String, imageName: String) {
         self.name = name
-        self.image = UIImage(systemName: name)!
+        self.imageName = imageName
+        self.image = UIImage(systemName: imageName)!
     }
 }
