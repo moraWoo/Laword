@@ -16,11 +16,14 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 SFSymbolItem(name: "Язык", imageName: "globe"),
             ])
         ]
+    
         
         var collectionView: UICollectionView!
         var dataSource: UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>!
         var presenter: SettingsViewPresenterProtocol!
 
+    
+    
         override func viewDidLoad() {
             super.viewDidLoad()
             
@@ -58,29 +61,39 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 configuration.text = symbolItem.name
 
                 cell.contentConfiguration = configuration
+                
             }
+            
 
             // MARK: Initialize data source
-            dataSource = UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>(collectionView: collectionView) {
+            dataSource = UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>(collectionView: collectionView) { [unowned self]
                 (collectionView, indexPath, symbolItem) -> UICollectionViewCell? in
                 
                 // Dequeue symbol cell
                 let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,
                                                                         for: indexPath,
                                                                         item: symbolItem)
+//                collectionView.isUserInteractionEnabled = false
+
+//                cell.isSelected.
+//                cell.isHighlighted = false
+//                cell.is
+//                cell.isUserInteractionEnabled = false
+                
                 let switchInCell = UISwitch()
-                switchInCell.isOn = true
+                switchInCell.isOn = false
                 
 //                switchInCell.center = CGPoint(x: cell.bounds.size.width  / 2, y: cell.bounds.size.height / 2)
-//                let boundsOfCell = cell.layer
-                switchInCell.layer.frame = CGRect(x: cell.frame.size.width - 100, y: cell.frame., width: 100, height: 100)
-//                cell.translatesAutoresizingMaskIntoConstraints = false
                 cell.addSubview(switchInCell)
                 
-//                switchInCell.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0).isActive = true
-//                switchInCell.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-//                switchInCell.widthAnchor.constraint(equalToConstant: 100).isActive = true
-//                switchInCell.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//                let heightOfSwitch = switchInCell.bounds.size.height
+//                let heightOfCell = cell.bounds.size.height
+                
+                switchInCell.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
+                    switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
+                ])
                 return cell
             }
             
@@ -152,4 +165,5 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
 
         }
 
+    
 }

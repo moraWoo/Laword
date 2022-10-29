@@ -73,7 +73,6 @@ class MainViewController: UIViewController {
     lazy var titleStackView: UIStackView = {
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
-//        titleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
         titleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         titleLabel.font = .systemFont(ofSize: 16)
         titleLabel.text = "Базовый словарь"
@@ -81,7 +80,6 @@ class MainViewController: UIViewController {
         subtitleLabel.textAlignment = .center
         subtitleLabel.text = "250 / 4963"
         subtitleLabel.font = .systemFont(ofSize: 12)
-//        subtitleLabel.textColor = UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: 1)
         subtitleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
