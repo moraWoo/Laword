@@ -33,11 +33,14 @@ struct ColorScheme {
     private (set) var schemeOption: ColorSchemeOption
     
     private init() {
-        let option = UserDefaults.standard.bool(forKey: "dark_mode")
-        if option {
+        let settingsOfDarkMode = UserDefaults.standard.bool(forKey: "dark_mode")
+        print("======ColorScheme")
+        if settingsOfDarkMode == true {
             schemeOption = .dark
+            print("+++++++++++ dark mode")
         } else {
             schemeOption = .light
+            print("+++++++++++ light mode")
         }
     }
 }

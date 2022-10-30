@@ -29,6 +29,7 @@ enum ColorAppearence {
         static let textColorOfCountWords = UIColor.systemGray
         static let textColor = UIColor.white
     }
+
 }
 
 
@@ -90,7 +91,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -187,7 +187,6 @@ class MainViewController: UIViewController {
     
     @objc private func settingsButtonTap(sender: UIButton) {
         let settingsVC = ModelBuilder.createSettingsModule()
-//        present(settingsVC, animated: true)
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
@@ -206,7 +205,6 @@ class MainViewController: UIViewController {
             afterButtonPressed(key: "DontKnow", grade: .null)
         }
     }
-    
     
     func afterButtonPressed(key: String, grade: Grade) {
         

@@ -33,6 +33,7 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         collectionView?.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identifier)
         
         let nib = UINib(nibName: "DictionaryCollectionViewCell", bundle: nil)
+        self.collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         self.collectionView.register(nib, forCellWithReuseIdentifier: "dictionaryCell")
     }
 
