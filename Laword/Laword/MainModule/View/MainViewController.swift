@@ -89,7 +89,6 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
@@ -187,7 +186,7 @@ class MainViewController: UIViewController {
     
     @objc private func settingsButtonTap(sender: UIButton) {
         let settingsVC = ModelBuilder.createSettingsModule()
-        navigationController?.pushViewController(settingsVC, animated: true)
+        navigationController?.pushViewController(settingsVC, animated: false)
     }
     
     @IBAction func dictionaryListButton(_ sender: Any) {
@@ -355,4 +354,9 @@ extension MainViewController {
     }
 }
 
+extension UIWindow {
+    func initTheme() {
+        overrideUserInterfaceStyle = Theme.current.userInterfaceStyle
+    }
+}
 

@@ -13,18 +13,18 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         HeaderItem(title: "Внешний вид", symbols: [
             SFSymbolItem(name: "Темная тема", imageName: "powersleep"),
             SFSymbolItem(name: "Кнопки слева", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
-            SFSymbolItem(name: "Язык", imageName: "globe"),
+//            SFSymbolItem(name: "Язык", imageName: "globe"),
         ])
     ]
-        
+ 
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>!
     var presenter: SettingsViewPresenterProtocol!
     var count = 0
+    var switchInCellUp = UISwitch()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "Настройки"
         
         // MARK: Create list layout
@@ -32,13 +32,15 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         layoutConfig.headerMode = .supplementary
         layoutConfig.footerMode = .supplementary
         let listLayout = UICollectionViewCompositionalLayout.list(using: layoutConfig)
+        navigationController?.view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+        navigationController?.navigationBar.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+        layoutConfig.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         
         // MARK: Configure collection view
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: listLayout)
+        collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         view.addSubview(collectionView)
-        self.view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        self.collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        
+        collectionView.allowsSelection = false
         
         // Make collection view take up the entire view
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,31 +59,42 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             var configuration = cell.defaultContentConfiguration()
             configuration.image = symbolItem.image
             configuration.text = symbolItem.name
+
             cell.contentConfiguration = configuration
+            
         }
         
         // MARK: Initialize data source
         dataSource = UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>(collectionView: collectionView) { [unowned self]
             (collectionView, indexPath, symbolItem) -> UICollectionViewCell? in
-            
-            // Dequeue symbol cell
-            let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,
-                                                                    for: indexPath,
-                                                                    item: symbolItem)
+            let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,for: indexPath,item: symbolItem)
             let switchInCell = UISwitch()
-            switchInCell.isOn = false
             
-            cell.addSubview(switchInCell)
-            
+            let darkMode = UserDefaults.standard.bool(forKey: "dark_mode")
+            switchInCell.setOn(darkMode, animated: false)
             switchInCell.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
-            
-            
-            
+            switchInCell.tag = indexPath.row
+                        
+            cell.addSubview(switchInCell)
+
             switchInCell.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
                 switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
             ])
+            print("switchCell.tag=\(switchInCell.tag)")
+            switchInCellUp = switchInCell
+            
+            switch switchInCell.tag {
+                case 0: switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
+                    print("case1")
+                case 1:
+                    switchInCell.isOn = UserDefaults.standard.bool(forKey: "buttonLeft")
+                    print("case2")
+                default:
+                    print("default case")
+            }
+            
             return cell
         }
         
@@ -136,6 +149,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                     using: footerRegistration, for: indexPath)
             }
         }
+        
         // MARK: Setup snapshot
         var dataSourceSnapshot = NSDiffableDataSourceSnapshot<HeaderItem, SFSymbolItem>()
         
@@ -145,15 +159,15 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         // Loop through each header item to append symbols to their respective section
         for headerItem in modelObjects {
             dataSourceSnapshot.appendItems(headerItem.symbols, toSection: headerItem)
+            
         }
         dataSource.apply(dataSourceSnapshot, animatingDifferences: false)
         
-        registerSettingsBundle()
-        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
-        defaultsChanged()
+        
     }
-    
+       
     @objc func switchChanged(mySwitch: UISwitch) {
+        
         print("switch changed: \(mySwitch.tag)")
         print("value is: \(mySwitch.isOn)")
         let tag = mySwitch.tag
@@ -162,12 +176,24 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 if mySwitch.isOn == true {
                     print("It is dark mode")
                     UserDefaults.standard.set(true, forKey: "dark_mode")
+                    guard let theme = Theme(rawValue: 0) else { return }
+                    theme.setActive()
                 } else {
                     print("It is light mode")
                     UserDefaults.standard.set(false, forKey: "dark_mode")
+                    guard let theme = Theme(rawValue: 1) else { return }
+                    theme.setActive()
                 }
             case 1:
-                return
+                if mySwitch.isOn == true {
+                    print("Buttons of the left")
+                    UserDefaults.standard.set(true, forKey: "buttonLeft")
+
+                } else {
+                    print("Buttons of the right")
+                    UserDefaults.standard.set(false, forKey: "buttonLeft")
+
+                }
             default:
                 return
         }
@@ -176,17 +202,5 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
     func registerSettingsBundle(){
         let appDefaults = [String:AnyObject]()
         UserDefaults.standard.register(defaults: appDefaults)
-    }
-    @objc func defaultsChanged(){
-        if UserDefaults.standard.bool(forKey: "dark_mode") {
-            self.view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-            let val = UserDefaults.standard.bool(forKey: "dark_mode")
-            
-            print("UserDefaults dark_mode111: \(val.description)")
-        }
-        else {
-            self.view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-            let val = UserDefaults.standard.bool(forKey: "dark_mode")
-        }
     }
 }

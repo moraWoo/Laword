@@ -32,7 +32,6 @@
 		63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FA28CE237A00D34438 /* MainPresenter.swift */; };
 		63F402FD28CE25CA00D34438 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FC28CE25CA00D34438 /* Builder.swift */; };
 		77205DAE290BFBF60004351B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77205DAC290BFBF60004351B /* SettingsViewController.swift */; };
-		779E5FB4290DAD6600C23E97 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 779E5FB3290DAD6600C23E97 /* Settings.bundle */; };
 		779E5FB6290DAE9500C23E97 /* SettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E5FB5290DAE9500C23E97 /* SettingsHelper.swift */; };
 		77F75566290486B4009A87D5 /* ModelOfSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F75565290486B4009A87D5 /* ModelOfSettings.swift */; };
 		77F7556929048844009A87D5 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F7556829048843009A87D5 /* SettingsPresenter.swift */; };
@@ -66,7 +65,6 @@
 		63F402FA28CE237A00D34438 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		63F402FC28CE25CA00D34438 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		77205DAC290BFBF60004351B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		779E5FB3290DAD6600C23E97 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		779E5FB5290DAE9500C23E97 /* SettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelper.swift; sourceTree = "<group>"; };
 		77F75565290486B4009A87D5 /* ModelOfSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelOfSettings.swift; sourceTree = "<group>"; };
 		77F7556829048843009A87D5 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 				63547EA828B91FE100A03730 /* Laword.xcdatamodeld */,
 				6335B10E28BFC2760023C33A /* wordsdef.plist */,
 				635FE2FC290409A700564B7B /* wordsdef_new.plist */,
-				779E5FB3290DAD6600C23E97 /* Settings.bundle */,
 			);
 			path = Laword;
 			sourceTree = "<group>";
@@ -298,7 +295,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				779E5FB4290DAD6600C23E97 /* Settings.bundle in Resources */,
 				6372A07A2903258200889958 /* DictionaryCollectionViewCell.xib in Resources */,
 				6316D44528D77D650022C373 /* MainViewController.xib in Resources */,
 				63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */,
