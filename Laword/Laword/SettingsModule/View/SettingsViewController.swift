@@ -17,12 +17,9 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             ])
         ]
     
-        
         var collectionView: UICollectionView!
         var dataSource: UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>!
         var presenter: SettingsViewPresenterProtocol!
-
-    
     
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -64,7 +61,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 
             }
             
-
             // MARK: Initialize data source
             dataSource = UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>(collectionView: collectionView) { [unowned self]
                 (collectionView, indexPath, symbolItem) -> UICollectionViewCell? in
@@ -73,21 +69,14 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,
                                                                         for: indexPath,
                                                                         item: symbolItem)
-//                collectionView.isUserInteractionEnabled = false
-
-//                cell.isSelected.
-//                cell.isHighlighted = false
-//                cell.is
-//                cell.isUserInteractionEnabled = false
-                
                 let switchInCell = UISwitch()
                 switchInCell.isOn = false
-                
-//                switchInCell.center = CGPoint(x: cell.bounds.size.width  / 2, y: cell.bounds.size.height / 2)
+                               
                 cell.addSubview(switchInCell)
                 
-//                let heightOfSwitch = switchInCell.bounds.size.height
-//                let heightOfCell = cell.bounds.size.height
+                switchInCell.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
+
+
                 
                 switchInCell.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
@@ -96,6 +85,8 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 ])
                 return cell
             }
+            
+
             
             // MARK: Supplementary view registration
             let headerRegistration = UICollectionView.SupplementaryRegistration
@@ -165,5 +156,9 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
 
         }
 
-    
+    @objc func switchChanged(mySwitch: UISwitch) {
+        let value = mySwitch.isOn
+        UserDefaults.standard.set(value, forKey: "dark_mode")
+        print("switch status in Userdefaults: \(UserDefaults.standard.bool(forKey: "dark_mode"))")
+    }
 }

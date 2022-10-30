@@ -20,13 +20,13 @@ enum ColorAppearence {
     
     private enum Light {
         static let backgroundColor = UIColor.white
-        static let textColorOfCountWords = UIColor.gray
+        static let textColorOfCountWords = UIColor.systemGray
         static let textColor = UIColor.black
     }
     
     private enum Dark {
         static let backgroundColor = UIColor.black
-        static let textColorOfCountWords = UIColor.gray
+        static let textColorOfCountWords = UIColor.systemGray
         static let textColor = UIColor.white
     }
 }
@@ -89,6 +89,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -102,7 +104,8 @@ class MainViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
+        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+        
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
             titleStackView.spacing = UIStackView.spacingUseDefault
@@ -114,7 +117,8 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         countOfLearningWords.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         EasySecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         DifficultSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()

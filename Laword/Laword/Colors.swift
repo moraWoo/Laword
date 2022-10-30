@@ -31,7 +31,13 @@ struct SchemeColor {
 struct ColorScheme {
     static let shared = ColorScheme()
     private (set) var schemeOption: ColorSchemeOption
+    
     private init() {
-        schemeOption = .dark
+        let option = UserDefaults.standard.bool(forKey: "dark_mode")
+        if option {
+            schemeOption = .dark
+        } else {
+            schemeOption = .light
+        }
     }
 }
