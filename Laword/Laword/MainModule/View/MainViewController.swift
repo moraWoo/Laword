@@ -8,30 +8,6 @@
 import UIKit
 import CoreData
 
-//enum ColorSchemeOption {
-//    case dark
-//    case light
-//}
-//
-//enum ColorAppearence {
-//    static let backgroudColor = SchemeColor(dark: Dark.backgroundColor, light: Light.backgroundColor)
-//    static let textColorOfCountWords = SchemeColor(dark: Dark.textColorOfCountWords, light: Light.textColorOfCountWords)
-//    static let textColor = SchemeColor(dark: Dark.textColor, light: Light.textColor)
-//    
-//    private enum Light {
-//        static let backgroundColor = UIColor.white
-//        static let textColorOfCountWords = UIColor.systemGray
-//        static let textColor = UIColor.black
-//    }
-//    
-//    private enum Dark {
-//        static let backgroundColor = UIColor.black
-//        static let textColorOfCountWords = UIColor.systemGray
-//        static let textColor = UIColor.white
-//    }
-//
-//}
-
 class MainViewController: UIViewController {
     
     @IBOutlet var LabelFirst: UILabel!
@@ -61,6 +37,18 @@ class MainViewController: UIViewController {
     @IBOutlet var DontKnowLabel: UILabel!
     @IBOutlet var DontKnowSecondLabel: UILabel!
     
+    @IBOutlet var stackOfButtons: UIStackView!
+    
+    @IBOutlet var viewOfEasyButton: UIView!
+    @IBOutlet var viewOfDifficultButton: UIView!
+    @IBOutlet var viewOfDontKnowButton: UIView!
+    
+    @IBOutlet var stackViewWithEasyText: UIStackView!
+    @IBOutlet var stackViewWithDifText: UIStackView!
+    @IBOutlet var stackViewWithDontText: UIStackView!
+    
+    var stackOfButtonsConstraints: NSLayoutConstraint?
+    
     var presenter: MainViewPresenterProtocol!
     var presenterSettings: SettingsViewPresenterProtocol!
     var count = 0
@@ -86,7 +74,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -100,7 +88,11 @@ class MainViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-               
+           
+        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
+        print("leftRightMode: \(leftRightMode)")
+        changeConstraintsOfStackButtons(leftMode: leftRightMode)
+        
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
             titleStackView.spacing = UIStackView.spacingUseDefault
@@ -112,6 +104,11 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
+        print("leftRightMode: \(leftRightMode)")
+        changeConstraintsOfStackButtons(leftMode: leftRightMode)
+
         
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
@@ -325,3 +322,128 @@ extension UIWindow {
     }
 }
 
+//MARK: Change stackView withbuttons to the left or to the right side
+extension MainViewController {
+
+    func changeConstraintsOfStackButtons(leftMode: Bool) {
+        if leftMode {
+            stackOfButtons.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100.0),
+            ])
+
+            stackOfButtons.axis = NSLayoutConstraint.Axis.vertical
+            stackOfButtons.distribution = UIStackView.Distribution.equalSpacing
+            stackOfButtons.alignment = UIStackView.Alignment.center
+            stackOfButtons.spacing = 10
+            stackOfButtons.addArrangedSubview(viewOfEasyButton)
+            stackOfButtons.addArrangedSubview(viewOfDifficultButton)
+            stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
+            
+            stackViewWithEasyText.alignment = .trailing
+            
+            NSLayoutConstraint.activate([
+                
+                // Widths of Labels
+                EasyLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                EasySecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DifficultLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DifficultSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DontKnowLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DontKnowSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                
+                
+                // Size of stackView of labels
+                stackViewWithEasyText.widthAnchor.constraint(equalToConstant: 150.0),
+                stackViewWithDifText.widthAnchor.constraint(equalToConstant: 150.0),
+                stackViewWithDontText.widthAnchor.constraint(equalToConstant: 150.0),
+                
+                // EasyButton
+                stackViewWithEasyText.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
+                
+                EasyButton.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
+                EasyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                
+                EasyLabel.leadingAnchor.constraint(equalTo: EasyButton.leadingAnchor, constant: 50),
+                
+                stackViewWithEasyText.trailingAnchor.constraint(equalTo: viewOfEasyButton.trailingAnchor, constant: -90),
+                
+                // DifficultButton
+                stackViewWithDifText.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
+                
+                DifficultButton.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
+                DifficultButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+
+                stackViewWithDifText.trailingAnchor.constraint(equalTo: viewOfDifficultButton.trailingAnchor, constant: -90),
+                
+                // DontKnowButton
+                stackViewWithDontText.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
+                
+                DontKnowButton.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
+                DontKnowButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                
+                stackViewWithDontText.trailingAnchor.constraint(equalTo: viewOfDontKnowButton.trailingAnchor, constant: -90),
+          ])
+        
+        } else {
+            stackOfButtons.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
+                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100.0),
+            ])
+
+            stackOfButtons.axis = NSLayoutConstraint.Axis.vertical
+            stackOfButtons.distribution = UIStackView.Distribution.equalSpacing
+            stackOfButtons.alignment = UIStackView.Alignment.center
+            stackOfButtons.spacing = 10
+            stackOfButtons.addArrangedSubview(viewOfEasyButton)
+            stackOfButtons.addArrangedSubview(viewOfDifficultButton)
+            stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
+            
+            
+
+            NSLayoutConstraint.activate([
+                
+                // Widths of Labels
+                EasyLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                EasySecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DifficultLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DifficultSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DontKnowLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                DontKnowSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
+                
+                
+                // Size of stackView of labels
+                stackViewWithEasyText.widthAnchor.constraint(equalToConstant: 150.0),
+                stackViewWithDifText.widthAnchor.constraint(equalToConstant: 150.0),
+                stackViewWithDontText.widthAnchor.constraint(equalToConstant: 150.0),
+                
+                // EasyButton
+                stackViewWithEasyText.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
+                
+                EasyButton.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
+                EasyButton.trailingAnchor.constraint(equalTo: stackOfButtons.trailingAnchor, constant: 0),
+                
+                stackViewWithEasyText.trailingAnchor.constraint(equalTo: viewOfEasyButton.trailingAnchor, constant: -90),
+                
+                // DifficultButton
+                stackViewWithDifText.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
+                
+                DifficultButton.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
+                DifficultButton.trailingAnchor.constraint(equalTo: stackOfButtons.trailingAnchor, constant: 0),
+                
+                stackViewWithDifText.trailingAnchor.constraint(equalTo: viewOfDifficultButton.trailingAnchor, constant: -90),
+                
+                // DontKnowButton
+                stackViewWithDontText.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
+                
+                DontKnowButton.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
+                DontKnowButton.trailingAnchor.constraint(equalTo: stackOfButtons.trailingAnchor, constant: 0),
+                
+                stackViewWithDontText.trailingAnchor.constraint(equalTo: viewOfDontKnowButton.trailingAnchor, constant: -90),
+          ])
+        }
+    }
+}

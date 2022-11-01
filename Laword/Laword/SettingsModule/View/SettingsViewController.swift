@@ -84,7 +84,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 case 0: switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
                     print("case1")
                 case 1:
-                    switchInCell.isOn = UserDefaults.standard.bool(forKey: "buttonLeft")
+                    switchInCell.isOn = UserDefaults.standard.bool(forKey: "leftMode")
                     print("case2")
                 default:
                     print("default case")
@@ -181,11 +181,11 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             case 1:
                 if mySwitch.isOn == true {
                     print("Buttons of the left")
-                    UserDefaults.standard.set(true, forKey: "buttonLeft")
+                    UserDefaults.standard.set(true, forKey: "leftMode")
 
                 } else {
                     print("Buttons of the right")
-                    UserDefaults.standard.set(false, forKey: "buttonLeft")
+                    UserDefaults.standard.set(false, forKey: "leftMode")
 
                 }
             default:
