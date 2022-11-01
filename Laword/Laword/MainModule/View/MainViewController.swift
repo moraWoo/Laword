@@ -52,7 +52,8 @@ class MainViewController: UIViewController {
     var presenter: MainViewPresenterProtocol!
     var presenterSettings: SettingsViewPresenterProtocol!
     var count = 0
-    let maxCount = 5
+    var maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
+
     var fetchedWords: [Word]!
     var progressCount = 0.0
     let dateTime = Date().timeIntervalSince1970
@@ -74,7 +75,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -123,6 +124,7 @@ class MainViewController: UIViewController {
     }
     
     func startLearning(_ dictionaryName: String) {
+        maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
         fetchedWords = presenter.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName)
         guard let selectedWord = fetchedWords?[count] else { return }
         let result = selectedWord.dictionary?.name

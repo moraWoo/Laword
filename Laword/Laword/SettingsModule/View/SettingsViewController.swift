@@ -13,14 +13,13 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         HeaderItem(title: "Внешний вид", symbols: [
             SFSymbolItem(name: "Темная тема", imageName: "powersleep"),
             SFSymbolItem(name: "Кнопки слева", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
+            SFSymbolItem(name: "Количество слов", imageName: "list.bullet.rectangle.fill"),
         ]),
-        
-        HeaderItem(title: "ОБУЧЕНИЕ", symbols: [
-            SFSymbolItem(name: "Количество слов", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
-        ])
-        
+        HeaderItem(title: "Обучение", symbols: [
+            SFSymbolItem(name: "Количество слов", imageName: "list.bullet.rectangle.fill"),
+        ]),
     ]
- 
+    var labelForCell = UILabel()
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>!
     var presenter: SettingsViewPresenterProtocol!
@@ -35,6 +34,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         layoutConfig.footerMode = .supplementary
         let listLayout = UICollectionViewCompositionalLayout.list(using: layoutConfig)
         
+        
         // MARK: Configure collection view
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: listLayout)
         view.addSubview(collectionView)
@@ -48,7 +48,8 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
         ])
-        
+
+            
         // MARK: Cell registration
         let symbolCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SFSymbolItem> {
             (cell, indexPath, symbolItem) in
@@ -65,33 +66,70 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         dataSource = UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>(collectionView: collectionView) { [unowned self]
             (collectionView, indexPath, symbolItem) -> UICollectionViewCell? in
             let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,for: indexPath,item: symbolItem)
-            let switchInCell = UISwitch()
             
-            let darkMode = UserDefaults.standard.bool(forKey: "dark_mode")
-            switchInCell.setOn(darkMode, animated: false)
-            switchInCell.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
-            switchInCell.tag = indexPath.row
-                        
-            cell.addSubview(switchInCell)
+            let sections = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+           
+            if sections.title == "Внешний вид" {
+                let switchInCell = UISwitch()
 
-            switchInCell.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
-                switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
-            ])
-            
-            switch switchInCell.tag {
-                case 0: switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
-                    print("case1")
-                case 1:
-                    switchInCell.isOn = UserDefaults.standard.bool(forKey: "leftMode")
-                    print("case2")
-                default:
-                    print("default case")
+                let darkMode = UserDefaults.standard.bool(forKey: "dark_mode")
+                switchInCell.setOn(darkMode, animated: false)
+                switchInCell.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
+                switchInCell.tag = indexPath.row
+                            
+                cell.addSubview(switchInCell)
+
+                switchInCell.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
+                    switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
+                ])
+                
+                switch switchInCell.tag {
+                    case 0: switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
+                        print("case1")
+                    default:
+                        switchInCell.isOn = UserDefaults.standard.bool(forKey: "leftMode")
+                        print("case2")
+                }
+            } else {
+                let stepper = UIStepper()
+                stepper.minimumValue = 5
+                stepper.maximumValue = 20
+                stepper.stepValue = 1
+                stepper.value = UserDefaults.standard.double(forKey: "amountOfWords")
+                stepper.addTarget(self, action: #selector(stepperChanged), for: .valueChanged)
+                cell.addSubview(stepper)
+                stepper.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    stepper.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -45.0),
+                    stepper.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
+                ])
+                
+                labelForCell.text = String(Int(stepper.value))
+                cell.addSubview(labelForCell)
+                labelForCell.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    labelForCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -12.0),
+                    labelForCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
+                ])
+                
+//                labelForCell.text = String(Int(stepper.value))
+//
+//                let cellWithLabel = UICellAccessory.CustomViewConfiguration(
+//                    customView: labelForCell,
+//                    placement: .trailing()
+//                )
+//                cell.accessories = [.customView(configuration: cellWithLabel)]
             }
             
+            let ini = indexPath.row
+            print("ini \(ini)")
+    
             return cell
         }
+        
+
         
         // MARK: Supplementary view registration
         let headerRegistration = UICollectionView.SupplementaryRegistration
@@ -100,7 +138,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             
             // Obtain header item using index path
             let headerItem = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
+   
             // Configure header view content based on headerItem
             var configuration = headerView.defaultContentConfiguration()
             configuration.text = headerItem.title
@@ -156,6 +194,12 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             
         }
         dataSource.apply(dataSourceSnapshot, animatingDifferences: false)
+    }
+    
+    @objc func stepperChanged(stepper: UIStepper) {
+        labelForCell.text = String(Int(stepper.value))
+        let value = stepper.value
+        UserDefaults.standard.set(value, forKey: "amountOfWords")
     }
        
     @objc func switchChanged(mySwitch: UISwitch) {
