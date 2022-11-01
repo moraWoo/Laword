@@ -14,9 +14,9 @@ class DictionaryCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        nameOfDictionary.textColor = ColorAppearence.textColor.uiColor()
-        let nib = UIView()
-        nib.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        countOfWordsInCurrentDictionary.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+//        nameOfDictionary.textColor = ColorAppearence.textColor.uiColor()
+//        let nib = UIView()
+//        nib.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+//        countOfWordsInCurrentDictionary.textColor = ColorAppearence.textColorOfCountWords.uiColor()
     }
 }

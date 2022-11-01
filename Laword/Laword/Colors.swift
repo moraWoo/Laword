@@ -13,29 +13,26 @@ enum Theme: Int, CaseIterable {
     case dark
 }
 
-struct SchemeColor {
-    
-    let dark: UIColor
-    let light: UIColor
-       
-    func uiColor() -> UIColor {
-        return colorWith(scheme: ColorScheme.shared.schemeOption)
-    }
-    
-    func cgColor() -> CGColor {
-        return uiColor().cgColor
-    }
-    
-    private func colorWith(scheme: ColorSchemeOption) -> UIColor {
-        switch scheme {
-            case .dark: return dark
-            case .light: return light
-        }
-    }
-    
-
-    
-}
+//struct SchemeColor {
+//
+//    let dark: UIColor
+//    let light: UIColor
+//
+//    func uiColor() -> UIColor {
+//        return colorWith(scheme: ColorScheme.shared.schemeOption)
+//    }
+//
+//    func cgColor() -> CGColor {
+//        return uiColor().cgColor
+//    }
+//
+//    private func colorWith(scheme: ColorSchemeOption) -> UIColor {
+//        switch scheme {
+//            case .dark: return dark
+//            case .light: return light
+//        }
+//    }
+//}
 
 extension Theme {
     @Persist(key: "app_theme", defaultValue: Theme.light.rawValue)
@@ -69,7 +66,6 @@ extension Theme {
     }
 }
 
-
 @propertyWrapper
 struct Persist<T> {
     let key: String
@@ -86,19 +82,19 @@ struct Persist<T> {
     }
 }
 
-struct ColorScheme {
-    static let shared = ColorScheme()
-    private (set) var schemeOption: ColorSchemeOption
-    
-    private init() {
-        let settingsOfDarkMode = UserDefaults.standard.bool(forKey: "dark_mode")
-        print("======ColorScheme")
-        if settingsOfDarkMode == true {
-            schemeOption = .dark
-            print("+++++++++++ dark mode")
-        } else {
-            schemeOption = .light
-            print("+++++++++++ light mode")
-        }
-    }
-}
+//struct ColorScheme {
+//    static let shared = ColorScheme()
+//    private (set) var schemeOption: ColorSchemeOption
+//    
+//    private init() {
+//        let settingsOfDarkMode = UserDefaults.standard.bool(forKey: "dark_mode")
+//        print("======ColorScheme")
+//        if settingsOfDarkMode == true {
+//            schemeOption = .dark
+//            print("+++++++++++ dark mode")
+//        } else {
+//            schemeOption = .light
+//            print("+++++++++++ light mode")
+//        }
+//    }
+//}

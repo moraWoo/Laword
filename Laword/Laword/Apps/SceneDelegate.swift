@@ -18,7 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowsScene
         let mainVC = ModelBuilder.createMainModule()
         let navBar = UINavigationController(rootViewController: mainVC)
-                
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        navBar.navigationBar.standardAppearance = appearance
+        navBar.navigationBar.scrollEdgeAppearance = appearance
+        
         window?.rootViewController = navBar
 //        window?.rootViewController = mainVC
         window?.makeKeyAndVisible()

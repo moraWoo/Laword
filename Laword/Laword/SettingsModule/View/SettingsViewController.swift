@@ -13,15 +13,17 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         HeaderItem(title: "Внешний вид", symbols: [
             SFSymbolItem(name: "Темная тема", imageName: "powersleep"),
             SFSymbolItem(name: "Кнопки слева", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
-//            SFSymbolItem(name: "Язык", imageName: "globe"),
+        ]),
+        
+        HeaderItem(title: "ОБУЧЕНИЕ", symbols: [
+            SFSymbolItem(name: "Количество слов", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
         ])
+        
     ]
  
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<HeaderItem, SFSymbolItem>!
     var presenter: SettingsViewPresenterProtocol!
-    var count = 0
-    var switchInCellUp = UISwitch()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +34,10 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         layoutConfig.headerMode = .supplementary
         layoutConfig.footerMode = .supplementary
         let listLayout = UICollectionViewCompositionalLayout.list(using: layoutConfig)
-        navigationController?.view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        navigationController?.navigationBar.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        layoutConfig.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         
         // MARK: Configure collection view
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: listLayout)
-        collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+//        collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         view.addSubview(collectionView)
         collectionView.allowsSelection = false
         
@@ -82,8 +81,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
                 switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
             ])
-            print("switchCell.tag=\(switchInCell.tag)")
-            switchInCellUp = switchInCell
             
             switch switchInCell.tag {
                 case 0: switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
@@ -112,7 +109,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             
             // Customize header appearance to make it more eye-catching
             configuration.textProperties.font = .boldSystemFont(ofSize: 16)
-            configuration.textProperties.color = ColorAppearence.textColor.uiColor()
+//            configuration.textProperties.color = ColorAppearence.textColor.uiColor()
             configuration.directionalLayoutMargins = .init(top: 20.0, leading: 0.0, bottom: 10.0, trailing: 0.0)
             
             // Apply the configuration to header view
@@ -164,6 +161,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         dataSource.apply(dataSourceSnapshot, animatingDifferences: false)
         
         
+
     }
        
     @objc func switchChanged(mySwitch: UISwitch) {
@@ -176,13 +174,15 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 if mySwitch.isOn == true {
                     print("It is dark mode")
                     UserDefaults.standard.set(true, forKey: "dark_mode")
-                    guard let theme = Theme(rawValue: 0) else { return }
-                    theme.setActive()
+                    DispatchQueue.main.async {
+                        Theme.dark.setActive()
+                    }
                 } else {
                     print("It is light mode")
                     UserDefaults.standard.set(false, forKey: "dark_mode")
-                    guard let theme = Theme(rawValue: 1) else { return }
-                    theme.setActive()
+                    DispatchQueue.main.async {
+                        Theme.light.setActive()
+                    }
                 }
             case 1:
                 if mySwitch.isOn == true {
@@ -203,4 +203,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         let appDefaults = [String:AnyObject]()
         UserDefaults.standard.register(defaults: appDefaults)
     }
+    
+
 }

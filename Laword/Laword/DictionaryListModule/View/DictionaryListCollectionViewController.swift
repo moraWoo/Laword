@@ -14,7 +14,7 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     
     let photos = ["sanfransisco", "newyork", "newyork", "newyork", "newyork", "newyork"]
     
-    let labelOfSection = ["Базовые словари", "Пользовательские словари"]
+    let labelOfSection = ["Базовые", "Пользовательские"]
     let nameOfDictionary = ["Dictionary 1", "Dictionary 2", "Dictionary 3", "Dictionary 4", "Dictionary 5", "Dictionary 6"]
     let countOfWordsInDictionary = ["1 / 100", "230 / 370", "230 / 370", "230 / 370", "230 / 370", "230 / 370"]
     
@@ -24,16 +24,17 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        navigationItem.title = "Список словарей"
+        
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.scrollDirection = .vertical
         collectionView.showsVerticalScrollIndicator = false
-        
         collectionView?.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identifier)
         
         let nib = UINib(nibName: "DictionaryCollectionViewCell", bundle: nil)
-        self.collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+//        self.collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         self.collectionView.register(nib, forCellWithReuseIdentifier: "dictionaryCell")
     }
 
@@ -48,15 +49,9 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         let tappedCell = collectionView.cellForItem(at: indexPath) as! DictionaryCollectionViewCell
-        
         guard let nameOfDictionary = tappedCell.nameOfDictionary else { return }
-        
-        
         print("Нажата следующая ячейка: \(nameOfDictionary)")
-        
         _ = navigationController?.popToRootViewController(animated: true)
-        
-        
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

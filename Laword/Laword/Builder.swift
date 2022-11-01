@@ -33,7 +33,6 @@ class ModelBuilder: Builder {
     
     static func createSettingsModule() -> UIViewController {
         let view = SettingsViewController()
-//        var view = SettingsViewController(nibName: "SettingViewController", bundle: nil)
         let dataStoreManager = DataStoreManager()
         let presenter = SettingsPresenter(view: view, dataStoreManager: dataStoreManager)
         view.presenter = presenter

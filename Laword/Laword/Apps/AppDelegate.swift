@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 
 final class ThemeWindow: UIWindow {
@@ -28,16 +27,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         themeWindow.makeKey()
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-    SettingsBundleHelper.setDarkMode()
-//    SettingsBundleHelper.setVersionAndBuildNumber()
-    }
-
 }
 

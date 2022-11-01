@@ -8,30 +8,29 @@
 import UIKit
 import CoreData
 
-enum ColorSchemeOption {
-    case dark
-    case light
-}
-
-enum ColorAppearence {
-    static let backgroudColor = SchemeColor(dark: Dark.backgroundColor, light: Light.backgroundColor)
-    static let textColorOfCountWords = SchemeColor(dark: Dark.textColorOfCountWords, light: Light.textColorOfCountWords)
-    static let textColor = SchemeColor(dark: Dark.textColor, light: Light.textColor)
-    
-    private enum Light {
-        static let backgroundColor = UIColor.white
-        static let textColorOfCountWords = UIColor.systemGray
-        static let textColor = UIColor.black
-    }
-    
-    private enum Dark {
-        static let backgroundColor = UIColor.black
-        static let textColorOfCountWords = UIColor.systemGray
-        static let textColor = UIColor.white
-    }
-
-}
-
+//enum ColorSchemeOption {
+//    case dark
+//    case light
+//}
+//
+//enum ColorAppearence {
+//    static let backgroudColor = SchemeColor(dark: Dark.backgroundColor, light: Light.backgroundColor)
+//    static let textColorOfCountWords = SchemeColor(dark: Dark.textColorOfCountWords, light: Light.textColorOfCountWords)
+//    static let textColor = SchemeColor(dark: Dark.textColor, light: Light.textColor)
+//    
+//    private enum Light {
+//        static let backgroundColor = UIColor.white
+//        static let textColorOfCountWords = UIColor.systemGray
+//        static let textColor = UIColor.black
+//    }
+//    
+//    private enum Dark {
+//        static let backgroundColor = UIColor.black
+//        static let textColorOfCountWords = UIColor.systemGray
+//        static let textColor = UIColor.white
+//    }
+//
+//}
 
 class MainViewController: UIViewController {
     
@@ -74,14 +73,14 @@ class MainViewController: UIViewController {
     lazy var titleStackView: UIStackView = {
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
-        titleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+//        titleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         titleLabel.font = .systemFont(ofSize: 16)
         titleLabel.text = "Базовый словарь"
         let subtitleLabel = UILabel()
         subtitleLabel.textAlignment = .center
         subtitleLabel.text = "250 / 4963"
         subtitleLabel.font = .systemFont(ofSize: 12)
-        subtitleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+//        subtitleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
         return stackView
@@ -89,7 +88,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -103,8 +102,7 @@ class MainViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        
+               
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
             titleStackView.spacing = UIStackView.spacingUseDefault
@@ -116,20 +114,20 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-        countOfLearningWords.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-        EasySecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-        DifficultSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-        DontKnowSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-        
-        EasyLabel.textColor = ColorAppearence.textColor.uiColor()
-        DifficultLabel.textColor = ColorAppearence.textColor.uiColor()
-        DontKnowLabel.textColor = ColorAppearence.textColor.uiColor()
-        
-        LabelFirst.textColor = ColorAppearence.textColor.uiColor()
-        LabelSecond.textColor = ColorAppearence.textColor.uiColor()
-        WordTranscription.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+                
+//        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
+//        countOfLearningWords.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+//        EasySecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+//        DifficultSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+//        DontKnowSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
+//
+//        EasyLabel.textColor = ColorAppearence.textColor.uiColor()
+//        DifficultLabel.textColor = ColorAppearence.textColor.uiColor()
+//        DontKnowLabel.textColor = ColorAppearence.textColor.uiColor()
+//
+//        LabelFirst.textColor = ColorAppearence.textColor.uiColor()
+//        LabelSecond.textColor = ColorAppearence.textColor.uiColor()
+//        WordTranscription.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
@@ -186,13 +184,8 @@ class MainViewController: UIViewController {
     
     @objc private func settingsButtonTap(sender: UIButton) {
         let settingsVC = ModelBuilder.createSettingsModule()
+
         navigationController?.pushViewController(settingsVC, animated: false)
-    }
-    
-    @IBAction func dictionaryListButton(_ sender: Any) {
-        let dictionaryName = "Base1"
-        let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
-        navigationController?.pushViewController(dictionaryListVC, animated: true)
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
