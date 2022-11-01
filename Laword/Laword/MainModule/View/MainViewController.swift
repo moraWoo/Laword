@@ -73,14 +73,12 @@ class MainViewController: UIViewController {
     lazy var titleStackView: UIStackView = {
         let titleLabel = UILabel()
         titleLabel.textAlignment = .center
-//        titleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         titleLabel.font = .systemFont(ofSize: 16)
         titleLabel.text = "Базовый словарь"
         let subtitleLabel = UILabel()
         subtitleLabel.textAlignment = .center
         subtitleLabel.text = "250 / 4963"
         subtitleLabel.font = .systemFont(ofSize: 12)
-//        subtitleLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
         return stackView
@@ -114,20 +112,6 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                
-//        view.backgroundColor = ColorAppearence.backgroudColor.uiColor()
-//        countOfLearningWords.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-//        EasySecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-//        DifficultSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-//        DontKnowSecondLabel.textColor = ColorAppearence.textColorOfCountWords.uiColor()
-//
-//        EasyLabel.textColor = ColorAppearence.textColor.uiColor()
-//        DifficultLabel.textColor = ColorAppearence.textColor.uiColor()
-//        DontKnowLabel.textColor = ColorAppearence.textColor.uiColor()
-//
-//        LabelFirst.textColor = ColorAppearence.textColor.uiColor()
-//        LabelSecond.textColor = ColorAppearence.textColor.uiColor()
-//        WordTranscription.textColor = ColorAppearence.textColorOfCountWords.uiColor()
         
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
@@ -257,9 +241,6 @@ class MainViewController: UIViewController {
             startLearning("5000OxfordWords")
         }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
-//            hideEverything()
-//            self.LabelStart.isHidden = false
-//            self.LabelStart.text = "Вы закончили. Хорошая работа!"
             let dictionaryName = "Base1"
 
             let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
@@ -283,12 +264,7 @@ extension MainViewController {
     func hideEverything() {
         LabelFirst.isHidden = true
         LabelSecond.isHidden = true
-        
-//        settingsButton.isHidden = true
-//        menuButton.isHidden = true
-//        nameOfVocabulary.isHidden = true
-//        countOfWords.isHidden = true
-//
+
         EasyButton.isHidden = true
         DifficultButton.isHidden = true
         DontKnowButton.isHidden = true
@@ -306,10 +282,6 @@ extension MainViewController {
     }
     
     func showTopButtonsAndInformation() {
-//        settingsButton.isHidden = false
-//        menuButton.isHidden = false
-//        nameOfVocabulary.isHidden = false
-//        countOfWords.isHidden = false
         LabelFirst.isHidden = false
         LabelStart.isHidden = true
         progressBar.isHidden = false

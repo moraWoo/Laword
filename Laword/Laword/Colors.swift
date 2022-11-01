@@ -13,27 +13,6 @@ enum Theme: Int, CaseIterable {
     case dark
 }
 
-//struct SchemeColor {
-//
-//    let dark: UIColor
-//    let light: UIColor
-//
-//    func uiColor() -> UIColor {
-//        return colorWith(scheme: ColorScheme.shared.schemeOption)
-//    }
-//
-//    func cgColor() -> CGColor {
-//        return uiColor().cgColor
-//    }
-//
-//    private func colorWith(scheme: ColorSchemeOption) -> UIColor {
-//        switch scheme {
-//            case .dark: return dark
-//            case .light: return light
-//        }
-//    }
-//}
-
 extension Theme {
     @Persist(key: "app_theme", defaultValue: Theme.light.rawValue)
     private static var appTheme: Int
@@ -62,7 +41,6 @@ extension Theme {
         UIApplication.shared.windows
             .filter { $0 != themeWindow }
             .forEach { $0.overrideUserInterfaceStyle = userInterfaceStyle }
-
     }
 }
 
@@ -81,20 +59,3 @@ struct Persist<T> {
         self.defaultValue = defaultValue
     }
 }
-
-//struct ColorScheme {
-//    static let shared = ColorScheme()
-//    private (set) var schemeOption: ColorSchemeOption
-//    
-//    private init() {
-//        let settingsOfDarkMode = UserDefaults.standard.bool(forKey: "dark_mode")
-//        print("======ColorScheme")
-//        if settingsOfDarkMode == true {
-//            schemeOption = .dark
-//            print("+++++++++++ dark mode")
-//        } else {
-//            schemeOption = .light
-//            print("+++++++++++ light mode")
-//        }
-//    }
-//}

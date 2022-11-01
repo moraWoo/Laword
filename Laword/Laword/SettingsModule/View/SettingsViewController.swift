@@ -37,7 +37,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         
         // MARK: Configure collection view
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: listLayout)
-//        collectionView.backgroundColor = ColorAppearence.backgroudColor.uiColor()
         view.addSubview(collectionView)
         collectionView.allowsSelection = false
         
@@ -60,7 +59,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             configuration.text = symbolItem.name
 
             cell.contentConfiguration = configuration
-            
         }
         
         // MARK: Initialize data source
@@ -109,7 +107,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             
             // Customize header appearance to make it more eye-catching
             configuration.textProperties.font = .boldSystemFont(ofSize: 16)
-//            configuration.textProperties.color = ColorAppearence.textColor.uiColor()
             configuration.directionalLayoutMargins = .init(top: 20.0, leading: 0.0, bottom: 10.0, trailing: 0.0)
             
             // Apply the configuration to header view
@@ -159,9 +156,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             
         }
         dataSource.apply(dataSourceSnapshot, animatingDifferences: false)
-        
-        
-
     }
        
     @objc func switchChanged(mySwitch: UISwitch) {
