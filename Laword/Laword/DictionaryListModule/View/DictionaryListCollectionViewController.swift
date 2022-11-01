@@ -12,11 +12,11 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     let itemsPerRow: CGFloat = 2
     let sectionInserts = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     
-    let photos = ["sanfransisco", "newyork", "newyork", "newyork", "newyork", "newyork"]
+    let photos = ["sanfransisco", "newyork"]
     
     let labelOfSection = ["Базовые", "Пользовательские"]
-    let nameOfDictionary = ["Dictionary 1", "Dictionary 2", "Dictionary 3", "Dictionary 4", "Dictionary 5", "Dictionary 6"]
-    let countOfWordsInDictionary = ["1 / 100", "230 / 370", "230 / 370", "230 / 370", "230 / 370", "230 / 370"]
+    let nameOfDictionary = ["Dictionary 1", "Dictionary 2"]
+    let countOfWordsInDictionary = ["1 / 100", "230 / 370"]
     
     var namesOfDicts: [String] = []
     

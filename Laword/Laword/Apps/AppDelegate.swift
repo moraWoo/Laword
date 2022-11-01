@@ -37,7 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         themeWindow.makeKey()
         
-        UserDefaults.standard.set(11, forKey: "amountOfWords")
+        
+        
+        UserDefaults.standard.set(10, forKey: "amountOfWords")
         return true
     }
     

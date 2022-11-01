@@ -13,7 +13,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         HeaderItem(title: "Внешний вид", symbols: [
             SFSymbolItem(name: "Темная тема", imageName: "powersleep"),
             SFSymbolItem(name: "Кнопки слева", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
-            SFSymbolItem(name: "Количество слов", imageName: "list.bullet.rectangle.fill"),
         ]),
         HeaderItem(title: "Обучение", symbols: [
             SFSymbolItem(name: "Количество слов", imageName: "list.bullet.rectangle.fill"),
@@ -68,8 +67,10 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,for: indexPath,item: symbolItem)
             
             let sections = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-           
+            let rows = self.dataSource.snapshot().itemIdentifiers[indexPath.item]
+            print("rows\(rows)")
             if sections.title == "Внешний вид" {
+                
                 let switchInCell = UISwitch()
 
                 let darkMode = UserDefaults.standard.bool(forKey: "dark_mode")
@@ -155,12 +156,17 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         <UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionFooter) {
             [unowned self] (footerView, elementKind, indexPath) in
             
-            let headerItem = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            let symbolCount = headerItem.symbols.count
-            
+//            let headerItem = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+            let sections = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+
             // Configure footer view content
             var configuration = footerView.defaultContentConfiguration()
-            configuration.text = "Symbol count: \(symbolCount)"
+            if sections.title == "Внешний вид" {
+                configuration.text = "Настройте внешний вид"
+            } else {
+                configuration.text = "Укажите количество изучаемых слов"
+            }
+            
             footerView.contentConfiguration = configuration
         }
         
@@ -226,7 +232,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 if mySwitch.isOn == true {
                     print("Buttons of the left")
                     UserDefaults.standard.set(true, forKey: "leftMode")
-
                 } else {
                     print("Buttons of the right")
                     UserDefaults.standard.set(false, forKey: "leftMode")

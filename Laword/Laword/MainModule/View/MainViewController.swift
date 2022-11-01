@@ -75,7 +75,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
+        changeConstraintsOfStackButtons(leftMode: leftRightMode)
+
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -116,11 +118,10 @@ class MainViewController: UIViewController {
         progressBar.progress = 0
                
         hideEverything()
-        startLearning("5000OxfordWords")
+        startLearning("5000 Oxford Words")
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
-        
     }
     
     func startLearning(_ dictionaryName: String) {
@@ -447,5 +448,6 @@ extension MainViewController {
                 stackViewWithDontText.trailingAnchor.constraint(equalTo: viewOfDontKnowButton.trailingAnchor, constant: -90),
           ])
         }
+        
     }
 }
