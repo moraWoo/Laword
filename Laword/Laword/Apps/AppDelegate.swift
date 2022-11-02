@@ -22,7 +22,7 @@ let themeWindow = ThemeWindow()
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let theme = UserDefaults.standard.bool(forKey: "dark_mode")
@@ -37,9 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         themeWindow.makeKey()
         
-        
-        
-        UserDefaults.standard.set(10, forKey: "amountOfWords")
+        if let _ = UserDefaults.standard.object(forKey: "amountOfWords") {
+            UserDefaults.standard.bool(forKey: "amountOfWords")
+        } else {
+            UserDefaults.standard.set(10, forKey: "amountOfWords")
+        }
         return true
     }
     

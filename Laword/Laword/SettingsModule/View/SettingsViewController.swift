@@ -114,23 +114,9 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                     labelForCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -12.0),
                     labelForCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
                 ])
-                
-//                labelForCell.text = String(Int(stepper.value))
-//
-//                let cellWithLabel = UICellAccessory.CustomViewConfiguration(
-//                    customView: labelForCell,
-//                    placement: .trailing()
-//                )
-//                cell.accessories = [.customView(configuration: cellWithLabel)]
             }
-            
-            let ini = indexPath.row
-            print("ini \(ini)")
-    
             return cell
         }
-        
-
         
         // MARK: Supplementary view registration
         let headerRegistration = UICollectionView.SupplementaryRegistration
@@ -156,7 +142,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         <UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionFooter) {
             [unowned self] (footerView, elementKind, indexPath) in
             
-//            let headerItem = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             let sections = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
 
             // Configure footer view content
@@ -232,10 +217,11 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 if mySwitch.isOn == true {
                     print("Buttons of the left")
                     UserDefaults.standard.set(true, forKey: "leftMode")
+                    
                 } else {
                     print("Buttons of the right")
                     UserDefaults.standard.set(false, forKey: "leftMode")
-
+                    
                 }
             default:
                 return

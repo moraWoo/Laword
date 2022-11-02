@@ -39,9 +39,9 @@ class MainViewController: UIViewController {
     
     @IBOutlet var stackOfButtons: UIStackView!
     
-    @IBOutlet var viewOfEasyButton: UIView!
-    @IBOutlet var viewOfDifficultButton: UIView!
-    @IBOutlet var viewOfDontKnowButton: UIView!
+    @IBOutlet var viewOfEasyButton: UIStackView!
+    @IBOutlet var viewOfDifficultButton: UIStackView!
+    @IBOutlet var viewOfDontKnowButton: UIStackView!
     
     @IBOutlet var stackViewWithEasyText: UIStackView!
     @IBOutlet var stackViewWithDifText: UIStackView!
@@ -75,8 +75,6 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-        changeConstraintsOfStackButtons(leftMode: leftRightMode)
 
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
@@ -91,11 +89,7 @@ class MainViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-           
-        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-        print("leftRightMode: \(leftRightMode)")
-        changeConstraintsOfStackButtons(leftMode: leftRightMode)
-        
+                   
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
             titleStackView.spacing = UIStackView.spacingUseDefault
@@ -108,11 +102,6 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-        print("leftRightMode: \(leftRightMode)")
-        changeConstraintsOfStackButtons(leftMode: leftRightMode)
-
-        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -122,6 +111,10 @@ class MainViewController: UIViewController {
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+        
+        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
+        print("============leftRightMode: \(leftRightMode)")
+        changeConstraintsOfStackButtons(leftMode: leftRightMode)
     }
     
     func startLearning(_ dictionaryName: String) {
@@ -329,125 +322,178 @@ extension UIWindow {
 extension MainViewController {
 
     func changeConstraintsOfStackButtons(leftMode: Bool) {
+        stackOfButtons.translatesAutoresizingMaskIntoConstraints = false
+        EasyLabel.translatesAutoresizingMaskIntoConstraints = false
+        EasySecondLabel.translatesAutoresizingMaskIntoConstraints = false
+        DifficultLabel.translatesAutoresizingMaskIntoConstraints = false
+        DifficultSecondLabel.translatesAutoresizingMaskIntoConstraints = false
+        DontKnowLabel.translatesAutoresizingMaskIntoConstraints = false
+        DontKnowSecondLabel.translatesAutoresizingMaskIntoConstraints = false
+        stackViewWithEasyText.translatesAutoresizingMaskIntoConstraints = false
+        stackViewWithDifText.translatesAutoresizingMaskIntoConstraints = false
+        stackViewWithDontText.translatesAutoresizingMaskIntoConstraints = false
+        EasyButton.translatesAutoresizingMaskIntoConstraints = false
+        DifficultButton.translatesAutoresizingMaskIntoConstraints = false
+        DontKnowButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(stackOfButtons)
+        
+        // MARK: Add 3 view to StackView (stackOfButtons)
+        stackOfButtons.addArrangedSubview(viewOfEasyButton)
+        stackOfButtons.addArrangedSubview(viewOfDifficultButton)
+        stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
+        
+        // MARK: Add Labels to StackView
+        stackViewWithEasyText.addArrangedSubview(EasyLabel)
+        stackViewWithEasyText.addArrangedSubview(EasySecondLabel)
+        stackViewWithDifText.addArrangedSubview(DifficultLabel)
+        stackViewWithDifText.addArrangedSubview(DifficultSecondLabel)
+        stackViewWithDontText.addArrangedSubview(DontKnowLabel)
+        stackViewWithDontText.addArrangedSubview(DontKnowSecondLabel)
+        
         if leftMode {
-            stackOfButtons.translatesAutoresizingMaskIntoConstraints = false
-
-            NSLayoutConstraint.activate([
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100.0),
-            ])
-
+            // MARK: Add buttons and stackviews with label to views
+            viewOfEasyButton.addArrangedSubview(EasyButton)
+            viewOfEasyButton.addArrangedSubview(stackViewWithEasyText)
+            viewOfDifficultButton.addArrangedSubview(DifficultButton)
+            viewOfDifficultButton.addArrangedSubview(stackViewWithDifText)
+            viewOfDontKnowButton.addArrangedSubview(DontKnowButton)
+            viewOfDontKnowButton.addArrangedSubview(stackViewWithDontText)
+            
+            // MARK: Configure stackOfButtons
             stackOfButtons.axis = NSLayoutConstraint.Axis.vertical
             stackOfButtons.distribution = UIStackView.Distribution.equalSpacing
-            stackOfButtons.alignment = UIStackView.Alignment.center
-            stackOfButtons.spacing = 10
+            stackOfButtons.alignment = UIStackView.Alignment.leading
+            stackOfButtons.spacing = 20
             stackOfButtons.addArrangedSubview(viewOfEasyButton)
             stackOfButtons.addArrangedSubview(viewOfDifficultButton)
             stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
-            
-            stackViewWithEasyText.alignment = .trailing
-            
-            NSLayoutConstraint.activate([
-                
-                // Widths of Labels
-                EasyLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                EasySecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DifficultLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DifficultSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DontKnowLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DontKnowSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                
-                
-                // Size of stackView of labels
-                stackViewWithEasyText.widthAnchor.constraint(equalToConstant: 150.0),
-                stackViewWithDifText.widthAnchor.constraint(equalToConstant: 150.0),
-                stackViewWithDontText.widthAnchor.constraint(equalToConstant: 150.0),
-                
-                // EasyButton
-                stackViewWithEasyText.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
-                
-                EasyButton.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
-                EasyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-                
-                EasyLabel.leadingAnchor.constraint(equalTo: EasyButton.leadingAnchor, constant: 50),
-                
-                stackViewWithEasyText.trailingAnchor.constraint(equalTo: viewOfEasyButton.trailingAnchor, constant: -90),
-                
-                // DifficultButton
-                stackViewWithDifText.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
-                
-                DifficultButton.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
-                DifficultButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
 
-                stackViewWithDifText.trailingAnchor.constraint(equalTo: viewOfDifficultButton.trailingAnchor, constant: -90),
-                
-                // DontKnowButton
-                stackViewWithDontText.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
-                
-                DontKnowButton.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
-                DontKnowButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-                
-                stackViewWithDontText.trailingAnchor.constraint(equalTo: viewOfDontKnowButton.trailingAnchor, constant: -90),
-          ])
-        
+            NSLayoutConstraint.activate([
+                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -94.0),
+                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            ])
+            
+            // MARK: Configure StackViews with labels
+            stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithEasyText.alignment = UIStackView.Alignment.center
+            stackViewWithEasyText.spacing = 10
+
+            stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDifText.alignment = UIStackView.Alignment.center
+            stackViewWithDifText.spacing = 10
+
+            stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDontText.alignment = UIStackView.Alignment.center
+            stackViewWithDontText.spacing = 10
+            
+            // MARK: Configure stackViews with buttons and labels
+            viewOfEasyButton.axis = NSLayoutConstraint.Axis.horizontal
+            viewOfEasyButton.distribution = UIStackView.Distribution.equalSpacing
+            viewOfEasyButton.alignment = UIStackView.Alignment.center
+            viewOfEasyButton.spacing = 10
+            
+            viewOfDifficultButton.axis = NSLayoutConstraint.Axis.horizontal
+            viewOfDifficultButton.distribution = UIStackView.Distribution.equalSpacing
+            viewOfDifficultButton.alignment = UIStackView.Alignment.center
+            viewOfDifficultButton.spacing = 10
+            
+            viewOfDontKnowButton.axis = NSLayoutConstraint.Axis.horizontal
+            viewOfDontKnowButton.distribution = UIStackView.Distribution.equalSpacing
+            viewOfDontKnowButton.alignment = UIStackView.Alignment.center
+            viewOfDontKnowButton.spacing = 10
+            
+            // MARK: Configure stackViews with labels
+            stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithEasyText.alignment = UIStackView.Alignment.leading
+            stackViewWithEasyText.spacing = 10
+            
+            stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDifText.alignment = UIStackView.Alignment.leading
+            stackViewWithDifText.spacing = 10
+            
+            stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDontText.alignment = UIStackView.Alignment.leading
+            stackViewWithDontText.spacing = 10
+                                
         } else {
-            stackOfButtons.translatesAutoresizingMaskIntoConstraints = false
+            // MARK: Add buttons and stackviews with label to views
+            viewOfEasyButton.addArrangedSubview(stackViewWithEasyText)
+            viewOfEasyButton.addArrangedSubview(EasyButton)
+            viewOfDifficultButton.addArrangedSubview(stackViewWithDifText)
+            viewOfDifficultButton.addArrangedSubview(DifficultButton)
+            viewOfDontKnowButton.addArrangedSubview(stackViewWithDontText)
+            viewOfDontKnowButton.addArrangedSubview(DontKnowButton)
 
-            NSLayoutConstraint.activate([
-                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100.0),
-            ])
-
+            // MARK: Configure stackOfButtons
             stackOfButtons.axis = NSLayoutConstraint.Axis.vertical
             stackOfButtons.distribution = UIStackView.Distribution.equalSpacing
-            stackOfButtons.alignment = UIStackView.Alignment.center
-            stackOfButtons.spacing = 10
+            stackOfButtons.alignment = UIStackView.Alignment.trailing
+            stackOfButtons.spacing = 20
             stackOfButtons.addArrangedSubview(viewOfEasyButton)
             stackOfButtons.addArrangedSubview(viewOfDifficultButton)
             stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
-            
-            
 
             NSLayoutConstraint.activate([
-                
-                // Widths of Labels
-                EasyLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                EasySecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DifficultLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DifficultSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DontKnowLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                DontKnowSecondLabel.widthAnchor.constraint(equalToConstant: 150.0),
-                
-                
-                // Size of stackView of labels
-                stackViewWithEasyText.widthAnchor.constraint(equalToConstant: 150.0),
-                stackViewWithDifText.widthAnchor.constraint(equalToConstant: 150.0),
-                stackViewWithDontText.widthAnchor.constraint(equalToConstant: 150.0),
-                
-                // EasyButton
-                stackViewWithEasyText.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
-                
-                EasyButton.centerYAnchor.constraint(equalTo: viewOfEasyButton.centerYAnchor, constant: 0.0),
-                EasyButton.trailingAnchor.constraint(equalTo: stackOfButtons.trailingAnchor, constant: 0),
-                
-                stackViewWithEasyText.trailingAnchor.constraint(equalTo: viewOfEasyButton.trailingAnchor, constant: -90),
-                
-                // DifficultButton
-                stackViewWithDifText.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
-                
-                DifficultButton.centerYAnchor.constraint(equalTo: viewOfDifficultButton.centerYAnchor, constant: 0.0),
-                DifficultButton.trailingAnchor.constraint(equalTo: stackOfButtons.trailingAnchor, constant: 0),
-                
-                stackViewWithDifText.trailingAnchor.constraint(equalTo: viewOfDifficultButton.trailingAnchor, constant: -90),
-                
-                // DontKnowButton
-                stackViewWithDontText.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
-                
-                DontKnowButton.centerYAnchor.constraint(equalTo: viewOfDontKnowButton.centerYAnchor, constant: 0.0),
-                DontKnowButton.trailingAnchor.constraint(equalTo: stackOfButtons.trailingAnchor, constant: 0),
-                
-                stackViewWithDontText.trailingAnchor.constraint(equalTo: viewOfDontKnowButton.trailingAnchor, constant: -90),
-          ])
+                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -94.0),
+                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            ])
+            
+            // MARK: Configure StackViews with labels
+            stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithEasyText.alignment = UIStackView.Alignment.center
+            stackViewWithEasyText.spacing = 10
+
+            stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDifText.alignment = UIStackView.Alignment.center
+            stackViewWithDifText.spacing = 10
+
+            stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDontText.alignment = UIStackView.Alignment.center
+            stackViewWithDontText.spacing = 10
+            
+            // MARK: Configure stackViews with buttons and labels
+            viewOfEasyButton.axis = NSLayoutConstraint.Axis.horizontal
+            viewOfEasyButton.distribution = UIStackView.Distribution.equalSpacing
+            viewOfEasyButton.alignment = UIStackView.Alignment.center
+            viewOfEasyButton.spacing = 10
+            
+            viewOfDifficultButton.axis = NSLayoutConstraint.Axis.horizontal
+            viewOfDifficultButton.distribution = UIStackView.Distribution.equalSpacing
+            viewOfDifficultButton.alignment = UIStackView.Alignment.center
+            viewOfDifficultButton.spacing = 10
+            
+            viewOfDontKnowButton.axis = NSLayoutConstraint.Axis.horizontal
+            viewOfDontKnowButton.distribution = UIStackView.Distribution.equalSpacing
+            viewOfDontKnowButton.alignment = UIStackView.Alignment.center
+            viewOfDontKnowButton.spacing = 10
+            
+            // MARK: Configure stackViews with labels
+            stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithEasyText.alignment = UIStackView.Alignment.trailing
+            stackViewWithEasyText.spacing = 10
+            
+            stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDifText.alignment = UIStackView.Alignment.trailing
+            stackViewWithDifText.spacing = 10
+            
+            stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
+            stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
+            stackViewWithDontText.alignment = UIStackView.Alignment.trailing
+            stackViewWithDontText.spacing = 10
         }
-        
     }
 }
