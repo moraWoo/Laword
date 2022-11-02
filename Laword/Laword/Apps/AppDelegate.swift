@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let theme = UserDefaults.standard.bool(forKey: "dark_mode")
+        
         if theme {
             DispatchQueue.main.async {
                 Theme.dark.setActive()
@@ -42,6 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             UserDefaults.standard.set(10, forKey: "amountOfWords")
         }
+        
+        UserDefaults.standard.set(0, forKey: "currentDictionary")
+        
         return true
     }
     

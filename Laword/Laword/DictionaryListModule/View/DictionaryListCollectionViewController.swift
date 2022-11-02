@@ -15,7 +15,7 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     let photos = ["sanfransisco", "newyork"]
     
     let labelOfSection = ["Базовые", "Пользовательские"]
-    let nameOfDictionary = ["Dictionary 1", "Dictionary 2"]
+//    let nameOfDictionary = ["Dictionary 1", "Dictionary 2"]
     let countOfWordsInDictionary = ["1 / 100", "230 / 370"]
     
     var namesOfDicts: [String] = []
@@ -27,6 +27,8 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         
         navigationItem.title = "Список словарей"
         
+        namesOfDicts = presenter.getNamesOfDictionary() ?? [""]
+
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.scrollDirection = .vertical
@@ -38,7 +40,7 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -46,22 +48,21 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        let tappedCell = collectionView.cellForItem(at: indexPath) as! DictionaryCollectionViewCell
-        guard let nameOfDictionary = tappedCell.nameOfDictionary else { return }
-        print("Нажата следующая ячейка: \(nameOfDictionary)")
+        if indexPath.item == 0 {
+            UserDefaults.standard.set(0, forKey: "currentDictionary")
+        } else {
+            UserDefaults.standard.set(1, forKey: "currentDictionary")
+        }
         _ = navigationController?.popToRootViewController(animated: true)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dictionaryCell", for: indexPath) as! DictionaryCollectionViewCell
         
-        namesOfDicts = presenter.getNamesOfDictionary() ?? [""]
-        cell.nameOfDictionary.text = namesOfDicts[indexPath.row]
-        
+        cell.nameOfDictionary.text = namesOfDicts[indexPath.item]
+        UserDefaults.standard.set(indexPath.item, forKey: "currentDictionary")
         cell.countOfWordsInCurrentDictionary.text = countOfWordsInDictionary[indexPath.row]
 
-        
         let imageName = photos[indexPath.item]
         let image = UIImage(named: imageName)
         
@@ -99,9 +100,9 @@ extension DictionaryListCollectionViewController: UICollectionViewDelegateFlowLa
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identifier, for: indexPath) as! HeaderCollectionReusableView
         
         if indexPath.section == 0 {
-            header.configure(labelOfSection[0])
+            header.configure(labelOfSection[indexPath.section])
         } else {
-            header.configure(labelOfSection[1])
+            header.configure(labelOfSection[indexPath.section])
         }
         return header
     }

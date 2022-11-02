@@ -23,6 +23,8 @@ protocol MainViewPresenterProtocol: AnyObject { //Input
     var fetchedWords: [Word]! { get set }
     var fetchedShowedWords: [Word]? { get set }
     var dictionaryName: String? { get set }
+    func getNamesOfDictionary() -> [String]?
+    func saveContext ()
 }
 
 class MainPresenter: MainViewPresenterProtocol {
@@ -37,10 +39,11 @@ class MainPresenter: MainViewPresenterProtocol {
     required init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol) {
         self.view = view
         self.dataStoreManager = dataStoreManager
-        fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName ?? "5000OxfordWords")
+        
+        fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName ?? "5000 Oxford Words")
         //You can add new files of dictionaries with words
-        getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000OxfordWords")
-        getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "20words")
+        getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000 Oxford Words")
+        getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "Test Dictionary")
     }
     
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
@@ -69,6 +72,11 @@ class MainPresenter: MainViewPresenterProtocol {
         dataStoreManager.statisticShowWords(searchKey)
     }
 
+    func getNamesOfDictionary() -> [String]? {
+        return dataStoreManager.getNamesOfDictionary()
+    }
 
-
+    func saveContext() {
+        saveContext()
+    }
 }

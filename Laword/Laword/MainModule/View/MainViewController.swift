@@ -58,15 +58,17 @@ class MainViewController: UIViewController {
     var progressCount = 0.0
     let dateTime = Date().timeIntervalSince1970
     var selectedWord: Word!
-    
+    var currentDict: Int!
+    var namesOfDictionary: [String]?
+    let titleLabel = UILabel()
+    let subtitleLabel = UILabel()
+
     lazy var titleStackView: UIStackView = {
-        let titleLabel = UILabel()
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 16)
-        titleLabel.text = "Базовый словарь"
-        let subtitleLabel = UILabel()
+        
         subtitleLabel.textAlignment = .center
-        subtitleLabel.text = "250 / 4963"
+        
         subtitleLabel.font = .systemFont(ofSize: 12)
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
@@ -75,13 +77,16 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         addButtonsAndLabelsToNavigatorBar()
-        navigationItem.titleView = titleStackView
         progressBar.progress = 0
-               
+        
         hideEverything()
-        startLearning("5000OxfordWords")
+        currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
+        guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
+        startLearning(namesOfDictionary[currentDict])
+        
+        titleLabel.text = namesOfDictionary[currentDict]
+        subtitleLabel.text = "250 / 4963"
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
@@ -102,18 +107,23 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
+        guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
+        startLearning(namesOfDictionary[currentDict])
+        
+        titleLabel.text = namesOfDictionary[currentDict]
+        subtitleLabel.text = "250 / 4963"
+        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
                
         hideEverything()
-        startLearning("5000 Oxford Words")
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         
         let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-        print("============leftRightMode: \(leftRightMode)")
         changeConstraintsOfStackButtons(leftMode: leftRightMode)
     }
     
@@ -231,7 +241,10 @@ class MainViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [self] _ in
             self.count = 0
             hideEverything()
-            startLearning("5000OxfordWords")
+            
+            currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
+            guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
+            startLearning(namesOfDictionary[currentDict])
         }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
             let dictionaryName = "Base1"

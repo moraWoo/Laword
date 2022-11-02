@@ -33,7 +33,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         layoutConfig.footerMode = .supplementary
         let listLayout = UICollectionViewCompositionalLayout.list(using: layoutConfig)
         
-        
         // MARK: Configure collection view
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: listLayout)
         view.addSubview(collectionView)
@@ -48,7 +47,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
         ])
 
-            
         // MARK: Cell registration
         let symbolCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, SFSymbolItem> {
             (cell, indexPath, symbolItem) in
@@ -151,7 +149,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             } else {
                 configuration.text = "Укажите количество изучаемых слов"
             }
-            
             footerView.contentConfiguration = configuration
         }
         
@@ -160,13 +157,10 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             (collectionView, elementKind, indexPath) -> UICollectionReusableView? in
             
             if elementKind == UICollectionView.elementKindSectionHeader {
-                
                 // Dequeue header view
                 return self.collectionView.dequeueConfiguredReusableSupplementary(
                     using: headerRegistration, for: indexPath)
-                
             } else {
-                
                 // Dequeue footer view
                 return self.collectionView.dequeueConfiguredReusableSupplementary(
                     using: footerRegistration, for: indexPath)
@@ -182,7 +176,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         // Loop through each header item to append symbols to their respective section
         for headerItem in modelObjects {
             dataSourceSnapshot.appendItems(headerItem.symbols, toSection: headerItem)
-            
         }
         dataSource.apply(dataSourceSnapshot, animatingDifferences: false)
     }
@@ -194,9 +187,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
     }
        
     @objc func switchChanged(mySwitch: UISwitch) {
-        
-        print("switch changed: \(mySwitch.tag)")
-        print("value is: \(mySwitch.isOn)")
         let tag = mySwitch.tag
         switch tag {
             case 0:
@@ -217,11 +207,9 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 if mySwitch.isOn == true {
                     print("Buttons of the left")
                     UserDefaults.standard.set(true, forKey: "leftMode")
-                    
                 } else {
                     print("Buttons of the right")
                     UserDefaults.standard.set(false, forKey: "leftMode")
-                    
                 }
             default:
                 return
@@ -232,6 +220,4 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         let appDefaults = [String:AnyObject]()
         UserDefaults.standard.register(defaults: appDefaults)
     }
-    
-
 }

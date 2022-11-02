@@ -29,7 +29,6 @@ class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
         self.view = view
         self.dataStoreManager = dataStoreManager
         self.dictionaryName = dictionaryName
-//        getNamesOfDictionary()
     }
     public func setDictionaryName() {
         self.view?.setDictionaryName(dictionaryName: dictionaryName)

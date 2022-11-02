@@ -23,6 +23,10 @@ public enum Grade: Int {
     case bright
 }
 
+enum DictionaryError: Error {
+    case emptyArray
+}
+
 protocol DataStoreManagerProtocol {
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word]
     func getShownWords(wordShowNow: String) -> [Word]
@@ -31,13 +35,14 @@ protocol DataStoreManagerProtocol {
     func statisticWords(_ searchKey: String)
     func statisticShowWords(_ searchKey: Bool)
     func getNamesOfDictionary() -> [String]?
+    
+    func saveContext()
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
     var countWords = 0
     var wordDictionary: [String : AnyObject]!
-//    var sm2protocol: SM2ManagerProtocol!
-    var fetchedWords: [Word]!
+    var fetchedWords: [Word]?
     var selectedWord: Word?
     
     var namesOfDictionary: [String]? = []
@@ -78,7 +83,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         let predicateOfDictionary = NSPredicate(
             format: "%K = %@",
-            argumentArray: [#keyPath(Word.dictionary.name), "5000OxfordWords"])
+            argumentArray: [#keyPath(Word.dictionary.name), dictionaryName])
         
         var calendar = Calendar.current
         calendar.timeZone = NSTimeZone.local
@@ -90,15 +95,27 @@ class DataStoreManager: DataStoreManagerProtocol {
         let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Word.nextDate), dateTo! as NSDate)
         let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate, predicateOfUnshowedWords, predicateOfDictionary])
         fetchRequest.predicate = dateAndUnshowedPredicate
-        
+             
+       
         do {
-            let results = try context.fetch(fetchRequest)
+            let results = try? context.fetch(fetchRequest)
             fetchedWords = results
+            print("работает")
         } catch {
-            print(error.localizedDescription)
+            print("не работает")
+        }
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
         }
         return fetchedWords
     }
+
         
     // MARK: - Save keys according to different buttons tapped (Easy, Difficult, DontKnow)
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {
@@ -118,7 +135,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             print(error.localizedDescription)
         }
         
-        guard let selectedWord = fetchedWords.first else { return }
+        guard let selectedWord = fetchedWords?.first else { return }
                
         selectedWord.word = word
         selectedWord.wordKey = key
@@ -236,7 +253,7 @@ class DataStoreManager: DataStoreManagerProtocol {
     func getNamesOfDictionary() -> [String]? {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
-        
+        namesOfDictionary = []
         do {
             let results = try context.fetch(fetchRequest)
             
@@ -247,11 +264,9 @@ class DataStoreManager: DataStoreManagerProtocol {
                 print("============ Наименование словарей: \(String(describing: nameOfDict.name))")
                 print("============ Массив словарей: \(String(describing: namesOfDictionary)), количество: \(String(describing: countOfDictionaries))")
             }
-            
         } catch {
             print(error.localizedDescription)
         }
-        
         return namesOfDictionary
     }
     
