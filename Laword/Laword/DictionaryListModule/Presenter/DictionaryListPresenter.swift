@@ -17,6 +17,8 @@ protocol DictionaryListViewPresenterProtocol: AnyObject {
     init(view: DictionaryListViewProtocol, dataStoreManager: DataStoreManagerProtocol, dictionaryName: String)
     func setDictionaryName()
     func getNamesOfDictionary() -> [String]?
+    func getAllWordsCount() -> [String: Int]
+    func getRemainWordsCount() -> [String : Int]
 }
 
 class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
@@ -37,5 +39,18 @@ class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
     func getNamesOfDictionary() -> [String]? {
         namesOfDicts = dataStoreManager.getNamesOfDictionary()
         return namesOfDicts
+    }
+    
+    func getAllWordsCount() -> [String : Int] {
+        let allWords = dataStoreManager.getAllWordsCount()
+        print("1--------------> ALLWORDS \(allWords)")
+        return allWords
+    }
+
+    func getRemainWordsCount() -> [String : Int] {
+        
+        let remainWords = dataStoreManager.getRemainWordsCount()
+        print("1--------------> REMAINWORDS \(remainWords)")
+        return remainWords
     }
 }

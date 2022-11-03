@@ -36,6 +36,9 @@ protocol DataStoreManagerProtocol {
     func statisticShowWords(_ searchKey: Bool)
     func getNamesOfDictionary() -> [String]?
     func saveContext()
+    
+    func getAllWordsCount() -> [String: Int]
+    func getRemainWordsCount() -> [String: Int]
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
@@ -76,13 +79,13 @@ class DataStoreManager: DataStoreManagerProtocol {
     }
     
 
-//    func getAllWordsCount() -> [String: Int] {
-//        return allWordsInCurrentDictionary
-//    }
-//
-//    func getRemainWordsCount() -> [String: Int] {
-//        return remainingWordsInCurrentDictionary
-//    }
+    func getAllWordsCount() -> [String: Int] {
+        return allWordsInCurrentDictionary
+    }
+
+    func getRemainWordsCount() -> [String: Int] {
+        return remainingWordsInCurrentDictionary
+    }
         
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
         let context = persistentContainer.viewContext
@@ -326,6 +329,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         selectedDict.countAllWords = Int16(countWords)
         allWordsInCurrentDictionary[nameOfDictionary] = countWords
         
+        UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: nameOfDictionary)
         print("QQQQQQQQQQQQ\(allWordsInCurrentDictionary)")
     }
 }

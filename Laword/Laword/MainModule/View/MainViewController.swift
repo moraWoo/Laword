@@ -120,13 +120,11 @@ class MainViewController: UIViewController {
         startLearning(namesOfDictionary[currentDict])
 
         titleLabel.text = namesOfDictionary[currentDict]
-
-//   
-//        print("allWordsallWordsallWordsallWordsallWordsallWordsallWords\(allWords)")
-//        let currentNameOfDict = namesOfDictionary[currentDict]
-//
-//        subtitleLabel.text = String(allWords[currentNameOfDict] ?? 0)
         
+        let allWords = presenter.getAllWordsCount()
+        let currentNameOfDict = namesOfDictionary[currentDict]
+        let remainWords = presenter.getRemainWordsCount()
+        subtitleLabel.text = "\(remainWords[currentNameOfDict] ?? 0) " + "/" + " \(allWords[currentNameOfDict] ?? 0)"
         
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView

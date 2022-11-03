@@ -22,6 +22,9 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     
     var namesOfDicts: [String] = []
     
+    var dict1: String = ""
+    var dict2: Int!
+    
     var presenter: DictionaryListViewPresenterProtocol!
     
     override func viewDidLoad() {
@@ -71,8 +74,18 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         
         cell.nameOfDictionary.text = namesOfDicts[indexPath.item]
         UserDefaults.standard.set(indexPath.item, forKey: "currentDictionary")
-        cell.countOfWordsInCurrentDictionary.text = countOfWordsInDictionary[indexPath.row]
-
+        
+        let currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
+              
+        let nameOfCurentDictionary = namesOfDicts[indexPath.item]
+        
+        let allWordsFromUserDef = UserDefaults.standard.dictionary(forKey: nameOfCurentDictionary) ?? ["" : ""]
+        let numberOfAllWords = allWordsFromUserDef[nameOfCurentDictionary] as? Int
+        
+        if let stringWithNumberOfAllWords = numberOfAllWords {
+            cell.countOfWordsInCurrentDictionary.text = String(stringWithNumberOfAllWords)
+        }
+        
         let imageName = photos[indexPath.item]
         let image = UIImage(named: imageName)
         
@@ -139,3 +152,5 @@ extension DictionaryListCollectionViewController {
         }))
     }
 }
+
+

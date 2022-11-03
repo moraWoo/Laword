@@ -24,8 +24,10 @@ protocol MainViewPresenterProtocol: AnyObject { //Input
     var fetchedShowedWords: [Word]? { get set }
     var dictionaryName: String? { get set }
     func getNamesOfDictionary() -> [String]?
-    func saveContext ()
-
+    func saveContext()
+    
+    func getAllWordsCount() -> [String: Int]
+    func getRemainWordsCount() -> [String : Int]
 }
 
 class MainPresenter: MainViewPresenterProtocol {
@@ -83,13 +85,15 @@ class MainPresenter: MainViewPresenterProtocol {
         saveContext()
     }
     
-//    func getAllWordsCount() -> [String : Int] {
-//        let allWords = getAllWordsCount()
-//        return allWords
-//    }
-//
-//    func getRemainWordsCount() -> [String : Int] {
-//        let remainWords = getRemainWordsCount()
-//        return remainWords
-//    }
+    func getAllWordsCount() -> [String : Int] {
+        let allWords = dataStoreManager.getAllWordsCount()
+        print("================--------------> ALLWORDS \(allWords)")
+        return allWords
+    }
+
+    func getRemainWordsCount() -> [String : Int] {
+        let remainWords = dataStoreManager.getRemainWordsCount()
+        print("================--------------> REMAINWORDS \(remainWords)")
+        return remainWords
+    }
 }
