@@ -177,7 +177,6 @@ class MainViewController: UIViewController {
     
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
         view.resignFirstResponder()
-//        guard let selectedWord = fetchedWords?[count] else { return }
         showAnswers("showWordFirst", selectedWord)
     }
     

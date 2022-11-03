@@ -14,20 +14,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowsScene = (scene as? UIWindowScene) else { return }
         
+        let launchBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        UserDefaults.standard.set(true, forKey: "launchedBefore")
+        
         window = UIWindow(frame: windowsScene.coordinateSpace.bounds)
         window?.windowScene = windowsScene
-        let mainVC = ModelBuilder.createMainModule()
-        let navBar = UINavigationController(rootViewController: mainVC)
         
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
+        if launchBefore {
+            let mainVC = ModelBuilder.createMainModule()
+            let navBar = UINavigationController(rootViewController: mainVC)
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            
+            navBar.navigationBar.standardAppearance = appearance
+            navBar.navigationBar.scrollEdgeAppearance = appearance
+            
+            window?.rootViewController = navBar
+            window?.makeKeyAndVisible()
+        } else {
+            let mainVC = ModelBuilder.createOnboardingPage1()
+            window?.rootViewController = mainVC
+            window?.makeKeyAndVisible()
+        }
         
-        navBar.navigationBar.standardAppearance = appearance
-        navBar.navigationBar.scrollEdgeAppearance = appearance
-        
-        window?.rootViewController = navBar
-//        window?.rootViewController = mainVC
-        window?.makeKeyAndVisible()
     }
+
 }
 

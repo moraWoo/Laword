@@ -28,6 +28,10 @@
 		6372A07E290325BC00889958 /* DictionaryListCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6372A07C290325BC00889958 /* DictionaryListCollectionViewController.xib */; };
 		6372A0802903262800889958 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A07F2903262800889958 /* HeaderCollectionReusableView.swift */; };
 		6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387995928F2F49B00D9590F /* SM2Manager.swift */; };
+		63A5FA7C291464CC006ED7D3 /* OnboardingViewControllerPage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5FA7A291464CC006ED7D3 /* OnboardingViewControllerPage1.swift */; };
+		63A5FA7D291464CC006ED7D3 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63A5FA7B291464CC006ED7D3 /* OnboardingViewController.xib */; };
+		63A5FA7F29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5FA7E29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift */; };
+		63A5FA8129146B2B006ED7D3 /* OnboardingViewControllerPage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5FA8029146B2B006ED7D3 /* OnboardingViewControllerPage3.swift */; };
 		63DB606E28BB2124002ADD6E /* DataStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB606D28BB2124002ADD6E /* DataStoreManager.swift */; };
 		63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FA28CE237A00D34438 /* MainPresenter.swift */; };
 		63F402FD28CE25CA00D34438 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F402FC28CE25CA00D34438 /* Builder.swift */; };
@@ -60,6 +64,10 @@
 		6372A07C290325BC00889958 /* DictionaryListCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryListCollectionViewController.xib; sourceTree = "<group>"; };
 		6372A07F2903262800889958 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		6387995928F2F49B00D9590F /* SM2Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Manager.swift; sourceTree = "<group>"; };
+		63A5FA7A291464CC006ED7D3 /* OnboardingViewControllerPage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerPage1.swift; sourceTree = "<group>"; };
+		63A5FA7B291464CC006ED7D3 /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
+		63A5FA7E29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerPage2.swift; sourceTree = "<group>"; };
+		63A5FA8029146B2B006ED7D3 /* OnboardingViewControllerPage3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerPage3.swift; sourceTree = "<group>"; };
 		63DB606D28BB2124002ADD6E /* DataStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreManager.swift; sourceTree = "<group>"; };
 		63F402FA28CE237A00D34438 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		63F402FC28CE25CA00D34438 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
@@ -98,6 +106,7 @@
 		63547E9E28B91FE100A03730 /* Laword */ = {
 			isa = PBXGroup;
 			children = (
+				63A5FA7929146255006ED7D3 /* Onboarding */,
 				63F402FC28CE25CA00D34438 /* Builder.swift */,
 				635FE30029046F0800564B7B /* Colors.swift */,
 				77F75562290485BC009A87D5 /* SettingsModule */,
@@ -200,6 +209,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		63A5FA7929146255006ED7D3 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				63A5FA7A291464CC006ED7D3 /* OnboardingViewControllerPage1.swift */,
+				63A5FA7B291464CC006ED7D3 /* OnboardingViewController.xib */,
+				63A5FA7E29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift */,
+				63A5FA8029146B2B006ED7D3 /* OnboardingViewControllerPage3.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		77F75562290485BC009A87D5 /* SettingsModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +319,7 @@
 				635FE2FD290409A700564B7B /* wordsdef_new.plist in Resources */,
 				63547EAC28B91FE200A03730 /* Assets.xcassets in Resources */,
 				6335B10F28BFC2760023C33A /* wordsdef.plist in Resources */,
+				63A5FA7D291464CC006ED7D3 /* OnboardingViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,7 +337,10 @@
 				635FE30129046F0800564B7B /* Colors.swift in Sources */,
 				63547EA428B91FE100A03730 /* MainViewController.swift in Sources */,
 				63256F2F28FC331800D2319C /* Word+CoreDataClass.swift in Sources */,
+				63A5FA8129146B2B006ED7D3 /* OnboardingViewControllerPage3.swift in Sources */,
 				6372A07D290325BC00889958 /* DictionaryListCollectionViewController.swift in Sources */,
+				63A5FA7C291464CC006ED7D3 /* OnboardingViewControllerPage1.swift in Sources */,
+				63A5FA7F29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift in Sources */,
 				63F402FD28CE25CA00D34438 /* Builder.swift in Sources */,
 				63F402FB28CE237A00D34438 /* MainPresenter.swift in Sources */,
 				63256F2E28FC331800D2319C /* Dictionary+CoreDataProperties.swift in Sources */,

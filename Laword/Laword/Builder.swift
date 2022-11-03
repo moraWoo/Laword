@@ -11,6 +11,9 @@ protocol Builder {
     static func createMainModule() -> UIViewController
     static func createDictionaryListModule(dictionaryName: String) -> UICollectionViewController
     static func createSettingsModule() -> UIViewController
+    static func createOnboardingPage1() -> UIViewController
+    static func createOnboardingPage2() -> UIViewController
+    static func createOnboardingPage3() -> UIViewController
 }
 
 class ModelBuilder: Builder {
@@ -39,4 +42,17 @@ class ModelBuilder: Builder {
         return view
     }
     
+    static func createOnboardingPage1() -> UIViewController {
+        let view = OnboardingViewControllerPage1(nibName: "OnboardingViewController", bundle: nil)
+        return view
+    }
+    
+    static func createOnboardingPage2() -> UIViewController {
+        let view = OnboardingViewControllerPage2(nibName: "OnboardingViewController", bundle: nil)
+        return view
+    }
+    static func createOnboardingPage3() -> UIViewController {
+        let view = OnboardingViewControllerPage3(nibName: "OnboardingViewController", bundle: nil)
+        return view
+    }
 }
