@@ -67,6 +67,7 @@ class MainViewController: UIViewController {
     
     var currentAmountOfWords = 0
 
+    var allWords: [String : Int]!
 
     lazy var titleStackView: UIStackView = {
         titleLabel.textAlignment = .center
@@ -95,6 +96,8 @@ class MainViewController: UIViewController {
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -115,9 +118,15 @@ class MainViewController: UIViewController {
         currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
         guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
         startLearning(namesOfDictionary[currentDict])
-        
+
         titleLabel.text = namesOfDictionary[currentDict]
-        subtitleLabel.text = "250 / 4963"
+
+//   
+//        print("allWordsallWordsallWordsallWordsallWordsallWordsallWords\(allWords)")
+//        let currentNameOfDict = namesOfDictionary[currentDict]
+//
+//        subtitleLabel.text = String(allWords[currentNameOfDict] ?? 0)
+        
         
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
@@ -137,7 +146,6 @@ class MainViewController: UIViewController {
     func startLearning(_ dictionaryName: String) {
         maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
         fetchedWords = presenter.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName)
-//        guard let selectedWord = fetchedWords?[count] else { return }
         
         if count == 0 {
             guard (fetchedWords?[count]) != nil else { return }
@@ -198,7 +206,6 @@ class MainViewController: UIViewController {
     }
     
     func afterButtonPressed(key: String, grade: Grade) {
-//        guard let selectedWord = fetchedWords?[count] else { return }
         guard let word = selectedWord.word else { return }
         guard let wordTranslation = selectedWord.wordTranslation else { return }
         presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
@@ -259,10 +266,6 @@ class MainViewController: UIViewController {
             countOfLearningWords.text = String(count) + "/" + String(currentAmountOfWords)
             UserDefaults.standard.set(currentAmountOfWords, forKey: "currentAmountOfWords")
         }
-        
-//        progressCount = Double(count) / Double(maxCount)
-//        progressBar.progress = Float(progressCount)
-//        countOfLearningWords.text = String(count) + "/" + String(maxCount)
     }
     
     private func alertFinish() {

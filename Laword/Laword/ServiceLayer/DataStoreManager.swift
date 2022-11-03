@@ -35,11 +35,13 @@ protocol DataStoreManagerProtocol {
     func statisticWords(_ searchKey: String)
     func statisticShowWords(_ searchKey: Bool)
     func getNamesOfDictionary() -> [String]?
-//    var remainingWordsInCurrentDictionary: [String:Int] { get set }
     func saveContext()
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
+    var allWordsInCurrentDictionary: [String : Int] = [:]
+    var remainingWordsInCurrentDictionary: [String : Int] = [:]
+    
     var countWords = 0
     var wordDictionary: [String : AnyObject]!
     var fetchedWords: [Word]?
@@ -48,8 +50,6 @@ class DataStoreManager: DataStoreManagerProtocol {
 
     var namesOfDictionary: [String]? = []
     var countOfDictionaries: Int?
-    
-    var remainingWordsInCurrentDictionary = [String:Int]()
     
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
@@ -75,6 +75,15 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
     }
     
+
+//    func getAllWordsCount() -> [String: Int] {
+//        return allWordsInCurrentDictionary
+//    }
+//
+//    func getRemainWordsCount() -> [String: Int] {
+//        return remainingWordsInCurrentDictionary
+//    }
+        
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
@@ -116,8 +125,9 @@ class DataStoreManager: DataStoreManagerProtocol {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
-
-        remainingWordsInCurrentDictionary = [dictionaryName : fetchedWords.count]
+        
+        remainingWordsInCurrentDictionary[dictionaryName] = fetchedWords.count
+  
         print("WWWWWWWWWWWWWWWWWW\(remainingWordsInCurrentDictionary)")
         return fetchedWords
     }
@@ -256,6 +266,8 @@ class DataStoreManager: DataStoreManagerProtocol {
         return fetchedShowedNowWords
     }
     
+    
+    
     func getNamesOfDictionary() -> [String]? {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
@@ -312,6 +324,8 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         
         selectedDict.countAllWords = Int16(countWords)
+        allWordsInCurrentDictionary[nameOfDictionary] = countWords
         
+        print("QQQQQQQQQQQQ\(allWordsInCurrentDictionary)")
     }
 }

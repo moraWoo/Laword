@@ -25,19 +25,19 @@ protocol MainViewPresenterProtocol: AnyObject { //Input
     var dictionaryName: String? { get set }
     func getNamesOfDictionary() -> [String]?
     func saveContext ()
-//    var remainingWordsInCurrentDictionary: [String:Int] { get set }
+
 }
 
 class MainPresenter: MainViewPresenterProtocol {
+    var allWordsInCurrentDictionary: [String : Int]?
+    var remainingWordsInCurrentDictionary: [String : Int]?
     
-
     var fetchedShowedWords: [Word]?
     var fetchedWords: [Word]!
     weak var view: MainViewProtocol?
     let dataStoreManager: DataStoreManagerProtocol!
     let dateTime = Date().timeIntervalSince1970
     var dictionaryName: String?
-//    var remainingWordsInCurrentDictionary: [String:Int]
     
     required init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol) {
         self.view = view
@@ -82,4 +82,14 @@ class MainPresenter: MainViewPresenterProtocol {
     func saveContext() {
         saveContext()
     }
+    
+//    func getAllWordsCount() -> [String : Int] {
+//        let allWords = getAllWordsCount()
+//        return allWords
+//    }
+//
+//    func getRemainWordsCount() -> [String : Int] {
+//        let remainWords = getRemainWordsCount()
+//        return remainWords
+//    }
 }
