@@ -35,7 +35,7 @@ protocol DataStoreManagerProtocol {
     func statisticWords(_ searchKey: String)
     func statisticShowWords(_ searchKey: Bool)
     func getNamesOfDictionary() -> [String]?
-    
+//    var remainingWordsInCurrentDictionary: [String:Int] { get set }
     func saveContext()
 }
 
@@ -44,9 +44,12 @@ class DataStoreManager: DataStoreManagerProtocol {
     var wordDictionary: [String : AnyObject]!
     var fetchedWords: [Word]?
     var selectedWord: Word?
-    
+    var currentCount = 0
+
     var namesOfDictionary: [String]? = []
     var countOfDictionaries: Int?
+    
+    var remainingWordsInCurrentDictionary = [String:Int]()
     
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
@@ -96,13 +99,13 @@ class DataStoreManager: DataStoreManagerProtocol {
         let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate, predicateOfUnshowedWords, predicateOfDictionary])
         fetchRequest.predicate = dateAndUnshowedPredicate
              
-       
         do {
             let results = try? context.fetch(fetchRequest)
+            UserDefaults.standard.set(results?.count, forKey: "currentAmountOfWords")
             fetchedWords = results
-            print("работает")
-        } catch {
-            print("не работает")
+            currentCount = results?.count ?? 0
+        } catch let error as NSError {
+            print("Не могу получить выборку: \(error), \(error.userInfo)")
         }
         
         if context.hasChanges {
@@ -113,6 +116,9 @@ class DataStoreManager: DataStoreManagerProtocol {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+
+        remainingWordsInCurrentDictionary = [dictionaryName : fetchedWords.count]
+        print("WWWWWWWWWWWWWWWWWW\(remainingWordsInCurrentDictionary)")
         return fetchedWords
     }
 
@@ -261,8 +267,6 @@ class DataStoreManager: DataStoreManagerProtocol {
                 guard let name = nameOfDict.name else { return [] }
                 namesOfDictionary?.append(name)
                 countOfDictionaries = namesOfDictionary?.count
-                print("============ Наименование словарей: \(String(describing: nameOfDict.name))")
-                print("============ Массив словарей: \(String(describing: namesOfDictionary)), количество: \(String(describing: countOfDictionaries))")
             }
         } catch {
             print(error.localizedDescription)
@@ -275,7 +279,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         let context = persistentContainer.viewContext
         let fetchRequestDictionary: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
         fetchRequestDictionary.predicate = NSPredicate(format: "name = %@", nameOfDictionary)
-                
+        countWords = 0
         var records = 0
         do {
             records = try context.count(for: fetchRequestDictionary)
@@ -290,7 +294,10 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         selectedDict.name = nameOfDictionary
         
+//        guard let selectedDict.countAllWords = Int16(allWordsInCurrentDictionary) else { return }
+        
         guard let pathToFile = Bundle.main.path(forResource: nameOfFileDictionary, ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
+        
         for dictionary in dataArray {
         
             guard let entityWord = NSEntityDescription.entity(forEntityName: "Word", in: context) else { return }
@@ -303,5 +310,8 @@ class DataStoreManager: DataStoreManagerProtocol {
             
             countWords += 1
         }
+        
+        selectedDict.countAllWords = Int16(countWords)
+        
     }
 }

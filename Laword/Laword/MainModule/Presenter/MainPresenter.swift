@@ -25,9 +25,11 @@ protocol MainViewPresenterProtocol: AnyObject { //Input
     var dictionaryName: String? { get set }
     func getNamesOfDictionary() -> [String]?
     func saveContext ()
+//    var remainingWordsInCurrentDictionary: [String:Int] { get set }
 }
 
 class MainPresenter: MainViewPresenterProtocol {
+    
 
     var fetchedShowedWords: [Word]?
     var fetchedWords: [Word]!
@@ -35,6 +37,7 @@ class MainPresenter: MainViewPresenterProtocol {
     let dataStoreManager: DataStoreManagerProtocol!
     let dateTime = Date().timeIntervalSince1970
     var dictionaryName: String?
+//    var remainingWordsInCurrentDictionary: [String:Int]
     
     required init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol) {
         self.view = view
@@ -43,7 +46,7 @@ class MainPresenter: MainViewPresenterProtocol {
         fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName ?? "5000 Oxford Words")
         //You can add new files of dictionaries with words
         getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000 Oxford Words")
-        getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "Test Dictionary")
+        getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "Demo Dictionary")
     }
     
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {

@@ -9,6 +9,8 @@ import UIKit
 
 class DictionaryListCollectionViewController: UICollectionViewController {
 
+    weak var viewController: UIViewController?
+    
     let itemsPerRow: CGFloat = 2
     let sectionInserts = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     
@@ -48,10 +50,18 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        print("UserDefaults.standard.bool(forKey: Test Dictionary.dictionaryIsEmpty) \(UserDefaults.standard.bool(forKey: "Test Dictionary.dictionaryIsEmpty")) ")
+        
         if indexPath.item == 0 {
             UserDefaults.standard.set(0, forKey: "currentDictionary")
+            
         } else {
-            UserDefaults.standard.set(1, forKey: "currentDictionary")
+            if UserDefaults.standard.bool(forKey: "Test Dictionary.dictionaryIsEmpty") {
+                alertFinishWordsInCurrentDict()
+            } else {
+                UserDefaults.standard.set(1, forKey: "currentDictionary")
+            }
         }
         _ = navigationController?.popToRootViewController(animated: true)
     }
@@ -117,5 +127,15 @@ extension DictionaryListCollectionViewController: DictionaryListViewProtocol {
     }
     func getNamesOfDictionary() -> [String]? {
         return []
+    }
+}
+
+extension DictionaryListCollectionViewController {
+    
+    private func alertFinishWordsInCurrentDict() {
+        let alert = UIAlertController(title: "В данном словаре на сегодня закончились слова", message: "Выберите другой словарь словарь", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [self] _ in
+            dismiss(animated: true)
+        }))
     }
 }

@@ -4,123 +4,63 @@
 <array>
 	<dict>
 		<key>wordEN</key>
-		<string>abandon0</string>
+		<string>abandon*</string>
 		<key>wordRU</key>
-		<string> оставить,забросить0</string>
+		<string> оставить,забросить*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>abate1</string>
+		<string>abate*</string>
 		<key>wordRU</key>
-		<string> уменьшаться, ослабевать1</string>
+		<string> уменьшаться, ослабевать*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>abduct2</string>
+		<string>abduct*</string>
 		<key>wordRU</key>
-		<string> похищать2</string>
+		<string> похищать*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>abide3</string>
+		<string>abide*</string>
 		<key>wordRU</key>
-		<string> смириться, выносить3</string>
+		<string> смириться, выносить*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>aboard4</string>
+		<string>aboard*</string>
 		<key>wordRU</key>
-		<string> на борту4</string>
+		<string> на борту*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>abolish5</string>
+		<string>abolish*</string>
 		<key>wordRU</key>
-		<string> упразднять5</string>
+		<string> упразднять*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>abound6 </string>
+		<string>abound*</string>
 		<key>wordRU</key>
-		<string> изобиловать6</string>
+		<string> изобиловать*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>abrupt7</string>
+		<string>abrupt*</string>
 		<key>wordRU</key>
-		<string> крутой, резкий7</string>
+		<string> крутой, резкий*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>absent8</string>
+		<string>absent*</string>
 		<key>wordRU</key>
-		<string> отсутствующий8</string>
+		<string> отсутствующий*</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
-		<string>absorb9</string>
+		<string>absorb*</string>
 		<key>wordRU</key>
-		<string> впитывать, поглощать9</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>abundant10</string>
-		<key>wordRU</key>
-		<string> обильный10</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>abuse11</string>
-		<key>wordRU</key>
-		<string> оскорблять, бранить, брань11</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>abuse12</string>
-		<key>wordRU</key>
-		<string> злоупотреблять12</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>abuse13</string>
-		<key>wordRU</key>
-		<string> насилие, домогательство13</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>accessory14 </string>
-		<key>wordRU</key>
-		<string> принадлежность, аксессуар14</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>acclaim15 </string>
-		<key>wordRU</key>
-		<string> приветствовать, аплодировать15</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>accomplish16</string>
-		<key>wordRU</key>
-		<string> выполнить, завершить16</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>accord17 </string>
-		<key>wordRU</key>
-		<string> согласие17</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>according to18</string>
-		<key>wordRU</key>
-		<string> в соответствии18</string>
-	</dict>
-	<dict>
-		<key>wordEN</key>
-		<string>account19</string>
-		<key>wordRU</key>
-		<string> счёт (в банке)19</string>
+		<string> впитывать, поглощать*</string>
 	</dict>
 </array>
 </plist>
