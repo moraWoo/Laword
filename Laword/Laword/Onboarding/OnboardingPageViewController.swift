@@ -83,9 +83,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        if let viewControllerIndex = self.pages.firstIndex(of: viewController) {
-            print("viewControllerIndex\(viewControllerIndex)")
- 
+        if let viewControllerIndex = self.pages.firstIndex(of: viewController) { 
             if viewControllerIndex != 0 {
                 return self.pages[viewControllerIndex - 1]
             }

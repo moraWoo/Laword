@@ -96,8 +96,6 @@ class MainViewController: UIViewController {
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
-
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -150,7 +148,6 @@ class MainViewController: UIViewController {
             selectedWord = fetchedWords?[count]
         }
         
-//        let result = selectedWord?.dictionary?.name
         LabelFirst.text = selectedWord?.word
         LabelSecond.text = selectedWord?.wordTranslation
         
@@ -228,7 +225,6 @@ class MainViewController: UIViewController {
                 showFunctionButtonsAndLabels()
             default:
                 if currentAmountOfWords > maxCount {
-                    print("currentAmountOfWords > maxCount")
                     if count < maxCount {
                         showFunctionButtonsAndLabels()
                         hideFunctionButtonsAndLabels()
@@ -238,7 +234,6 @@ class MainViewController: UIViewController {
                         alertFinish()
                     }
                 } else {
-                    print("count < currentAmountOfWords")
                     if count < currentAmountOfWords {
                         showFunctionButtonsAndLabels()
                         hideFunctionButtonsAndLabels()
@@ -297,11 +292,9 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MainViewProtocol {
     func getWords(){
-        //        print("getWords from MainController")
     }
     
     func getDataFromFile() {
-        //        print("getDataFromFile fromMainController")
     }
 }
 

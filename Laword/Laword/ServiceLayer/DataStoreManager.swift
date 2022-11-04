@@ -112,10 +112,10 @@ class DataStoreManager: DataStoreManagerProtocol {
         fetchRequest.predicate = dateAndUnshowedPredicate
              
         do {
-            let results = try? context.fetch(fetchRequest)
-            UserDefaults.standard.set(results?.count, forKey: "currentAmountOfWords")
+            let results = try context.fetch(fetchRequest)
+            UserDefaults.standard.set(results.count, forKey: "currentAmountOfWords")
             fetchedWords = results
-            currentCount = results?.count ?? 0
+            currentCount = results.count
         } catch let error as NSError {
             print("Не могу получить выборку: \(error), \(error.userInfo)")
         }
@@ -131,7 +131,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         remainingWordsInCurrentDictionary[dictionaryName] = fetchedWords.count
   
-        print("WWWWWWWWWWWWWWWWWW\(remainingWordsInCurrentDictionary)")
         return fetchedWords
     }
 
@@ -330,6 +329,5 @@ class DataStoreManager: DataStoreManagerProtocol {
         allWordsInCurrentDictionary[nameOfDictionary] = countWords
         
         UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: nameOfDictionary)
-        print("QQQQQQQQQQQQ\(allWordsInCurrentDictionary)")
     }
 }

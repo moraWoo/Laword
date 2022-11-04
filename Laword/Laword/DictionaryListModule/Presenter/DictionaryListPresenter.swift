@@ -43,14 +43,12 @@ class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
     
     func getAllWordsCount() -> [String : Int] {
         let allWords = dataStoreManager.getAllWordsCount()
-        print("1--------------> ALLWORDS \(allWords)")
         return allWords
     }
 
     func getRemainWordsCount() -> [String : Int] {
         
         let remainWords = dataStoreManager.getRemainWordsCount()
-        print("1--------------> REMAINWORDS \(remainWords)")
         return remainWords
     }
 }
