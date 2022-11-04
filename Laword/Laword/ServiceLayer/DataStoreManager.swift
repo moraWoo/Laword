@@ -78,7 +78,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
     }
     
-
     func getAllWordsCount() -> [String: Int] {
         return allWordsInCurrentDictionary
     }
@@ -130,7 +129,9 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         
         remainingWordsInCurrentDictionary[dictionaryName] = fetchedWords.count
-  
+        UserDefaults.standard.set(remainingWordsInCurrentDictionary, forKey: "remainWordsCount")
+        
+        UserDefaults.standard.set(remainingWordsInCurrentDictionary, forKey: dictionaryName)
         return fetchedWords
     }
 
@@ -268,8 +269,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         return fetchedShowedNowWords
     }
     
-    
-    
     func getNamesOfDictionary() -> [String]? {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
@@ -307,9 +306,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         let selectedDict = NSManagedObject(entity: entityDictionary, insertInto: context) as! Dictionary
         
         selectedDict.name = nameOfDictionary
-        
-//        guard let selectedDict.countAllWords = Int16(allWordsInCurrentDictionary) else { return }
-        
+                
         guard let pathToFile = Bundle.main.path(forResource: nameOfFileDictionary, ofType: "plist"), let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
         
         for dictionary in dataArray {
@@ -327,6 +324,8 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         selectedDict.countAllWords = Int16(countWords)
         allWordsInCurrentDictionary[nameOfDictionary] = countWords
+        
+        UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: "allWordsCount")
         
         UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: nameOfDictionary)
     }

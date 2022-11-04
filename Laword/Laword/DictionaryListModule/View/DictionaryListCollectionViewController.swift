@@ -54,7 +54,6 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
             UserDefaults.standard.set(0, forKey: "currentDictionary")
-            
         } else {
             if UserDefaults.standard.bool(forKey: "Test Dictionary.dictionaryIsEmpty") {
                 alertFinishWordsInCurrentDict()
@@ -64,6 +63,13 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         }
         _ = navigationController?.popToRootViewController(animated: true)
     }
+    // MARK: To load current dictionary to Main
+    override func viewWillDisappear(_ animated: Bool) {
+        if self.isMovingToParent {
+            let currentDictFromMain = UserDefaults.standard.integer(forKey: "currentDictionary")
+            UserDefaults.standard.set(currentDictFromMain, forKey: "currentDictionary")
+        }
+    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dictionaryCell", for: indexPath) as! DictionaryCollectionViewCell
@@ -71,13 +77,15 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         cell.nameOfDictionary.text = namesOfDicts[indexPath.item]
         UserDefaults.standard.set(indexPath.item, forKey: "currentDictionary")
                       
-        let nameOfCurentDictionary = namesOfDicts[indexPath.item]
-        
-        let allWordsFromUserDef = UserDefaults.standard.dictionary(forKey: nameOfCurentDictionary) ?? ["" : ""]
-        let numberOfAllWords = allWordsFromUserDef[nameOfCurentDictionary] as? Int
-        
+        let nameOfCurrentDictionary = namesOfDicts[indexPath.item]
+        let allWordsFromUserDef = UserDefaults.standard.dictionary(forKey: "allWordsCount") ?? ["" : ""]
+        let numberOfAllWords = allWordsFromUserDef[nameOfCurrentDictionary] as? Int
+  
+        let remainWordsFromUserDef = UserDefaults.standard.dictionary(forKey: "remainWordsCount") ?? ["" : ""]
+        let numberOfRemainWords = remainWordsFromUserDef[nameOfCurrentDictionary] as? Int
         if let stringWithNumberOfAllWords = numberOfAllWords {
-            cell.countOfWordsInCurrentDictionary.text = String(stringWithNumberOfAllWords)
+            let newNumberOfRemainWords = numberOfRemainWords ?? 0
+            cell.countOfWordsInCurrentDictionary.text = "\(String(describing: newNumberOfRemainWords)) " + " | " + " \(stringWithNumberOfAllWords)"
         }
         
         let imageName = photos[indexPath.item]

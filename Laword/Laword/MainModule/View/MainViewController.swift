@@ -67,8 +67,18 @@ class MainViewController: UIViewController {
     
     var currentAmountOfWords = 0
 
-    var allWords: [String : Int]!
+    var allWords: [String : Any]!
+    var remainWords: [String : Any]!
 
+    var numberOfRemainWords: Int!
+    
+    var countOfRemainWords: Int! {
+        didSet {
+            subtitleLabel.text = "\(countOfRemainWords) " + "/" + " \(allWords[currentNameOfDict] ?? 0)"
+        }
+    }
+    var currentNameOfDict: String!
+    
     lazy var titleStackView: UIStackView = {
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 16)
@@ -81,26 +91,30 @@ class MainViewController: UIViewController {
         return stackView
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addButtonsAndLabelsToNavigatorBar()
         progressBar.progress = 0
-        
+
         hideEverything()
         currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
         guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
         startLearning(namesOfDictionary[currentDict])
         
         titleLabel.text = namesOfDictionary[currentDict]
-        subtitleLabel.text = "250 / 4963"
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+        
+        allWords = presenter.getAllWordsCount()
+        remainWords = presenter.getRemainWordsCount()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-                   
+
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
             titleStackView.spacing = UIStackView.spacingUseDefault
@@ -114,14 +128,24 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
+        
         guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
+        
         startLearning(namesOfDictionary[currentDict])
 
         titleLabel.text = namesOfDictionary[currentDict]
         
-        let allWords = presenter.getAllWordsCount()
-        let currentNameOfDict = namesOfDictionary[currentDict]
-        let remainWords = presenter.getRemainWordsCount()
+        allWords = UserDefaults.standard.dictionary(forKey: "allWordsCount")
+        
+        remainWords = UserDefaults.standard.dictionary(forKey: "remainWordsCount")
+        
+        currentNameOfDict = namesOfDictionary[currentDict]
+        
+        if let numberOfRemainWords = remainWords[currentNameOfDict] as? Int {
+            print("numberOfRemainWords ================ \(numberOfRemainWords)")
+            countOfRemainWords = numberOfRemainWords
+        }
+
         subtitleLabel.text = "\(remainWords[currentNameOfDict] ?? 0) " + "/" + " \(allWords[currentNameOfDict] ?? 0)"
         
         addButtonsAndLabelsToNavigatorBar()
@@ -215,7 +239,10 @@ class MainViewController: UIViewController {
             showAnswers("showWordSecond", selectedWord)
         }
         countProgressBar()
+        
+        countOfRemainWords = countOfRemainWords - 1
 
+        subtitleLabel.text = "\(countOfRemainWords ?? 0) " + "/" + " \(allWords[currentNameOfDict] ?? 0)"
     }
 
     private func showAnswers(_ viewState: String, _ selectedWord: Word) {
