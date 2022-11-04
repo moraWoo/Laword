@@ -15,8 +15,6 @@ protocol SettingsViewProtocol: AnyObject {
 //output protocol
 protocol SettingsViewPresenterProtocol: AnyObject {
     init(view: SettingsViewProtocol, dataStoreManager: DataStoreManagerProtocol)
-//    func setDictionaryName()
-//    func getNamesOfDictionary() -> [String]?
 }
 
 class SettingsPresenter: SettingsViewPresenterProtocol {

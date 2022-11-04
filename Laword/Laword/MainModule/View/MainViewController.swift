@@ -150,7 +150,7 @@ class MainViewController: UIViewController {
             selectedWord = fetchedWords?[count]
         }
         
-        let result = selectedWord?.dictionary?.name
+//        let result = selectedWord?.dictionary?.name
         LabelFirst.text = selectedWord?.word
         LabelSecond.text = selectedWord?.wordTranslation
         

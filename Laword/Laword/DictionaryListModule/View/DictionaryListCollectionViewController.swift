@@ -17,7 +17,6 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     let photos = ["sanfransisco", "newyork"]
     
     let labelOfSection = ["Базовые", "Пользовательские"]
-//    let nameOfDictionary = ["Dictionary 1", "Dictionary 2"]
     let countOfWordsInDictionary = ["1 / 100", "230 / 370"]
     
     var namesOfDicts: [String] = []
@@ -53,9 +52,6 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        print("UserDefaults.standard.bool(forKey: Test Dictionary.dictionaryIsEmpty) \(UserDefaults.standard.bool(forKey: "Test Dictionary.dictionaryIsEmpty")) ")
-        
         if indexPath.item == 0 {
             UserDefaults.standard.set(0, forKey: "currentDictionary")
             
@@ -74,9 +70,7 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         
         cell.nameOfDictionary.text = namesOfDicts[indexPath.item]
         UserDefaults.standard.set(indexPath.item, forKey: "currentDictionary")
-        
-        let currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
-              
+                      
         let nameOfCurentDictionary = namesOfDicts[indexPath.item]
         
         let allWordsFromUserDef = UserDefaults.standard.dictionary(forKey: nameOfCurentDictionary) ?? ["" : ""]

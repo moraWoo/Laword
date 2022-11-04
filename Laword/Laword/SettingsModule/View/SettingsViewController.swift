@@ -7,15 +7,30 @@
 
 import UIKit
 
+
 class SettingsViewController: UIViewController, SettingsViewProtocol {
     let modelObjects = [
-        
         HeaderItem(title: "Внешний вид", symbols: [
-            SFSymbolItem(name: "Темная тема", imageName: "powersleep"),
-            SFSymbolItem(name: "Кнопки слева", imageName: "rectangle.lefthalf.inset.filled.arrow.left"),
+            SFSymbolItem(
+                name: "Темная тема",
+                imageName: "powersleep"
+            ),
+            SFSymbolItem(
+                name: "Кнопки слева",
+                imageName: "rectangle.lefthalf.inset.filled.arrow.left"
+            ),
         ]),
         HeaderItem(title: "Обучение", symbols: [
-            SFSymbolItem(name: "Количество слов", imageName: "list.bullet.rectangle.fill"),
+            SFSymbolItem(
+                name: "Количество слов",
+                imageName: "list.bullet.rectangle.fill"
+            ),
+        ]),
+        HeaderItem(title: "Система", symbols: [
+            SFSymbolItem(
+                name: "Начальный экран выключен",
+                imageName: "arrow.right.doc.on.clipboard"
+            ),
         ]),
     ]
     var labelForCell = UILabel()
@@ -54,8 +69,8 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             // Configure cell content
             var configuration = cell.defaultContentConfiguration()
             configuration.image = symbolItem.image
-            configuration.text = symbolItem.name
 
+            configuration.text = symbolItem.name
             cell.contentConfiguration = configuration
         }
         
@@ -65,8 +80,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             let cell = collectionView.dequeueConfiguredReusableCell(using: symbolCellRegistration,for: indexPath,item: symbolItem)
             
             let sections = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            let rows = self.dataSource.snapshot().itemIdentifiers[indexPath.item]
-            print("rows\(rows)")
+//            let rows = self.dataSource.snapshot().itemIdentifiers[indexPath.item]
             if sections.title == "Внешний вид" {
                 
                 let switchInCell = UISwitch()
@@ -85,13 +99,13 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 ])
                 
                 switch switchInCell.tag {
-                    case 0: switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
-                        print("case1")
+                    case 0:
+                        switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
                     default:
                         switchInCell.isOn = UserDefaults.standard.bool(forKey: "leftMode")
-                        print("case2")
                 }
-            } else {
+                                
+            } else if sections.title == "Обучение" {
                 let stepper = UIStepper()
                 stepper.minimumValue = 5
                 stepper.maximumValue = 20
@@ -112,7 +126,25 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                     labelForCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -12.0),
                     labelForCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
                 ])
-            }
+            } else {
+                let switchInCell = UISwitch()
+                var launchBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+                switchInCell.setOn(launchBefore, animated: false)
+                switchInCell.addTarget(self, action: #selector(launchAppWithOnboarding), for: UIControl.Event.valueChanged)
+                switchInCell.tag = indexPath.row
+                            
+                cell.addSubview(switchInCell)
+
+                switchInCell.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
+                    switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
+                ])
+
+                launchBefore.toggle()
+                switchInCell.isOn = launchBefore
+        }
+            
             return cell
         }
         
@@ -146,8 +178,10 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             var configuration = footerView.defaultContentConfiguration()
             if sections.title == "Внешний вид" {
                 configuration.text = "Настройте внешний вид"
-            } else {
+            } else if sections.title == "Обучение" {
                 configuration.text = "Укажите количество изучаемых слов"
+            } else {
+                configuration.text = "Включите начальный экран при следующей загрузке"
             }
             footerView.contentConfiguration = configuration
         }
@@ -180,6 +214,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         dataSource.apply(dataSourceSnapshot, animatingDifferences: false)
     }
     
+    
     @objc func stepperChanged(stepper: UIStepper) {
         labelForCell.text = String(Int(stepper.value))
         let value = stepper.value
@@ -191,13 +226,11 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         switch tag {
             case 0:
                 if mySwitch.isOn == true {
-                    print("It is dark mode")
                     UserDefaults.standard.set(true, forKey: "dark_mode")
                     DispatchQueue.main.async {
                         Theme.dark.setActive()
                     }
                 } else {
-                    print("It is light mode")
                     UserDefaults.standard.set(false, forKey: "dark_mode")
                     DispatchQueue.main.async {
                         Theme.light.setActive()
@@ -205,14 +238,22 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 }
             case 1:
                 if mySwitch.isOn == true {
-                    print("Buttons of the left")
                     UserDefaults.standard.set(true, forKey: "leftMode")
                 } else {
-                    print("Buttons of the right")
                     UserDefaults.standard.set(false, forKey: "leftMode")
                 }
             default:
                 return
+        }
+    }
+    
+    @objc func launchAppWithOnboarding(mySwitch: UISwitch) {
+        if mySwitch.isOn == true {
+            // Onboarding is switch off
+            UserDefaults.standard.set(false, forKey: "launchedBefore")
+        } else {
+            // Onboarding is switch on
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
     }
     

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6316D44528D77D650022C373 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6316D44428D77D650022C373 /* MainViewController.xib */; };
+		63225432291503A9002B24F4 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63225430291503A9002B24F4 /* OnboardingPageViewController.swift */; };
+		63225433291503A9002B24F4 /* OnboardingPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63225431291503A9002B24F4 /* OnboardingPageViewController.xib */; };
 		63256F2D28FC331800D2319C /* Dictionary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256F2928FC331800D2319C /* Dictionary+CoreDataClass.swift */; };
 		63256F2E28FC331800D2319C /* Dictionary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256F2A28FC331800D2319C /* Dictionary+CoreDataProperties.swift */; };
 		63256F2F28FC331800D2319C /* Word+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256F2B28FC331800D2319C /* Word+CoreDataClass.swift */; };
@@ -42,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		6316D44428D77D650022C373 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		63225430291503A9002B24F4 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		63225431291503A9002B24F4 /* OnboardingPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingPageViewController.xib; sourceTree = "<group>"; };
 		63256F2928FC331800D2319C /* Dictionary+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+CoreDataClass.swift"; sourceTree = "<group>"; };
 		63256F2A28FC331800D2319C /* Dictionary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63256F2B28FC331800D2319C /* Word+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				63A5FA7B291464CC006ED7D3 /* OnboardingViewController.xib */,
 				63A5FA7E29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift */,
 				63A5FA8029146B2B006ED7D3 /* OnboardingViewControllerPage3.swift */,
+				63225430291503A9002B24F4 /* OnboardingPageViewController.swift */,
+				63225431291503A9002B24F4 /* OnboardingPageViewController.xib */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -312,6 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63225433291503A9002B24F4 /* OnboardingPageViewController.xib in Resources */,
 				6372A07A2903258200889958 /* DictionaryCollectionViewCell.xib in Resources */,
 				6316D44528D77D650022C373 /* MainViewController.xib in Resources */,
 				63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */,
@@ -334,6 +341,7 @@
 				6387995A28F2F49B00D9590F /* SM2Manager.swift in Sources */,
 				77205DAE290BFBF60004351B /* SettingsViewController.swift in Sources */,
 				63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */,
+				63225432291503A9002B24F4 /* OnboardingPageViewController.swift in Sources */,
 				635FE30129046F0800564B7B /* Colors.swift in Sources */,
 				63547EA428B91FE100A03730 /* MainViewController.swift in Sources */,
 				63256F2F28FC331800D2319C /* Word+CoreDataClass.swift in Sources */,

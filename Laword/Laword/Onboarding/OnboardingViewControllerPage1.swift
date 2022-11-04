@@ -20,18 +20,17 @@ class OnboardingViewControllerPage1: UIViewController {
         imageView.contentMode = .scaleAspectFit
         
         imageView.image = profile
-        
         return imageView
     }()
     
     let descriptionTextView: UITextView = {
         let textView = UITextView()
-        let attributedText = NSMutableAttributedString(string: "Join us today in our fun lunch!", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)])
+        let attributedText = NSMutableAttributedString(string: "Это страница про приложение", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)])
         
         attributedText.append(NSAttributedString(string: "\n\n\nAre you ready for loads and loads for fun? Don't wait any longer! We hope to see you in our event today.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray]))
         
         textView.attributedText = attributedText
-        
+        textView.backgroundColor = UIColor.white
         textView.textAlignment = .center
         textView.isEditable = false
         textView.isScrollEnabled = false
@@ -40,84 +39,15 @@ class OnboardingViewControllerPage1: UIViewController {
         return textView
     }()
     
-    private let previousButton: UIButton = {
-           let button = UIButton(type: .system)
-           button.setTitle("PREV", for: .normal)
-           button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-           button.setTitleColor(.gray, for: .normal)
-           button.translatesAutoresizingMaskIntoConstraints = false
-           return button
-       }()
-       
-    private let nextButton: UIButton = {
-           let button = UIButton(type: .system)
-           button.setTitle("NEXT", for: .normal)
-           button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-           button.setTitleColor(.mainPink, for: .normal)
-           button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-           return button
-       }()
-    
-    @objc private func nextButtonTapped(sender: UIButton) {
-        let page2 = ModelBuilder.createOnboardingPage2()
-//
-//        let transition = CATransition()
-//
-//        transition.duration = 0.5
-//        transition.type = CATransitionType.push
-//        transition.subtype = CATransitionSubtype.fromRight
-//        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-//        view.window!.layer.add(transition, forKey: kCATransition)
-       
-//        page2.view.window?.layer.add(transition, forKey: kCATransition)
-        page2.modalPresentationStyle = .currentContext
-        present(page2, animated: true)
-    }
-    
-    private let pageControl: UIPageControl = {
-        let pc = UIPageControl()
-        pc.currentPage = 0
-        pc.numberOfPages = 4
-        pc.currentPageIndicatorTintColor = .mainPink
-        pc.pageIndicatorTintColor = .gray
-        
-        return pc
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.white
         view.addSubview(descriptionTextView)
-        setupBottomControls()
         setupLayout()
     }
     
-    fileprivate func setupBottomControls(){
-            
-            let yellowView = UIView()
-            yellowView.backgroundColor = .yellow
-            
-            let greenView = UIView()
-            greenView.backgroundColor = .green
-            
-            let blueView = UIView()
-            blueView.backgroundColor = .blue
-            let bottomControlsStackView = UIStackView(arrangedSubviews: [previousButton, pageControl, nextButton])
-            
-            bottomControlsStackView.translatesAutoresizingMaskIntoConstraints = false
-            bottomControlsStackView.distribution = .fillEqually
-            
-            view.addSubview(bottomControlsStackView)
-            
-            NSLayoutConstraint.activate([
-                bottomControlsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-                bottomControlsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                bottomControlsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                bottomControlsStackView.heightAnchor.constraint(equalToConstant: 50)
-            ])
-        }
-    
     private func setupLayout(){
+
         let topImageContainerView = UIView()
         view.addSubview(topImageContainerView)
         
@@ -126,12 +56,10 @@ class OnboardingViewControllerPage1: UIViewController {
         topImageContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         topImageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         topImageContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        topImageContainerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
         
         topImageContainerView.addSubview(profileImageView)
         profileImageView.centerXAnchor.constraint(equalTo: topImageContainerView.centerXAnchor).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: topImageContainerView.centerYAnchor).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 200)
         
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         

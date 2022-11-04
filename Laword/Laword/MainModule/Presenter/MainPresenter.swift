@@ -87,13 +87,11 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func getAllWordsCount() -> [String : Int] {
         let allWords = dataStoreManager.getAllWordsCount()
-        print("================--------------> ALLWORDS \(allWords)")
         return allWords
     }
 
     func getRemainWordsCount() -> [String : Int] {
         let remainWords = dataStoreManager.getRemainWordsCount()
-        print("================--------------> REMAINWORDS \(remainWords)")
         return remainWords
     }
 }

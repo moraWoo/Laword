@@ -15,8 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowsScene = (scene as? UIWindowScene) else { return }
         
         let launchBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-        UserDefaults.standard.set(true, forKey: "launchedBefore")
         
+
         window = UIWindow(frame: windowsScene.coordinateSpace.bounds)
         window?.windowScene = windowsScene
         
@@ -31,13 +31,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             window?.rootViewController = navBar
             window?.makeKeyAndVisible()
+
         } else {
-            let mainVC = ModelBuilder.createOnboardingPage1()
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            let mainVC = ModelBuilder.createOnboardingPageVC()
             window?.rootViewController = mainVC
             window?.makeKeyAndVisible()
         }
-        
     }
-
 }
 
