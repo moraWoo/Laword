@@ -39,6 +39,8 @@ protocol DataStoreManagerProtocol {
     
     func getAllWordsCount() -> [String: Int]
     func getRemainWordsCount() -> [String: Int]
+    
+    
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
@@ -53,6 +55,8 @@ class DataStoreManager: DataStoreManagerProtocol {
 
     var namesOfDictionary: [String]? = []
     var countOfDictionaries: Int?
+    
+    var currentDictionary: [Dictionary]?
     
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
@@ -129,6 +133,9 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         
         remainingWordsInCurrentDictionary[dictionaryName] = fetchedWords.count
+        
+        
+        
         UserDefaults.standard.set(remainingWordsInCurrentDictionary, forKey: "remainWordsCount")
         
         UserDefaults.standard.set(remainingWordsInCurrentDictionary, forKey: dictionaryName)
@@ -325,6 +332,8 @@ class DataStoreManager: DataStoreManagerProtocol {
         selectedDict.countAllWords = Int16(countWords)
         allWordsInCurrentDictionary[nameOfDictionary] = countWords
         
+        let currentDictionary = CurrentDictionary.init(name: nameOfDictionary, countOfAllWords: countWords, countOfRemainWords: countWords)
+        print("currentDictionary ========== \(currentDictionary)")
         UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: "allWordsCount")
         
         UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: nameOfDictionary)
