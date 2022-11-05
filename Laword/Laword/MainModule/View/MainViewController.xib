@@ -43,30 +43,30 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="spe-Ls-V3J">
-                    <rect key="frame" x="8" y="87" width="374" height="274.66666666666669"/>
+                    <rect key="frame" x="106.33333333333333" y="87" width="177.66666666666669" height="274.66666666666669"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vocabulary" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-hP-dO3">
-                            <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vocabulary" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-hP-dO3">
+                            <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="43"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="374" id="m64-gh-46k"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="374" id="m64-gh-46k"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="36"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vəˈkæbjəlerɪ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5n-G6-3vt">
-                            <rect key="frame" x="0.0" y="123.00000000000001" width="374" height="28.666666666666671"/>
+                            <rect key="frame" x="0.0" y="123.00000000000001" width="177.66666666666666" height="28.666666666666671"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="374" id="Yik-Xs-M32"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="374" id="Yik-Xs-M32"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
                             <color key="textColor" red="0.69411764705882351" green="0.69411764705882351" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="запас слов" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LqF-vY-8rC">
-                            <rect key="frame" x="0.0" y="231.66666666666669" width="374" height="43"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="запас слов" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LqF-vY-8rC">
+                            <rect key="frame" x="0.0" y="231.66666666666669" width="177.66666666666666" height="43"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="374" id="xiV-nx-6Q7"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="374" id="xiV-nx-6Q7"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="36"/>
                             <nil key="textColor"/>

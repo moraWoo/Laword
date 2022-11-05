@@ -502,6 +502,8 @@
 				DEVELOPMENT_TEAM = RW8DRR2459;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Laword/Apps/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Laword;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMainNibFile = MainViewController;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -531,6 +533,8 @@
 				DEVELOPMENT_TEAM = RW8DRR2459;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Laword/Apps/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Laword;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSMainNibFile = MainViewController;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

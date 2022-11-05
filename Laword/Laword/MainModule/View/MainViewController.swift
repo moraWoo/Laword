@@ -112,7 +112,7 @@ class MainViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         
-        if screenHeight < 670 {
+        if screenHeight < 740 {
             stackViewLabelWords.spacing = 30
         } else {
             stackViewLabelWords.spacing = 120
@@ -438,7 +438,7 @@ extension MainViewController {
             stackOfButtons.addArrangedSubview(viewOfDifficultButton)
             stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
 
-            if screenHeight < 670 {
+            if screenHeight < 740 {
                 NSLayoutConstraint.activate([
                     stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -36.0),
                     stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -519,7 +519,7 @@ extension MainViewController {
             stackOfButtons.addArrangedSubview(viewOfDifficultButton)
             stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
             
-            if screenHeight < 670 {
+            if screenHeight < 740 {
                 NSLayoutConstraint.activate([
                     stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -36.0),
                     stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),

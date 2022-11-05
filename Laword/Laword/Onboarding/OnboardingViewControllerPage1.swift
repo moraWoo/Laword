@@ -25,21 +25,37 @@ class OnboardingViewControllerPage1: UIViewController {
     
     let descriptionTextView: UITextView = {
         let textView = UITextView()
-        let attributedText = NSMutableAttributedString(string: "Приложение LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
         
-        attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord позволит вам быстрого пополнить словарный запас иностранных слов.\n\nОсновано на методе SuperMemo2.\n\nБазовый словарь '5000 Оxford Words' включает наиболее частотные английские слова, которые покрывают до 90% лексики газет, фильмов, книг", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
-        
-        textView.attributedText = attributedText
-        textView.backgroundColor = UIColor.white
-        textView.textAlignment = .left
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        
+        if screenHeight < 740 {
+            let attributedText = NSMutableAttributedString(string: "Приложение LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)])
+            
+            attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord позволит вам быстрого пополнить словарный запас иностранных слов.\n\nОсновано на методе SuperMemo2.\n\nБазовый словарь '5000 Оxford Words' включает наиболее частотные английские слова, которые покрывают до 90% лексики газет, фильмов, книг", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+            
+            textView.attributedText = attributedText
+            textView.backgroundColor = UIColor.white
+            textView.textAlignment = .left
+            textView.isEditable = false
+            textView.isScrollEnabled = false
+            textView.translatesAutoresizingMaskIntoConstraints = false
+        } else {
+            let attributedText = NSMutableAttributedString(string: "Приложение LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
+            
+            attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord позволит вам быстрого пополнить словарный запас иностранных слов.\n\nОсновано на методе SuperMemo2.\n\nБазовый словарь '5000 Оxford Words' включает наиболее частотные английские слова, которые покрывают до 90% лексики газет, фильмов, книг", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+            
+            textView.attributedText = attributedText
+            textView.backgroundColor = UIColor.white
+            textView.textAlignment = .left
+            textView.isEditable = false
+            textView.isScrollEnabled = false
+            textView.translatesAutoresizingMaskIntoConstraints = false
+        }
         return textView
     }()
     
     override func viewDidLoad() {
+
+        print("screenWidth = \(screenWidth) screenHeight = \(screenHeight)")
+
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         view.addSubview(descriptionTextView)
@@ -53,9 +69,15 @@ class OnboardingViewControllerPage1: UIViewController {
         
         topImageContainerView.translatesAutoresizingMaskIntoConstraints = false
 
-        topImageContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        topImageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        topImageContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        if screenHeight < 740 {
+            topImageContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64).isActive = true
+            topImageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64).isActive = true
+            topImageContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 64).isActive = true
+        } else {
+            topImageContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            topImageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            topImageContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
         
         topImageContainerView.addSubview(profileImageView)
         profileImageView.centerXAnchor.constraint(equalTo: topImageContainerView.centerXAnchor).isActive = true
@@ -65,12 +87,27 @@ class OnboardingViewControllerPage1: UIViewController {
         
         profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         
-        profileImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        if screenHeight < 740 {
+            profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+            profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        } else {
+            profileImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+            profileImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        }
+        
+
         
         descriptionTextView.topAnchor.constraint(equalTo: topImageContainerView.bottomAnchor).isActive = true
         descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24).isActive = true
         descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24).isActive = true
         descriptionTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
+}
+
+public var screenWidth: CGFloat {
+    return UIScreen.main.bounds.width
+}
+
+public var screenHeight: CGFloat {
+    return UIScreen.main.bounds.height
 }
