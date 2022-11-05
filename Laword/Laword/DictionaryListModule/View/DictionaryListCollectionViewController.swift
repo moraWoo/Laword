@@ -52,30 +52,41 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == 0 {
-            UserDefaults.standard.set(0, forKey: "currentDictionary")
-        } else {
-            if UserDefaults.standard.bool(forKey: "Test Dictionary.dictionaryIsEmpty") {
-                alertFinishWordsInCurrentDict()
-            } else {
-                UserDefaults.standard.set(1, forKey: "currentDictionary")
-            }
+        let nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
+
+        if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
+            UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")
         }
         _ = navigationController?.popToRootViewController(animated: true)
+
+        
+//        if indexPath.item == 0 {
+//            UserDefaults.standard.set(0, forKey: "currentDictionary")
+//        } else {
+//            if UserDefaults.standard.bool(forKey: "Test Dictionary.dictionaryIsEmpty") {
+//                alertFinishWordsInCurrentDict()
+//            } else {
+//                UserDefaults.standard.set(1, forKey: "currentDictionary")
+//            }
+//        }
+        
     }
-    // MARK: To load current dictionary to Main
-    override func viewWillDisappear(_ animated: Bool) {
-        if self.isMovingToParent {
-            let currentDictFromMain = UserDefaults.standard.integer(forKey: "currentDictionary")
-            UserDefaults.standard.set(currentDictFromMain, forKey: "currentDictionary")
-        }
-    }
+//    // MARK: To load current dictionary to Main
+//    override func viewWillDisappear(_ animated: Bool) {
+//        if self.isMovingToParent {
+//            let nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
+//
+//            if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
+//                UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")
+//            }
+//        }
+//    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dictionaryCell", for: indexPath) as! DictionaryCollectionViewCell
         
         cell.nameOfDictionary.text = namesOfDicts[indexPath.item]
-        UserDefaults.standard.set(indexPath.item, forKey: "currentDictionary")
+//        UserDefaults.standard.set(indexPath.item, forKey: "currentDictionary")
                       
         let nameOfCurrentDictionary = namesOfDicts[indexPath.item]
         let allWordsFromUserDef = UserDefaults.standard.dictionary(forKey: "allWordsCount") ?? ["" : ""]

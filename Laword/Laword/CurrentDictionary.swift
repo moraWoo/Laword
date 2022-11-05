@@ -9,6 +9,6 @@ import Foundation
 
 struct  CurrentDictionary {
     let name: String?
-    let countOfAllWords: Int?
-    let countOfRemainWords: Int?
+    let countOfAllWords: Int16?
+    let countOfRemainWords: Int16?
 }

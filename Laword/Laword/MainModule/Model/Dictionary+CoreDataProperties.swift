@@ -2,7 +2,7 @@
 //  Dictionary+CoreDataProperties.swift
 //  Laword
 //
-//  Created by Ildar Khabibullin on 16.10.2022.
+//  Created by Ildar Khabibullin on 05.11.2022.
 //
 //
 
@@ -20,7 +20,7 @@ extension Dictionary {
     @NSManaged public var countDontKnowWords: Int16
     @NSManaged public var countEasyWords: Int16
     @NSManaged public var countHardWords: Int16
-    @NSManaged public var countNewWords: Int16
+    @NSManaged public var countRemainWords: Int16
     @NSManaged public var name: String?
     @NSManaged public var pic: Data?
     @NSManaged public var word: NSSet?

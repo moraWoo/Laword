@@ -53,6 +53,7 @@ class MainViewController: UIViewController {
     var presenterSettings: SettingsViewPresenterProtocol!
     var count = 0
     var maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
+    
 
     var fetchedWords: [Word]?
     var selectedWord: Word!
@@ -67,16 +68,18 @@ class MainViewController: UIViewController {
     
     var currentAmountOfWords = 0
 
-    var allWords: [String : Any]!
+    var nameOfCurrentDictionary: String?
+    var allWords: Int!
     var remainWords: [String : Any]!
 
     var numberOfRemainWords: Int!
     
     var countOfRemainWords: Int! {
         didSet {
-            subtitleLabel.text = "\(countOfRemainWords) " + "/" + " \(allWords[currentNameOfDict] ?? 0)"
+            subtitleLabel.text = "\(countOfRemainWords) " + "/" + " \(allWords ?? 0)"
         }
     }
+    
     var currentNameOfDict: String!
     
     lazy var titleStackView: UIStackView = {
@@ -91,8 +94,6 @@ class MainViewController: UIViewController {
         return stackView
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addButtonsAndLabelsToNavigatorBar()
@@ -101,15 +102,12 @@ class MainViewController: UIViewController {
         hideEverything()
         currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
         guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
-        startLearning(namesOfDictionary[currentDict])
         
         titleLabel.text = namesOfDictionary[currentDict]
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         
-        allWords = presenter.getAllWordsCount()
-        remainWords = presenter.getRemainWordsCount()
     }
     
     override func viewWillLayoutSubviews() {
@@ -126,28 +124,23 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
+                
+        startLearning(nameOfCurrentDictionary ?? "")
+        titleLabel.text = nameOfCurrentDictionary
+        guard let currentDictionary = presenter.getCurrentDictionary() else { return }
+        print("currentDictionary \(currentDictionary)")
         
-        currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
-        
-        guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
-        
-        startLearning(namesOfDictionary[currentDict])
-
-        titleLabel.text = namesOfDictionary[currentDict]
-        
-        allWords = UserDefaults.standard.dictionary(forKey: "allWordsCount")
-        
-        remainWords = UserDefaults.standard.dictionary(forKey: "remainWordsCount")
-        
-        currentNameOfDict = namesOfDictionary[currentDict]
-        
-        if let numberOfRemainWords = remainWords[currentNameOfDict] as? Int {
-            print("numberOfRemainWords ================ \(numberOfRemainWords)")
-            countOfRemainWords = numberOfRemainWords
+        for currentDict in currentDictionary {
+            let name = currentDict.name
+            allWords = Int(currentDict.countOfAllWords ?? 0)
+            countOfRemainWords = Int(currentDict.countOfRemainWords ?? 0)
+            
+            if name == nameOfCurrentDictionary {
+                subtitleLabel.text = "\(countOfRemainWords ?? 0) " + "/" + " \(allWords ?? 0)"
+            }
         }
 
-        subtitleLabel.text = "\(remainWords[currentNameOfDict] ?? 0) " + "/" + " \(allWords[currentNameOfDict] ?? 0)"
-        
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
         progressBar.progress = 0
@@ -232,7 +225,7 @@ class MainViewController: UIViewController {
         if count == currentAmountOfWords {
             alertFinishWordsInCurrentDict()
             
-            UserDefaults.standard.set(true, forKey: "Test Dictionary.dictionaryIsEmpty")
+//            UserDefaults.standard.set(true, forKey: "Test Dictionary.dictionaryIsEmpty")
         } else {
             guard (fetchedWords?[count]) != nil else { return }
             selectedWord = fetchedWords?[count]
@@ -242,7 +235,7 @@ class MainViewController: UIViewController {
         
         countOfRemainWords = countOfRemainWords - 1
 
-        subtitleLabel.text = "\(countOfRemainWords ?? 0) " + "/" + " \(allWords[currentNameOfDict] ?? 0)"
+        subtitleLabel.text = "\(countOfRemainWords ?? 0) " + "/" + " \(allWords ?? 0)"
     }
 
     private func showAnswers(_ viewState: String, _ selectedWord: Word) {

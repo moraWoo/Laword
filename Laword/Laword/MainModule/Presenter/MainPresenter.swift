@@ -14,23 +14,26 @@ protocol MainViewProtocol: AnyObject { //Output
 
 protocol MainViewPresenterProtocol: AnyObject { //Input
     init(view: MainViewProtocol, dataStoreManager: DataStoreManagerProtocol)
+    
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word]
-    func getShownWords(_ wordShowNow: String) -> [Word]?
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade)
-    func statisticWords( _ : String)
-    func statisticShowWords( _ : Bool)
+
     var fetchedWords: [Word]! { get set }
     var fetchedShowedWords: [Word]? { get set }
     var dictionaryName: String? { get set }
     func getNamesOfDictionary() -> [String]?
     func saveContext()
+
+//    var currentDictionary: [CurrentDictionary]? { get set }
     
-    func getAllWordsCount() -> [String: Int]
-    func getRemainWordsCount() -> [String : Int]
+    func getCurrentDictionary() -> [CurrentDictionary]?
+    func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int)
 }
 
 class MainPresenter: MainViewPresenterProtocol {
+    var currentDictionary: [CurrentDictionary]?
+    
     var allWordsInCurrentDictionary: [String : Int]?
     var remainingWordsInCurrentDictionary: [String : Int]?
     
@@ -48,33 +51,25 @@ class MainPresenter: MainViewPresenterProtocol {
         fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName ?? "5000 Oxford Words")
         //You can add new files of dictionaries with words
         getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000 Oxford Words")
+        
+        //Set default dictionary
+        UserDefaults.standard.set("5000 Oxford Words", forKey: "currentDictionary")
+
         getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "Demo Dictionary")
+
     }
     
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
         fetchedWords = dataStoreManager.getWords(showKey: showKey, currentDateTime: dateTime, dictionaryName: dictionaryName)
         return fetchedWords
     }
-    
-    func getShownWords(_ wordShowNow: String) -> [Word]? {
-        fetchedShowedWords = dataStoreManager.getShownWords(wordShowNow: wordShowNow)
-        return fetchedShowedWords
-    }
-    
+
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)  {
         dataStoreManager.getDataFromFile(nameOfFileDictionary: nameOfFileDictionary, nameOfDictionary: nameOfDictionary)
     }
     
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {
         dataStoreManager.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: wordShowed, wordShowNow: wordShowNow, grade: grade)
-    }
-
-    func statisticWords(_ searchKey: String) {
-        dataStoreManager.statisticWords(searchKey)
-    }
-    
-    func statisticShowWords(_ searchKey: Bool) {
-        dataStoreManager.statisticShowWords(searchKey)
     }
 
     func getNamesOfDictionary() -> [String]? {
@@ -85,13 +80,12 @@ class MainPresenter: MainViewPresenterProtocol {
         saveContext()
     }
     
-    func getAllWordsCount() -> [String : Int] {
-        let allWords = dataStoreManager.getAllWordsCount()
-        return allWords
+    func getCurrentDictionary() -> [CurrentDictionary]? {
+        currentDictionary = dataStoreManager.getCurrentDictionary()
+        return currentDictionary
     }
-
-    func getRemainWordsCount() -> [String : Int] {
-        let remainWords = dataStoreManager.getRemainWordsCount()
-        return remainWords
+    
+    func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int) {
+        dataStoreManager.saveCountOfRemainWords(nameOfDictionary: nameOfDictionary, remainWords: remainWords)
     }
 }

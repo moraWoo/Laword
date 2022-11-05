@@ -29,21 +29,18 @@ enum DictionaryError: Error {
 
 protocol DataStoreManagerProtocol {
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word]
-    func getShownWords(wordShowNow: String) -> [Word]
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade)
     func getDataFromFile(nameOfFileDictionary: String, nameOfDictionary: String)
-    func statisticWords(_ searchKey: String)
-    func statisticShowWords(_ searchKey: Bool)
+
     func getNamesOfDictionary() -> [String]?
     func saveContext()
-    
-    func getAllWordsCount() -> [String: Int]
-    func getRemainWordsCount() -> [String: Int]
-    
-    
+
+    func getCurrentDictionary() -> [CurrentDictionary]?
+    func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int)
 }
 
 class DataStoreManager: DataStoreManagerProtocol {
+    
     var allWordsInCurrentDictionary: [String : Int] = [:]
     var remainingWordsInCurrentDictionary: [String : Int] = [:]
     
@@ -56,40 +53,43 @@ class DataStoreManager: DataStoreManagerProtocol {
     var namesOfDictionary: [String]? = []
     var countOfDictionaries: Int?
     
-    var currentDictionary: [Dictionary]?
+    var currentDictionary: [CurrentDictionary]? = []
     
-    // MARK: - Core Data stack
-    var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Laword")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
-    
-    // MARK: - CRUD
-    func saveContext () {
+    // MARK: Get array with name, all words, remain words from CoreData
+    func getCurrentDictionary() -> [CurrentDictionary]? {
+        currentDictionary = []
+       
         let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        let fetchRequest: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            for selectedDictionary in results {
+                let currentDict = CurrentDictionary(
+                    name: selectedDictionary.name,
+                    countOfAllWords: selectedDictionary.countAllWords,
+                    countOfRemainWords: selectedDictionary.countRemainWords
+                )
+                currentDictionary?.append(currentDict)
             }
+        } catch {
+            print(error.localizedDescription)
         }
+        return currentDictionary
     }
     
-    func getAllWordsCount() -> [String: Int] {
-        return allWordsInCurrentDictionary
-    }
-
-    func getRemainWordsCount() -> [String: Int] {
-        return remainingWordsInCurrentDictionary
-    }
+    func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int) {
         
+        let context = persistentContainer.viewContext
+        let fetchRequestDictionary: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
+        fetchRequestDictionary.predicate = NSPredicate(format: "name = %@", nameOfDictionary)
+        
+        guard let entityDictionary = NSEntityDescription.entity(forEntityName: "Dictionary", in: context) else { return }
+        let selectedDict = NSManagedObject(entity: entityDictionary, insertInto: context) as! Dictionary
+                
+        selectedDict.countRemainWords = Int16(remainWords)
+    }
+    
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
@@ -131,14 +131,6 @@ class DataStoreManager: DataStoreManagerProtocol {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
-        
-        remainingWordsInCurrentDictionary[dictionaryName] = fetchedWords.count
-        
-        
-        
-        UserDefaults.standard.set(remainingWordsInCurrentDictionary, forKey: "remainWordsCount")
-        
-        UserDefaults.standard.set(remainingWordsInCurrentDictionary, forKey: dictionaryName)
         return fetchedWords
     }
 
@@ -171,7 +163,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         let timeInterval = Date().timeIntervalSince1970
         
-//        sm2protocol.sm2Algorythm(flashcard: selectedWord, grade: grade, currentDateTime: timeInterval)
         sm2Algorythm(flashcard: selectedWord, grade: grade, currentDateTime: timeInterval)
         
         do {
@@ -220,60 +211,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         let newNexDatetime = currentDateTime + Double(extraDays)
         flashcard.previousDate = flashcard.nextDate
         flashcard.nextDate = Date(timeIntervalSince1970: newNexDatetime)
-    }
-    
-    func statisticWords(_ searchKey: String) {
-        let context = persistentContainer.viewContext
-        let request: NSFetchRequest<Word> = Word.fetchRequest()
-        request.predicate = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordKey), searchKey])
-        do {
-            // Получить выборку
-            let results = try context.fetch(request)
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch let error as NSError {
-            print("Не могу получить выборку: \(error), \(error.userInfo)")
-        }
-    }
-    
-    func statisticShowWords(_ searchKey: Bool) {
-        let context = persistentContainer.viewContext
-        let request: NSFetchRequest<Word> = Word.fetchRequest()
-        request.predicate = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordShowed), searchKey as NSNumber])
-        do {
-            let results = try context.fetch(request)
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch let error as NSError {
-            print("Не могу получить выборку: \(error), \(error.userInfo)")
-        }
-    }
-    
-    func getShownWords(wordShowNow: String) -> [Word] {
-        let context = persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
-        var fetchedShowedNowWords: [Word]!
-       
-        fetchRequest.predicate = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordShowedNow), wordShowNow])
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            fetchedShowedNowWords = results
-            for showed in results {
-                print("\(String(describing: showed.word)) - \(showed.wordTranslation ?? "")")
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        return fetchedShowedNowWords
     }
     
     func getNamesOfDictionary() -> [String]? {
@@ -330,12 +267,30 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         
         selectedDict.countAllWords = Int16(countWords)
-        allWordsInCurrentDictionary[nameOfDictionary] = countWords
-        
-        let currentDictionary = CurrentDictionary.init(name: nameOfDictionary, countOfAllWords: countWords, countOfRemainWords: countWords)
-        print("currentDictionary ========== \(currentDictionary)")
-        UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: "allWordsCount")
-        
-        UserDefaults.standard.set(allWordsInCurrentDictionary, forKey: nameOfDictionary)
+        selectedDict.countRemainWords = Int16(countWords)
+    }
+    
+    // MARK: - Core Data stack
+    var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Laword")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+    
+    // MARK: - CRUD
+    func saveContext () {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
 }
