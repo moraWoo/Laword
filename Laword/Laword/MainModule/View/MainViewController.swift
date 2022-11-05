@@ -69,14 +69,14 @@ class MainViewController: UIViewController {
     var currentAmountOfWords = 0
 
     var nameOfCurrentDictionary: String?
-    var allWords: Int!
+    
     var remainWords: [String : Any]!
-
     var numberOfRemainWords: Int!
     
-    var countOfRemainWords: Int! {
+    var countOfAllWords: Int?
+    var countOfRemainWords: Int? {
         didSet {
-            subtitleLabel.text = "\(countOfRemainWords) " + "/" + " \(allWords ?? 0)"
+            subtitleLabel.text = "\(countOfRemainWords ?? 0) " + "/" + " \(countOfAllWords ?? 0)"
         }
     }
     
@@ -124,22 +124,19 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
                 
         startLearning(nameOfCurrentDictionary ?? "")
         titleLabel.text = nameOfCurrentDictionary
-        guard let currentDictionary = presenter.getCurrentDictionary() else { return }
-        print("currentDictionary \(currentDictionary)")
         
-        for currentDict in currentDictionary {
-            let name = currentDict.name
-            allWords = Int(currentDict.countOfAllWords ?? 0)
-            countOfRemainWords = Int(currentDict.countOfRemainWords ?? 0)
-            
-            if name == nameOfCurrentDictionary {
-                subtitleLabel.text = "\(countOfRemainWords ?? 0) " + "/" + " \(allWords ?? 0)"
-            }
+        guard let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary ?? "") else { return }
+        if currentDictionary.countOfRemainWords == 0 {
+            alertFinishWordsInCurrentDict()
         }
+        countOfAllWords = Int(currentDictionary.countOfAllWords ?? 0)
+        countOfRemainWords = Int(currentDictionary.countOfRemainWords ?? 0)
+        subtitleLabel.text = "\(currentDictionary.countOfRemainWords ?? 0) " + "/" + " \(currentDictionary.countOfAllWords ?? 0)"
 
         addButtonsAndLabelsToNavigatorBar()
         navigationItem.titleView = titleStackView
@@ -160,10 +157,8 @@ class MainViewController: UIViewController {
         maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
         fetchedWords = presenter.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName)
         
-        if count == 0 {
-            guard (fetchedWords?[count]) != nil else { return }
-            selectedWord = fetchedWords?[count]
-        }
+        guard (fetchedWords?[count]) != nil else { return }
+        selectedWord = fetchedWords?[count]
         
         LabelFirst.text = selectedWord?.word
         LabelSecond.text = selectedWord?.wordTranslation
@@ -222,20 +217,19 @@ class MainViewController: UIViewController {
         presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
         
         count += 1
+        
         if count == currentAmountOfWords {
             alertFinishWordsInCurrentDict()
-            
-//            UserDefaults.standard.set(true, forKey: "Test Dictionary.dictionaryIsEmpty")
         } else {
             guard (fetchedWords?[count]) != nil else { return }
             selectedWord = fetchedWords?[count]
             showAnswers("showWordSecond", selectedWord)
         }
         countProgressBar()
-        
-        countOfRemainWords = countOfRemainWords - 1
+        countOfRemainWords = (countOfRemainWords ?? 0) - 1
 
-        subtitleLabel.text = "\(countOfRemainWords ?? 0) " + "/" + " \(allWords ?? 0)"
+        // MARK: Save remaining words
+        presenter.saveCountOfRemainWords(nameOfDictionary: nameOfCurrentDictionary ?? "", remainWords: countOfRemainWords ?? 0)
     }
 
     private func showAnswers(_ viewState: String, _ selectedWord: Word) {
@@ -306,6 +300,7 @@ class MainViewController: UIViewController {
             let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
             navigationController?.pushViewController(dictionaryListVC, animated: true)
         }))
+        
         present(alert,animated: true)
     }
 }

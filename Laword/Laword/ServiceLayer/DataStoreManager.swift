@@ -35,7 +35,7 @@ protocol DataStoreManagerProtocol {
     func getNamesOfDictionary() -> [String]?
     func saveContext()
 
-    func getCurrentDictionary() -> [CurrentDictionary]?
+    func getCurrentDictionary(nameOfDictionary: String) -> CurrentDictionary?
     func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int)
 }
 
@@ -47,49 +47,66 @@ class DataStoreManager: DataStoreManagerProtocol {
     var countWords = 0
     var wordDictionary: [String : AnyObject]!
     var fetchedWords: [Word]?
+    var fetchedDicts: [Dictionary]?
     var selectedWord: Word?
     var currentCount = 0
 
     var namesOfDictionary: [String]? = []
     var countOfDictionaries: Int?
     
-    var currentDictionary: [CurrentDictionary]? = []
+    var currentDictionary: CurrentDictionary?
     
     // MARK: Get array with name, all words, remain words from CoreData
-    func getCurrentDictionary() -> [CurrentDictionary]? {
-        currentDictionary = []
-       
+    func getCurrentDictionary(nameOfDictionary: String) -> CurrentDictionary? {
+        
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
         
         do {
             let results = try context.fetch(fetchRequest)
+            
             for selectedDictionary in results {
                 let currentDict = CurrentDictionary(
                     name: selectedDictionary.name,
                     countOfAllWords: selectedDictionary.countAllWords,
                     countOfRemainWords: selectedDictionary.countRemainWords
                 )
-                currentDictionary?.append(currentDict)
+                
+                if selectedDictionary.name != nameOfDictionary {
+                    print("ищем другой словарь")
+                } else {
+                    currentDictionary = currentDict
+                }
             }
         } catch {
             print(error.localizedDescription)
         }
         return currentDictionary
     }
-    
+    // MARK: Update values of remaining words in each Dictionary
     func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int) {
-        
         let context = persistentContainer.viewContext
         let fetchRequestDictionary: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
-        fetchRequestDictionary.predicate = NSPredicate(format: "name = %@", nameOfDictionary)
         
-        guard let entityDictionary = NSEntityDescription.entity(forEntityName: "Dictionary", in: context) else { return }
-        let selectedDict = NSManagedObject(entity: entityDictionary, insertInto: context) as! Dictionary
-                
+        fetchRequestDictionary.predicate = NSPredicate(format: "name = %@", nameOfDictionary)
+
+        do {
+            let results = try context.fetch(fetchRequestDictionary)
+            fetchedDicts = results
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        guard let selectedDict = fetchedDicts?.first else { return }
         selectedDict.countRemainWords = Int16(remainWords)
+
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print("Не могу записать. \(error), \(error.userInfo), \(error.localizedDescription)")
+        }
     }
-    
+
     func getWords(showKey: Bool, currentDateTime: TimeInterval, dictionaryName: String) -> [Word] {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
@@ -134,7 +151,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         return fetchedWords
     }
 
-        
     // MARK: - Save keys according to different buttons tapped (Easy, Difficult, DontKnow)
     func saveKeys(word: String, key: String, wordTranslation: String, wordShowed: Bool, wordShowNow: String, grade: Grade) {
         

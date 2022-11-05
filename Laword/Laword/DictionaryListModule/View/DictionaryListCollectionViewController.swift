@@ -21,9 +21,6 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     
     var namesOfDicts: [String] = []
     
-    var dict1: String = ""
-    var dict2: Int!
-    
     var presenter: DictionaryListViewPresenterProtocol!
     
     override func viewDidLoad() {
@@ -41,6 +38,27 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         
         let nib = UINib(nibName: "DictionaryCollectionViewCell", bundle: nil)
         self.collectionView.register(nib, forCellWithReuseIdentifier: "dictionaryCell")
+                
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "chevron.backward"), for: .normal)
+        button.setTitle("  Back", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        button.sizeToFit()
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(barButtonAction), for: .touchUpInside)
+
+    }
+    
+    @objc func barButtonAction() {
+        print("Button pressed")
+        let nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
+        let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary)
+        if currentDictionary?.countOfRemainWords == 0 {
+            alertFinishWordsInCurrentDict()
+            print("alertFinishWordsInCurrentDict1")
+        }
+        _ = navigationController?.popToRootViewController(animated: true)
+        print("alertFinishWordsInCurrentDict2")
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -53,52 +71,33 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
-
+        let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: namesOfDicts[indexPath.item])
+        
+        //Check each dictionary Is there any new word
+        if currentDictionary?.countOfRemainWords == 0 {
+            alertFinishWordsInCurrentDict()
+        }
+        
         if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
-            UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")
+            if currentDictionary?.countOfRemainWords == 0 {
+                alertFinishWordsInCurrentDict()
+                print("alertFinishWordsInCurrentDict12  ==  \(nameOfCurrentDictionary)")
+            } else {
+                UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")
+                print("alertFinishWordsInCurrentDict13")
+            }
         }
         _ = navigationController?.popToRootViewController(animated: true)
-
-        
-//        if indexPath.item == 0 {
-//            UserDefaults.standard.set(0, forKey: "currentDictionary")
-//        } else {
-//            if UserDefaults.standard.bool(forKey: "Test Dictionary.dictionaryIsEmpty") {
-//                alertFinishWordsInCurrentDict()
-//            } else {
-//                UserDefaults.standard.set(1, forKey: "currentDictionary")
-//            }
-//        }
-        
     }
-//    // MARK: To load current dictionary to Main
-//    override func viewWillDisappear(_ animated: Bool) {
-//        if self.isMovingToParent {
-//            let nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
-//
-//            if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
-//                UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")
-//            }
-//        }
-//    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dictionaryCell", for: indexPath) as! DictionaryCollectionViewCell
         
         cell.nameOfDictionary.text = namesOfDicts[indexPath.item]
-//        UserDefaults.standard.set(indexPath.item, forKey: "currentDictionary")
-                      
         let nameOfCurrentDictionary = namesOfDicts[indexPath.item]
-        let allWordsFromUserDef = UserDefaults.standard.dictionary(forKey: "allWordsCount") ?? ["" : ""]
-        let numberOfAllWords = allWordsFromUserDef[nameOfCurrentDictionary] as? Int
-  
-        let remainWordsFromUserDef = UserDefaults.standard.dictionary(forKey: "remainWordsCount") ?? ["" : ""]
-        let numberOfRemainWords = remainWordsFromUserDef[nameOfCurrentDictionary] as? Int
-        if let stringWithNumberOfAllWords = numberOfAllWords {
-            let newNumberOfRemainWords = numberOfRemainWords ?? 0
-            cell.countOfWordsInCurrentDictionary.text = "\(String(describing: newNumberOfRemainWords)) " + " | " + " \(stringWithNumberOfAllWords)"
-        }
-        
+        let currentDictionaryInfo = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary)
+        cell.countOfWordsInCurrentDictionary.text = "\(currentDictionaryInfo?.countOfRemainWords ?? 0) " + " | " + " \(currentDictionaryInfo?.countOfAllWords ?? 0)"
+
         let imageName = photos[indexPath.item]
         let image = UIImage(named: imageName)
         
@@ -159,11 +158,13 @@ extension DictionaryListCollectionViewController: DictionaryListViewProtocol {
 extension DictionaryListCollectionViewController {
     
     private func alertFinishWordsInCurrentDict() {
-        let alert = UIAlertController(title: "В данном словаре на сегодня закончились слова", message: "Выберите другой словарь словарь", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [self] _ in
-            dismiss(animated: true)
-        }))
+        
+        let alert = UIAlertController(title: "Вы прошли все слова", message: "Выберите другой словарь словарь", preferredStyle: UIAlertController.Style.alert)
+
+        let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) -> Void in
+        })
+        alert.addAction(alertAction)
+        self.present(alert, animated:true, completion: nil)
     }
 }
-
 

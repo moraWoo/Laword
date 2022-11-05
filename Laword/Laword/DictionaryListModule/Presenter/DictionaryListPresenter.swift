@@ -17,10 +17,13 @@ protocol DictionaryListViewPresenterProtocol: AnyObject {
     init(view: DictionaryListViewProtocol, dataStoreManager: DataStoreManagerProtocol, dictionaryName: String)
     func setDictionaryName()
     func getNamesOfDictionary() -> [String]?
+    func getCurrentDictionary(nameOfDictionary: String) -> CurrentDictionary?
 }
 
 class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
     weak var view: DictionaryListViewProtocol?
+    
+    var currentDictionary: CurrentDictionary?
     let dataStoreManager: DataStoreManagerProtocol!
     var dictionaryName = "Base12"
     var namesOfDicts: [String]?
@@ -37,5 +40,9 @@ class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
     func getNamesOfDictionary() -> [String]? {
         namesOfDicts = dataStoreManager.getNamesOfDictionary()
         return namesOfDicts
+    }
+    func getCurrentDictionary(nameOfDictionary: String) -> CurrentDictionary? {
+        currentDictionary = dataStoreManager.getCurrentDictionary(nameOfDictionary: nameOfDictionary)
+        return currentDictionary
     }
 }

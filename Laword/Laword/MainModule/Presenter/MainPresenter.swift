@@ -24,22 +24,21 @@ protocol MainViewPresenterProtocol: AnyObject { //Input
     var dictionaryName: String? { get set }
     func getNamesOfDictionary() -> [String]?
     func saveContext()
-
-//    var currentDictionary: [CurrentDictionary]? { get set }
     
-    func getCurrentDictionary() -> [CurrentDictionary]?
+    func getCurrentDictionary(nameOfDictionary: String) -> CurrentDictionary?
     func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int)
 }
 
 class MainPresenter: MainViewPresenterProtocol {
-    var currentDictionary: [CurrentDictionary]?
+    weak var view: MainViewProtocol?
+    var currentDictionary: CurrentDictionary?
     
     var allWordsInCurrentDictionary: [String : Int]?
     var remainingWordsInCurrentDictionary: [String : Int]?
     
     var fetchedShowedWords: [Word]?
     var fetchedWords: [Word]!
-    weak var view: MainViewProtocol?
+    
     let dataStoreManager: DataStoreManagerProtocol!
     let dateTime = Date().timeIntervalSince1970
     var dictionaryName: String?
@@ -79,9 +78,8 @@ class MainPresenter: MainViewPresenterProtocol {
     func saveContext() {
         saveContext()
     }
-    
-    func getCurrentDictionary() -> [CurrentDictionary]? {
-        currentDictionary = dataStoreManager.getCurrentDictionary()
+    func getCurrentDictionary(nameOfDictionary: String) -> CurrentDictionary? {
+        currentDictionary = dataStoreManager.getCurrentDictionary(nameOfDictionary: nameOfDictionary)
         return currentDictionary
     }
     
