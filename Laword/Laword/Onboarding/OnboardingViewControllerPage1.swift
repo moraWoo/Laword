@@ -15,7 +15,7 @@ class OnboardingViewControllerPage1: UIViewController {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        let profile = UIImage(named: "onboard")
+        let profile = UIImage(named: "imageOB1")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         
@@ -27,11 +27,11 @@ class OnboardingViewControllerPage1: UIViewController {
         let textView = UITextView()
         let attributedText = NSMutableAttributedString(string: "Приложение LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
         
-        attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord предназначено для быстрого пополнения словарного запаса иностранных слов.\nОсновано на методе SuperMemo2.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord позволит вам быстрого пополнить словарный запас иностранных слов.\n\nОсновано на методе SuperMemo2.\n\nБазовый словарь '5000 Оxford Words' включает наиболее частотные английские слова, которые покрывают до 90% лексики газет, фильмов, книг", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
         
         textView.attributedText = attributedText
         textView.backgroundColor = UIColor.white
-        textView.textAlignment = .center
+        textView.textAlignment = .left
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.translatesAutoresizingMaskIntoConstraints = false

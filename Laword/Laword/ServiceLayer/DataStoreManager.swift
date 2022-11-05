@@ -112,9 +112,9 @@ class DataStoreManager: DataStoreManagerProtocol {
         let fetchRequest: NSFetchRequest<Word> = Word.fetchRequest()
         var fetchedWords: [Word]!
         
-        let predicateOfUnshowedWords = NSPredicate(
-            format: "%K = %@",
-            argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
+//        let predicateOfUnshowedWords = NSPredicate(
+//            format: "%K = %@",
+//            argumentArray: [#keyPath(Word.wordShowed), showKey as NSNumber])
         
         let predicateOfDictionary = NSPredicate(
             format: "%K = %@",
@@ -128,7 +128,8 @@ class DataStoreManager: DataStoreManagerProtocol {
         
         let fromPredicate = NSPredicate(format: "%@ >= %K", dateFrom as NSDate, #keyPath(Word.nextDate))
         let toPredicate = NSPredicate(format: "%K < %@", #keyPath(Word.nextDate), dateTo! as NSDate)
-        let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate, predicateOfUnshowedWords, predicateOfDictionary])
+//        let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate, predicateOfUnshowedWords, predicateOfDictionary])
+        let dateAndUnshowedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate, toPredicate, predicateOfDictionary])
         fetchRequest.predicate = dateAndUnshowedPredicate
              
         do {

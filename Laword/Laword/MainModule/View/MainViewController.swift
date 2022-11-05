@@ -14,6 +14,8 @@ class MainViewController: UIViewController {
     @IBOutlet var LabelSecond: UILabel!
     @IBOutlet var WordTranscription: UILabel!
     
+    @IBOutlet var stackViewLabelWords: UIStackView!
+    
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var nameOfVocabulary: UILabel!
@@ -60,7 +62,9 @@ class MainViewController: UIViewController {
     
     var progressCount = 0.0
     let dateTime = Date().timeIntervalSince1970
-
+    
+    
+    
     var currentDict: Int!
     var namesOfDictionary: [String]?
     let titleLabel = UILabel()
@@ -108,6 +112,11 @@ class MainViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         
+        if screenHeight < 670 {
+            stackViewLabelWords.spacing = 30
+        } else {
+            stackViewLabelWords.spacing = 120
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -429,11 +438,20 @@ extension MainViewController {
             stackOfButtons.addArrangedSubview(viewOfDifficultButton)
             stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
 
-            NSLayoutConstraint.activate([
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -94.0),
-                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            ])
+            if screenHeight < 670 {
+                NSLayoutConstraint.activate([
+                    stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -36.0),
+                    stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                ])
+            } else {
+                NSLayoutConstraint.activate([
+                    stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -94.0),
+                    stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                ])
+            }
+
             
             // MARK: Configure StackViews with labels
             stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
@@ -500,12 +518,22 @@ extension MainViewController {
             stackOfButtons.addArrangedSubview(viewOfEasyButton)
             stackOfButtons.addArrangedSubview(viewOfDifficultButton)
             stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
+            
+            if screenHeight < 670 {
+                NSLayoutConstraint.activate([
+                    stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -36.0),
+                    stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                ])
+            } else {
+                NSLayoutConstraint.activate([
+                    stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -94.0),
+                    stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                ])
+            }
+            
 
-            NSLayoutConstraint.activate([
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -94.0),
-                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            ])
             
             // MARK: Configure StackViews with labels
             stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
@@ -555,5 +583,13 @@ extension MainViewController {
             stackViewWithDontText.alignment = UIStackView.Alignment.trailing
             stackViewWithDontText.spacing = 10
         }
+    }
+    
+    public var screenWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+
+    public var screenHeight: CGFloat {
+        return UIScreen.main.bounds.height
     }
 }

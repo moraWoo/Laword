@@ -181,7 +181,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             } else if sections.title == "Обучение" {
                 configuration.text = "Укажите количество изучаемых слов"
             } else {
-                configuration.text = "Включите начальный экран при следующей загрузке"
+                configuration.text = "Показать начальный экран при следующей загрузке"
             }
             footerView.contentConfiguration = configuration
         }

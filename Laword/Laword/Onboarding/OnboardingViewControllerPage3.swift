@@ -11,25 +11,27 @@ class OnboardingViewControllerPage3: UIViewController {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        let profile = UIImage(named: "onboard")
+        let profile = UIImage(named: "imageOB3")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        
         imageView.image = profile
-        
         return imageView
     }()
     
     let descriptionTextView: UITextView = {
         let textView = UITextView()
-        let attributedText = NSMutableAttributedString(string: "Как пользоваться приложением", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)])
-        
-        attributedText.append(NSAttributedString(string: "\n\n\nAre you ready for loads and loads for fun? Don't wait any longer! We hope to see you in our event today.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        let attributedText = NSMutableAttributedString(string: "Инструкция LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
+        attributedText.append(NSAttributedString(
+            string: """
+            \n
+            В начале показывается слово из выбранного словаря.\n\n・В уме переводите слово.\n・Тапаете по экрану.\n・Показывается перевод.\n・Делаете анализ на сколько вы знаете слово. \n・Выбираете одну из кнопок. \n\n'Легко', если слово вам знакомо.\n'Трудно', если слово вы знаете, но сомневаетесь в переводе.\n'Не знаю', данное слово вам незнакомо.
+            """,
+            attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
         
         textView.attributedText = attributedText
         textView.backgroundColor = UIColor.white
 
-        textView.textAlignment = .center
+        textView.textAlignment = .left
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,8 +41,8 @@ class OnboardingViewControllerPage3: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
         view.addSubview(descriptionTextView)
+        view.backgroundColor = UIColor.white
         setupLayout()
     }
     
@@ -49,7 +51,6 @@ class OnboardingViewControllerPage3: UIViewController {
         view.addSubview(topImageContainerView)
         
         topImageContainerView.translatesAutoresizingMaskIntoConstraints = false
-        
         topImageContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         topImageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         topImageContainerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true

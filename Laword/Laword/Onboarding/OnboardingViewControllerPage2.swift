@@ -11,7 +11,7 @@ class OnboardingViewControllerPage2: UIViewController {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        let profile = UIImage(named: "onboard")
+        let profile = UIImage(named: "imageOB2")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.image = profile
@@ -20,18 +20,18 @@ class OnboardingViewControllerPage2: UIViewController {
     
     let descriptionTextView: UITextView = {
         let textView = UITextView()
-        let attributedText = NSMutableAttributedString(string: "Методика SuperMemo", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
+        let attributedText = NSMutableAttributedString(string: "Метод SuperMemo", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
         attributedText.append(NSAttributedString(
             string: """
             \n
-            Методика для запоминания информации была разработана польским студентом Петром Возняком в 1985 на основе системы Себастьяна Лейтнера.
+            Методика для запоминания информации была разработана польским студентом Петром Возняком в 1985 по системе Себастьяна Лейтнера.\n\nОсновано на кривой забывания.\n\nПройденные слова будут показываться вам в будущем через определенные интервалы в зависимости от вашего выбора.
             """,
             attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
         
         textView.attributedText = attributedText
         textView.backgroundColor = UIColor.white
 
-        textView.textAlignment = .center
+        textView.textAlignment = .left
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.translatesAutoresizingMaskIntoConstraints = false

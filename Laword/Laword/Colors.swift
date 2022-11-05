@@ -37,10 +37,17 @@ extension Theme {
     
     func setActive() {
         save()
-
-        UIApplication.shared.windows
+        
+        UIApplication
+            .shared
+            .connectedScenes
+            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
             .filter { $0 != themeWindow }
             .forEach { $0.overrideUserInterfaceStyle = userInterfaceStyle }
+        
+//        UIApplication.shared.windows
+//            .filter { $0 != themeWindow }
+//            .forEach { $0.overrideUserInterfaceStyle = userInterfaceStyle }
     }
 }
 
