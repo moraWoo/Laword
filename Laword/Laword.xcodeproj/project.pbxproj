@@ -26,7 +26,6 @@
 		6372A07D290325BC00889958 /* DictionaryListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A07B290325BC00889958 /* DictionaryListCollectionViewController.swift */; };
 		6372A07E290325BC00889958 /* DictionaryListCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6372A07C290325BC00889958 /* DictionaryListCollectionViewController.xib */; };
 		6372A0802903262800889958 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A07F2903262800889958 /* HeaderCollectionReusableView.swift */; };
-		6387995A28F2F49B00D9590F /* SM2Manager1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387995928F2F49B00D9590F /* SM2Manager1.swift */; };
 		63A5FA7C291464CC006ED7D3 /* OnboardingViewControllerPage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5FA7A291464CC006ED7D3 /* OnboardingViewControllerPage1.swift */; };
 		63A5FA7D291464CC006ED7D3 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63A5FA7B291464CC006ED7D3 /* OnboardingViewController.xib */; };
 		63A5FA7F29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5FA7E29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift */; };
@@ -65,7 +64,6 @@
 		6372A07B290325BC00889958 /* DictionaryListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListCollectionViewController.swift; sourceTree = "<group>"; };
 		6372A07C290325BC00889958 /* DictionaryListCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryListCollectionViewController.xib; sourceTree = "<group>"; };
 		6372A07F2903262800889958 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
-		6387995928F2F49B00D9590F /* SM2Manager1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Manager1.swift; sourceTree = "<group>"; };
 		63A5FA7A291464CC006ED7D3 /* OnboardingViewControllerPage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerPage1.swift; sourceTree = "<group>"; };
 		63A5FA7B291464CC006ED7D3 /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		63A5FA7E29146B1A006ED7D3 /* OnboardingViewControllerPage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerPage2.swift; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 			children = (
 				63B0AD392915AD6D002BE9A0 /* CurrentDictionary.swift */,
 				63DB606D28BB2124002ADD6E /* DataStoreManager.swift */,
-				6387995928F2F49B00D9590F /* SM2Manager1.swift */,
 			);
 			path = ServiceLayer;
 			sourceTree = "<group>";
@@ -341,7 +338,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6372A0802903262800889958 /* HeaderCollectionReusableView.swift in Sources */,
-				6387995A28F2F49B00D9590F /* SM2Manager1.swift in Sources */,
 				77205DAE290BFBF60004351B /* SettingsViewController.swift in Sources */,
 				63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */,
 				63225432291503A9002B24F4 /* OnboardingPageViewController.swift in Sources */,
