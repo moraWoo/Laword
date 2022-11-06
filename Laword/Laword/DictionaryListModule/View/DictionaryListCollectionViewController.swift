@@ -9,19 +9,15 @@ import UIKit
 
 class DictionaryListCollectionViewController: UICollectionViewController {
 
-    weak var viewController: UIViewController?
+    var presenter: DictionaryListViewPresenterProtocol!
     
     let itemsPerRow: CGFloat = 2
     let sectionInserts = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     
     let photos = ["sanfransisco", "newyork"]
-    
     let labelOfSection = ["Базовые", "Пользовательские"]
-    let countOfWordsInDictionary = ["1 / 100", "230 / 370"]
     
     var namesOfDicts: [String] = []
-    
-    var presenter: DictionaryListViewPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +49,10 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         print("Button pressed")
         let nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
         let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary)
+        
         if currentDictionary?.countOfRemainWords == 0 {
             alertFinishWordsInCurrentDict()
-            print("alertFinishWordsInCurrentDict1")
+            print("alertFinishWordsInCurrentDict2")
         }
         _ = navigationController?.popToRootViewController(animated: true)
         print("alertFinishWordsInCurrentDict2")
@@ -78,9 +75,12 @@ class DictionaryListCollectionViewController: UICollectionViewController {
             alertFinishWordsInCurrentDict()
         }
         
+        print("namesOfDicts[indexPath.item] \(namesOfDicts[indexPath.item]) ------ nameOfCurrentDictionary \(nameOfCurrentDictionary)")
+        
         if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
             if currentDictionary?.countOfRemainWords == 0 {
                 alertFinishWordsInCurrentDict()
+                UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
                 print("alertFinishWordsInCurrentDict12  ==  \(nameOfCurrentDictionary)")
             } else {
                 UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")

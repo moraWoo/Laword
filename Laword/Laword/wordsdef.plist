@@ -270,7 +270,7 @@
 		<key>wordEN</key>
 		<string>adopt </string>
 		<key>wordRU</key>
-		<string> усыновить или взять (животное)</string>
+		<string> усыновить, взять (животное)</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -2058,7 +2058,7 @@
 		<key>wordEN</key>
 		<string>beauty </string>
 		<key>wordRU</key>
-		<string> красота или красавица</string>
+		<string> красота, красавица</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -2886,7 +2886,7 @@
 		<key>wordEN</key>
 		<string>braid </string>
 		<key>wordRU</key>
-		<string> коса или оплётка</string>
+		<string> коса, оплётка</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -3246,7 +3246,7 @@
 		<key>wordEN</key>
 		<string>bud </string>
 		<key>wordRU</key>
-		<string> бутон или почка растения</string>
+		<string> бутон, почка растения</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -3264,7 +3264,7 @@
 		<key>wordEN</key>
 		<string>buffalo </string>
 		<key>wordRU</key>
-		<string> буйвол или бизон</string>
+		<string> буйвол, бизон</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -3324,7 +3324,7 @@
 		<key>wordEN</key>
 		<string>bum </string>
 		<key>wordRU</key>
-		<string> бомж или бездельник</string>
+		<string> бомж, бездельник</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -3846,7 +3846,7 @@
 		<key>wordEN</key>
 		<string>casket </string>
 		<key>wordRU</key>
-		<string> шкатулка или гроб (амер.)</string>
+		<string> шкатулка, гроб (амер.)</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -4926,7 +4926,7 @@
 		<key>wordEN</key>
 		<string>collar </string>
 		<key>wordRU</key>
-		<string> воротник или ошейник</string>
+		<string> воротник, ошейник</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -5106,7 +5106,7 @@
 		<key>wordEN</key>
 		<string>come up </string>
 		<key>wordRU</key>
-		<string> произойти или появиться</string>
+		<string> произойти, появиться</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -5706,7 +5706,7 @@
 		<key>wordEN</key>
 		<string>contemplate </string>
 		<key>wordRU</key>
-		<string> созерцать или размышлять</string>
+		<string> созерцать, размышлять</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -6288,7 +6288,7 @@
 		<key>wordEN</key>
 		<string>crib </string>
 		<key>wordRU</key>
-		<string> раскладушка или дет. кроватка</string>
+		<string> раскладушка, дет. кроватка</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -6504,7 +6504,7 @@
 		<key>wordEN</key>
 		<string>curb </string>
 		<key>wordRU</key>
-		<string> бордюр или обочина</string>
+		<string> бордюр, обочина</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -6576,7 +6576,7 @@
 		<key>wordEN</key>
 		<string>custody </string>
 		<key>wordRU</key>
-		<string> охрана, стража или опека</string>
+		<string> охрана, стража, опека</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -6816,7 +6816,7 @@
 		<key>wordEN</key>
 		<string>decade </string>
 		<key>wordRU</key>
-		<string> десятилетие или десяток</string>
+		<string> десятилетие, десяток</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -7716,7 +7716,7 @@
 		<key>wordEN</key>
 		<string>dish </string>
 		<key>wordRU</key>
-		<string> тарелка или миска</string>
+		<string> тарелка, миска</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -8214,7 +8214,7 @@
 		<key>wordEN</key>
 		<string>drift </string>
 		<key>wordRU</key>
-		<string> дрейфовать или дрифтовать</string>
+		<string> дрейфовать, дрифтовать</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -8304,7 +8304,7 @@
 		<key>wordEN</key>
 		<string>drug </string>
 		<key>wordRU</key>
-		<string> лекарство или наркотик</string>
+		<string> лекарство, наркотик</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -8910,7 +8910,7 @@
 		<key>wordEN</key>
 		<string>engine </string>
 		<key>wordRU</key>
-		<string> двигатель или машина</string>
+		<string> двигатель, машина</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -11004,13 +11004,13 @@
 		<key>wordEN</key>
 		<string>freak out </string>
 		<key>wordRU</key>
-		<string> пугать или бесить</string>
+		<string> пугать, бесить</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
 		<string>free </string>
 		<key>wordRU</key>
-		<string> свободный или бесплатный</string>
+		<string> свободный, бесплатный</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -11436,7 +11436,7 @@
 		<key>wordEN</key>
 		<string>germ </string>
 		<key>wordRU</key>
-		<string> микроб или зародыш</string>
+		<string> микроб, зародыш</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -11676,7 +11676,7 @@
 		<key>wordEN</key>
 		<string>glass </string>
 		<key>wordRU</key>
-		<string> стекло или стакан</string>
+		<string> стекло, стакан</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -11706,7 +11706,7 @@
 		<key>wordEN</key>
 		<string>glimpse </string>
 		<key>wordRU</key>
-		<string> вид (мельком или уголком)</string>
+		<string>случайно заметить</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -12210,7 +12210,7 @@
 		<key>wordEN</key>
 		<string>grow (grew, grown) </string>
 		<key>wordRU</key>
-		<string> расти или выращивать</string>
+		<string> расти, выращивать</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -13380,7 +13380,7 @@
 		<key>wordEN</key>
 		<string>hurt (hurt, hurt) </string>
 		<key>wordRU</key>
-		<string> причинять боль или болеть</string>
+		<string> причинять боль, болеть</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -14088,7 +14088,7 @@
 		<key>wordEN</key>
 		<string>intercourse </string>
 		<key>wordRU</key>
-		<string> отношения или пол. сношение</string>
+		<string> отношения, пол. сношение</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -14550,7 +14550,7 @@
 		<key>wordEN</key>
 		<string>jury </string>
 		<key>wordRU</key>
-		<string> жюри или присяжные</string>
+		<string> жюри, присяжные</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -14700,7 +14700,7 @@
 		<key>wordEN</key>
 		<string>kite </string>
 		<key>wordRU</key>
-		<string> коршун или воздушный змей</string>
+		<string> коршун, воздушный змей</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -15348,7 +15348,7 @@
 		<key>wordEN</key>
 		<string>light up </string>
 		<key>wordRU</key>
-		<string> осветить или загореться</string>
+		<string> осветить, загореться</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -15600,7 +15600,7 @@
 		<key>wordEN</key>
 		<string>lock up </string>
 		<key>wordRU</key>
-		<string> посадить в тюрьму или дурку</string>
+		<string> посадить в тюрьму, в дурку</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -15654,7 +15654,7 @@
 		<key>wordEN</key>
 		<string>long for </string>
 		<key>wordRU</key>
-		<string> желать или скучать</string>
+		<string> желать, скучать</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -15948,7 +15948,7 @@
 		<key>wordEN</key>
 		<string>mainland </string>
 		<key>wordRU</key>
-		<string> материк или большой остров</string>
+		<string> материк, большой остров</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -16404,7 +16404,7 @@
 		<key>wordEN</key>
 		<string>meditate </string>
 		<key>wordRU</key>
-		<string> обдумывать или созерцать</string>
+		<string> обдумывать, созерцать</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -16416,7 +16416,7 @@
 		<key>wordEN</key>
 		<string>meet (met, met) </string>
 		<key>wordRU</key>
-		<string> встретить или познакомиться</string>
+		<string> встретить, познакомиться</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -16620,7 +16620,7 @@
 		<key>wordEN</key>
 		<string>mill </string>
 		<key>wordRU</key>
-		<string> мельница или фабрика</string>
+		<string> мельница, фабрика</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -16956,7 +16956,7 @@
 		<key>wordEN</key>
 		<string>moth </string>
 		<key>wordRU</key>
-		<string> мотылёк или моль</string>
+		<string> мотылёк, моль</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -17064,7 +17064,7 @@
 		<key>wordEN</key>
 		<string>multiply </string>
 		<key>wordRU</key>
-		<string> умножать или размножаться</string>
+		<string> умножать, размножаться</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -17160,7 +17160,7 @@
 		<key>wordEN</key>
 		<string>muzzle </string>
 		<key>wordRU</key>
-		<string> морда или намордник</string>
+		<string> морда, намордник</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -17862,7 +17862,7 @@
 		<key>wordEN</key>
 		<string>offspring </string>
 		<key>wordRU</key>
-		<string> отпрыск или всё потомство</string>
+		<string> отпрыск, всё потомство</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -19110,7 +19110,7 @@
 		<key>wordEN</key>
 		<string>pick out </string>
 		<key>wordRU</key>
-		<string> выбрать или выделить из</string>
+		<string> выбрать, выделить из</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -19344,7 +19344,7 @@
 		<key>wordEN</key>
 		<string>plaster </string>
 		<key>wordRU</key>
-		<string> штукатурка или гипс</string>
+		<string> штукатурка, гипс</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -19572,7 +19572,7 @@
 		<key>wordEN</key>
 		<string>poll </string>
 		<key>wordRU</key>
-		<string> опрос или голосование</string>
+		<string> опрос, голосование</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -19644,7 +19644,7 @@
 		<key>wordEN</key>
 		<string>porter </string>
 		<key>wordRU</key>
-		<string> носильщик или порьте</string>
+		<string> носильщик, порьте</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -20658,7 +20658,7 @@
 		<key>wordEN</key>
 		<string>quite </string>
 		<key>wordRU</key>
-		<string> вполне или более-менее</string>
+		<string> вполне, более-менее</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -20952,7 +20952,7 @@
 		<key>wordEN</key>
 		<string>realm </string>
 		<key>wordRU</key>
-		<string> царство или область (перен.)</string>
+		<string> царство, область (перен.)</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -22038,7 +22038,7 @@
 		<key>wordEN</key>
 		<string>ripple </string>
 		<key>wordRU</key>
-		<string> рябь или пульсация</string>
+		<string> рябь, пульсация</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -22566,7 +22566,7 @@
 		<key>wordEN</key>
 		<string>sanctuary </string>
 		<key>wordRU</key>
-		<string> убежище или заповедник</string>
+		<string> убежище, заповедник</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -22602,7 +22602,7 @@
 		<key>wordEN</key>
 		<string>saucepan </string>
 		<key>wordRU</key>
-		<string> кастрюля или сковорода</string>
+		<string> кастрюля, сковорода</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -22722,7 +22722,7 @@
 		<key>wordEN</key>
 		<string>scent </string>
 		<key>wordRU</key>
-		<string> нюх или аромат</string>
+		<string> нюх, аромат</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -23586,7 +23586,7 @@
 		<key>wordEN</key>
 		<string>shovel </string>
 		<key>wordRU</key>
-		<string> лопата или совок</string>
+		<string> лопата, совок</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -24072,7 +24072,7 @@
 		<key>wordEN</key>
 		<string>slate </string>
 		<key>wordRU</key>
-		<string> шифер или сланец</string>
+		<string> шифер, сланец</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -24300,7 +24300,7 @@
 		<key>wordEN</key>
 		<string>snag </string>
 		<key>wordRU</key>
-		<string> коряга или загвоздка</string>
+		<string> коряга, загвоздка</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -24564,7 +24564,7 @@
 		<key>wordEN</key>
 		<string>soon </string>
 		<key>wordRU</key>
-		<string> скоро или рано</string>
+		<string> скоро, рано</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -25032,7 +25032,7 @@
 		<key>wordEN</key>
 		<string>squint </string>
 		<key>wordRU</key>
-		<string> щуриться или коситься</string>
+		<string> щуриться, коситься</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -25512,7 +25512,7 @@
 		<key>wordEN</key>
 		<string>stoop </string>
 		<key>wordRU</key>
-		<string> наклоняться или сутулиться</string>
+		<string> наклоняться, сутулиться</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -25896,7 +25896,7 @@
 		<key>wordEN</key>
 		<string>subtitle </string>
 		<key>wordRU</key>
-		<string> субтитры или подзаголовок</string>
+		<string> субтитры, подзаголовок</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -27246,7 +27246,7 @@
 		<key>wordEN</key>
 		<string>tin </string>
 		<key>wordRU</key>
-		<string> олово или жесть</string>
+		<string> олово, жесть</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -27462,7 +27462,7 @@
 		<key>wordEN</key>
 		<string>tow </string>
 		<key>wordRU</key>
-		<string> буксир или эвакуатор, буксировать</string>
+		<string> буксир, эвакуатор, буксировать</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -28428,7 +28428,7 @@
 		<key>wordEN</key>
 		<string>vault </string>
 		<key>wordRU</key>
-		<string> хранилище, об. в подвале</string>
+		<string> хранилище</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -28692,7 +28692,7 @@
 		<key>wordEN</key>
 		<string>vision </string>
 		<key>wordRU</key>
-		<string> зрение или видение</string>
+		<string> зрение, видение</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -28722,7 +28722,7 @@
 		<key>wordEN</key>
 		<string>vocation </string>
 		<key>wordRU</key>
-		<string> призвание или профессия</string>
+		<string> призвание, профессия</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -28794,7 +28794,7 @@
 		<key>wordEN</key>
 		<string>wad </string>
 		<key>wordRU</key>
-		<string> комок или пачка (денег)</string>
+		<string> комок, пачка (денег)</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
@@ -28848,7 +28848,7 @@
 		<key>wordEN</key>
 		<string>wake (up) </string>
 		<key>wordRU</key>
-		<string> просыпаться или будить</string>
+		<string> просыпаться, будить</string>
 	</dict>
 	<dict>
 		<key>wordEN</key>
