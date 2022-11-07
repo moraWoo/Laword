@@ -133,18 +133,24 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        print("viewWillAppear")
         nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
                 
+        let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary ?? "")
+        
+        if currentDictionary?.countOfRemainWords == 0 {
+            alertFinishWordsInCurrentDict()
+            return
+        }
+        
         startLearning(nameOfCurrentDictionary ?? "")
         titleLabel.text = nameOfCurrentDictionary
         
         guard let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary ?? "") else { return }
-        if currentDictionary.countOfRemainWords == 0 {
-            alertFinishWordsInCurrentDict()
-        }
+        
         countOfAllWords = Int(currentDictionary.countOfAllWords ?? 0)
         countOfRemainWords = Int(currentDictionary.countOfRemainWords ?? 0)
+        
         subtitleLabel.text = "\(currentDictionary.countOfRemainWords ?? 0) " + "/" + " \(currentDictionary.countOfAllWords ?? 0)"
 
         addButtonsAndLabelsToNavigatorBar()
@@ -195,6 +201,7 @@ class MainViewController: UIViewController {
     
     @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
         view.resignFirstResponder()
+        guard let selectedWord = self.selectedWord else { return }
         showAnswers("showWordFirst", selectedWord)
     }
     
