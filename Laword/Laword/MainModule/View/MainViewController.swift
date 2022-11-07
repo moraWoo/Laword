@@ -133,6 +133,7 @@ class MainViewController: UIViewController {
             return
         }
         print("currentCountWordsInProgress \(currentCountWordsInProgress)")
+        
         startLearning(nameOfCurrentDictionary ?? "")
         titleLabel.text = nameOfCurrentDictionary
         
@@ -140,6 +141,7 @@ class MainViewController: UIViewController {
 
         countOfAllWords = Int(currentDictionary.countOfAllWords ?? 0)
         countOfRemainWords = Int(currentDictionary.countOfRemainWords ?? 0)
+        
         subtitleLabel.text = "\(currentDictionary.countOfRemainWords ?? 0) " + "/" + " \(currentDictionary.countOfAllWords ?? 0)"
 
         addButtonsAndLabelsToNavigatorBar()
