@@ -78,12 +78,14 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         
         if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
             if currentDictionary?.countOfRemainWords == 0 {
-                alertFinishWordsInCurrentDict()
-                UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
-                print("alertFinishWordsInCurrentDict12  ==  \(nameOfCurrentDictionary)")
+                alertFinishWordsInCurrentDict()                
+                print("count__1.2 = nameOfCurrentDictionary = \(nameOfCurrentDictionary)")
             } else {
                 UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")
-                print("alertFinishWordsInCurrentDict13")
+                
+                let currentCountWordsInProgress = UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
+                print("count__2.2 = nameOfCurrentDictionary = \(nameOfCurrentDictionary)")
+                print("count__3.2 = currentCountWordsInProgress = \(currentCountWordsInProgress)")
             }
         }
         _ = navigationController?.popToRootViewController(animated: true)

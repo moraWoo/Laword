@@ -112,14 +112,10 @@ class MainViewController: UIViewController {
             stackViewLabelWords.spacing = 120
         }
     }
-//
-//    override func viewWillLayoutSubviews() {
-//
-//        super.viewWillLayoutSubviews()
-//        print("count__2 = viewWillLayoutSubviews = \(count)")
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
             titleStackView.spacing = UIStackView.spacingUseDefault
@@ -127,9 +123,14 @@ class MainViewController: UIViewController {
             titleStackView.axis = .horizontal
             titleStackView.spacing = 20.0
         }
-        super.viewWillAppear(animated)
-        print("count__3 = viewWillAppear = \(count)")
+        
         currentCountWordsInProgress = UserDefaults.standard.integer(forKey: "currentCountWordsInProgress")
+        if currentCountWordsInProgress == 0 {
+            count = 0
+        }
+            
+        print("count__3 = viewWillAppear = \(count)")
+        print("count__3.1 = currentCountWordsInProgress = \(currentCountWordsInProgress)")
         
         nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
         let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary ?? "")
@@ -169,13 +170,6 @@ class MainViewController: UIViewController {
         maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
         fetchedWords = presenter.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName)
         
-        if count < maxCount {
-            UserDefaults.standard.set(count, forKey: "currentCountWordsInProgress")
-        } else {
-            count = 0
-            UserDefaults.standard.set(count, forKey: "currentCountWordsInProgress")
-        }
-        
         guard (fetchedWords?[count]) != nil else { return }
         selectedWord = fetchedWords?[count]
         
@@ -213,12 +207,6 @@ class MainViewController: UIViewController {
     @objc private func menuButtonTap(sender: UIButton) {
         let dictionaryName = "Base1"
         let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
-        
-        if count < maxCount {
-            UserDefaults.standard.set(count, forKey: "currentCountWordsInProgress")
-        } else {
-            UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
-        }
         
         navigationController?.pushViewController(dictionaryListVC, animated: true)
     }
@@ -305,30 +293,23 @@ class MainViewController: UIViewController {
             UserDefaults.standard.set(currentAmountOfWords, forKey: "currentAmountOfWords")
         }
         print("count__7.1 = countProgressBar2 = \(count)")
-
     }
     
     private func alertFinish() {
         let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Показать новые?", preferredStyle: .alert)
         print("count__8 = alertFinish = \(count)")
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [self] _ in
-
-//            UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
             hideEverything()
             currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
             guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
-            
+            count = 0
             startLearning(namesOfDictionary[currentDict ?? 0])
             count = 0
-            UserDefaults.standard.set(count, forKey: "currentCountWordsInProgress")
             progressBar.progress = 0
             print("count__8 = alertFinish_Yes = \(count)")
         }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
-            let dictionaryName = "Base1"
-
-            UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
-            
+            let dictionaryName = ""
             let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
             navigationController?.pushViewController(dictionaryListVC, animated: true)
             count = 0
