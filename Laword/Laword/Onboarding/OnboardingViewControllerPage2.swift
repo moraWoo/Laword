@@ -21,39 +21,32 @@ class OnboardingViewControllerPage2: UIViewController {
     let descriptionTextView: UITextView = {
         let textView = UITextView()
         
+        var titleFont: CGFloat = 0
+        var descriptionFont: CGFloat = 0
+        
         if screenHeight < 740 {
-            let attributedText = NSMutableAttributedString(string: "Метод SuperMemo", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)])
-            attributedText.append(NSAttributedString(
-                string: """
-                \n
-                Методика для запоминания информации была разработана польским студентом Петром Возняком в 1985 по системе Себастьяна Лейтнера.\n\nОсновано на кривой забывания.\n\nПройденные слова будут показываться вам в будущем через определенные интервалы в зависимости от вашего выбора.
-                """,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.gray]))
-            
-            textView.attributedText = attributedText
-            textView.backgroundColor = UIColor.white
-
-            textView.textAlignment = .left
-            textView.isEditable = false
-            textView.isScrollEnabled = false
-            textView.translatesAutoresizingMaskIntoConstraints = false
+            titleFont = 18
+            descriptionFont = 12
         } else {
-            let attributedText = NSMutableAttributedString(string: "Метод SuperMemo", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
-            attributedText.append(NSAttributedString(
-                string: """
+            titleFont = 25
+            descriptionFont = 18
+        }
+
+        let attributedText = NSMutableAttributedString(string: "Метод SuperMemo", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: titleFont)])
+        attributedText.append(NSAttributedString(
+            string: """
                 \n
                 Методика для запоминания информации была разработана польским студентом Петром Возняком в 1985 по системе Себастьяна Лейтнера.\n\nОсновано на кривой забывания.\n\nПройденные слова будут показываться вам в будущем через определенные интервалы в зависимости от вашего выбора.
                 """,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
-            
-            textView.attributedText = attributedText
-            textView.backgroundColor = UIColor.white
-
-            textView.textAlignment = .left
-            textView.isEditable = false
-            textView.isScrollEnabled = false
-            textView.translatesAutoresizingMaskIntoConstraints = false
-        }
+            attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: descriptionFont), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        
+        textView.attributedText = attributedText
+        textView.backgroundColor = UIColor.white
+        
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
         
         return textView
     }()
@@ -85,7 +78,6 @@ class OnboardingViewControllerPage2: UIViewController {
         profileImageView.centerYAnchor.constraint(equalTo: topImageContainerView.centerYAnchor).isActive = true
         
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
         profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         
         if screenHeight < 740 {

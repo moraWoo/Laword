@@ -26,47 +26,45 @@ class OnboardingViewControllerPage1: UIViewController {
     let descriptionTextView: UITextView = {
         let textView = UITextView()
         
+        var titleFont: CGFloat = 0
+        var descriptionFont: CGFloat = 0
+        
         if screenHeight < 740 {
-            let attributedText = NSMutableAttributedString(string: "Приложение LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)])
-            
-            attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord позволит вам быстрого пополнить словарный запас иностранных слов.\n\nОсновано на методе SuperMemo2.\n\nБазовый словарь '5000 Оxford Words' включает наиболее частотные английские слова, которые покрывают до 90% лексики газет, фильмов, книг", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.gray]))
-            
-            textView.attributedText = attributedText
-            textView.backgroundColor = UIColor.white
-            textView.textAlignment = .left
-            textView.isEditable = false
-            textView.isScrollEnabled = false
-            textView.translatesAutoresizingMaskIntoConstraints = false
+            titleFont = 18
+            descriptionFont = 12
         } else {
-            let attributedText = NSMutableAttributedString(string: "Приложение LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
-            
-            attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord позволит вам быстрого пополнить словарный запас иностранных слов.\n\nОсновано на методе SuperMemo2.\n\nБазовый словарь '5000 Оxford Words' включает наиболее частотные английские слова, которые покрывают до 90% лексики газет, фильмов, книг", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
-            
-            textView.attributedText = attributedText
-            textView.backgroundColor = UIColor.white
-            textView.textAlignment = .left
-            textView.isEditable = false
-            textView.isScrollEnabled = false
-            textView.translatesAutoresizingMaskIntoConstraints = false
+            titleFont = 25
+            descriptionFont = 18
         }
+        
+        let attributedText = NSMutableAttributedString(string: "Приложение LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: titleFont)])
+        
+        attributedText.append(NSAttributedString(string: "\n\nПриложение LaWord позволит вам быстрого пополнить словарный запас иностранных слов.\n\nОсновано на методе SuperMemo2.\n\nБазовый словарь '5000 Оxford Words' включает наиболее частотные английские слова, которые покрывают до 90% лексики газет, фильмов, книг", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: descriptionFont), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        
+        textView.attributedText = attributedText
+        textView.backgroundColor = UIColor.white
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
+
         return textView
     }()
     
     override func viewDidLoad() {
-
-        print("screenWidth = \(screenWidth) screenHeight = \(screenHeight)")
-
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         view.addSubview(descriptionTextView)
         setupLayout()
     }
     
+    private func createTextView() {
+        
+    }
+    
     private func setupLayout(){
-
         let topImageContainerView = UIView()
         view.addSubview(topImageContainerView)
-        
         topImageContainerView.translatesAutoresizingMaskIntoConstraints = false
 
         if screenHeight < 740 {
@@ -84,7 +82,6 @@ class OnboardingViewControllerPage1: UIViewController {
         profileImageView.centerYAnchor.constraint(equalTo: topImageContainerView.centerYAnchor).isActive = true
         
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
         profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         
         if screenHeight < 740 {
@@ -94,8 +91,6 @@ class OnboardingViewControllerPage1: UIViewController {
             profileImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
             profileImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         }
-        
-
         
         descriptionTextView.topAnchor.constraint(equalTo: topImageContainerView.bottomAnchor).isActive = true
         descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24).isActive = true

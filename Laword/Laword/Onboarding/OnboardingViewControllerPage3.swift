@@ -21,30 +21,24 @@ class OnboardingViewControllerPage3: UIViewController {
     let descriptionTextView: UITextView = {
         let textView = UITextView()
         
+        var titleFont: CGFloat = 0
+        var descriptionFont: CGFloat = 0
+        
         if screenHeight < 740 {
-            let attributedText = NSMutableAttributedString(string: "Инструкция LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 20)])
-            attributedText.append(NSAttributedString(
-                string: """
-                \n
-                В начале показывается слово из выбранного словаря.\n\n・В уме переводите слово.\n・Тапаете по экрану.\n・Показывается перевод.\n・Делаете анализ на сколько вы знаете слово. \n・Выбираете одну из кнопок. \n\n'Легко', если слово вам знакомо.\n'Трудно', если слово вы знаете, но сомневаетесь в переводе.\n'Не знаю', данное слово вам незнакомо.
-                """,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.gray]))
-            
-            textView.attributedText = attributedText
-            textView.backgroundColor = UIColor.white
-
-            textView.textAlignment = .left
-            textView.isEditable = false
-            textView.isScrollEnabled = false
-            textView.translatesAutoresizingMaskIntoConstraints = false
+            titleFont = 18
+            descriptionFont = 12
         } else {
-            let attributedText = NSMutableAttributedString(string: "Инструкция LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
+            titleFont = 25
+            descriptionFont = 17
+        }
+
+            let attributedText = NSMutableAttributedString(string: "Инструкция LaWord", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: titleFont)])
             attributedText.append(NSAttributedString(
                 string: """
                 \n
                 В начале показывается слово из выбранного словаря.\n\n・В уме переводите слово.\n・Тапаете по экрану.\n・Показывается перевод.\n・Делаете анализ на сколько вы знаете слово. \n・Выбираете одну из кнопок. \n\n'Легко', если слово вам знакомо.\n'Трудно', если слово вы знаете, но сомневаетесь в переводе.\n'Не знаю', данное слово вам незнакомо.
                 """,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: descriptionFont), NSAttributedString.Key.foregroundColor: UIColor.gray]))
             
             textView.attributedText = attributedText
             textView.backgroundColor = UIColor.white
@@ -53,7 +47,6 @@ class OnboardingViewControllerPage3: UIViewController {
             textView.isEditable = false
             textView.isScrollEnabled = false
             textView.translatesAutoresizingMaskIntoConstraints = false
-        }
 
         return textView
     }()
