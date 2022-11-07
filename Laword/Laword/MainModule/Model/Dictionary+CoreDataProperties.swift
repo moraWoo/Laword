@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Dictionary {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Dictionary> {
@@ -44,6 +43,6 @@ extension Dictionary {
 
 }
 
-extension Dictionary : Identifiable {
+extension Dictionary: Identifiable {
 
 }

@@ -7,15 +7,15 @@
 
 import Foundation
 
-//input protocol
 protocol SettingsViewProtocol: AnyObject {
+
 }
-//output protocol
 protocol SettingsViewPresenterProtocol: AnyObject {
     init(view: SettingsViewProtocol, dataStoreManager: DataStoreManagerProtocol)
 }
 
 class SettingsPresenter: SettingsViewPresenterProtocol {
+
     weak var view: SettingsViewProtocol!
     let dataStoreManager: DataStoreManagerProtocol!
 

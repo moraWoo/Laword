@@ -26,7 +26,7 @@ struct SFSymbolItem: Hashable {
     let name: String
     let imageName: String
     let image: UIImage
-    
+
     init(name: String, imageName: String) {
         self.name = name
         self.imageName = imageName

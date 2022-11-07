@@ -7,12 +7,12 @@
 
 import Foundation
 
-//input protocol
+// input protocol
 protocol DictionaryListViewProtocol: AnyObject {
     func setDictionaryName(dictionaryName: String)
     func getNamesOfDictionary() -> [String]?
 }
-//output protocol
+// output protocol
 protocol DictionaryListViewPresenterProtocol: AnyObject {
     init(view: DictionaryListViewProtocol, dataStoreManager: DataStoreManagerProtocol, dictionaryName: String)
     func setDictionaryName()
@@ -22,21 +22,24 @@ protocol DictionaryListViewPresenterProtocol: AnyObject {
 
 class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
     weak var view: DictionaryListViewProtocol?
-    
+
     var currentDictionary: CurrentDictionary?
     let dataStoreManager: DataStoreManagerProtocol!
     var dictionaryName = ""
     var namesOfDicts: [String]?
-    
-    required init(view: DictionaryListViewProtocol, dataStoreManager: DataStoreManagerProtocol, dictionaryName: String) {
+
+    required init(view: DictionaryListViewProtocol,
+                  dataStoreManager: DataStoreManagerProtocol,
+                  dictionaryName: String) {
         self.view = view
         self.dataStoreManager = dataStoreManager
         self.dictionaryName = dictionaryName
     }
+
     public func setDictionaryName() {
         self.view?.setDictionaryName(dictionaryName: dictionaryName)
     }
-    
+
     func getNamesOfDictionary() -> [String]? {
         namesOfDicts = dataStoreManager.getNamesOfDictionary()
         return namesOfDicts
