@@ -60,7 +60,13 @@ class MainViewController: UIViewController {
     var maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
     var progressCount = 0.0
     var currentCountWordsInProgress = 0
-    var currentAmountOfWords = 0
+    
+    var currentAmountOfWords: Int? {
+        didSet {
+            countOfLearningWords.text = String(currentAmountOfWords ?? 0) + "/" + String(maxCount)
+        }
+    }
+    
     var countOfAllWords: Int?
     var countOfRemainWords: Int? {
         didSet {
@@ -89,15 +95,14 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("count__1 = viewDidLoad = \(count)")
         addButtonsAndLabelsToNavigatorBar()
         progressBar.progress = 0
-
         hideEverything()
         currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
         guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
         
         titleLabel.text = namesOfDictionary[currentDict ?? 0]
-        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         
@@ -107,10 +112,14 @@ class MainViewController: UIViewController {
             stackViewLabelWords.spacing = 120
         }
     }
+//
+//    override func viewWillLayoutSubviews() {
+//
+//        super.viewWillLayoutSubviews()
+//        print("count__2 = viewWillLayoutSubviews = \(count)")
+//    }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
+    override func viewWillAppear(_ animated: Bool) {
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
             titleStackView.spacing = UIStackView.spacingUseDefault
@@ -118,11 +127,8 @@ class MainViewController: UIViewController {
             titleStackView.axis = .horizontal
             titleStackView.spacing = 20.0
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        print("count__3 = viewWillAppear = \(count)")
         currentCountWordsInProgress = UserDefaults.standard.integer(forKey: "currentCountWordsInProgress")
         
         nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
@@ -132,7 +138,6 @@ class MainViewController: UIViewController {
             alertFinishWordsInCurrentDict()
             return
         }
-        print("currentCountWordsInProgress \(currentCountWordsInProgress)")
         
         startLearning(nameOfCurrentDictionary ?? "")
         titleLabel.text = nameOfCurrentDictionary
@@ -159,11 +164,17 @@ class MainViewController: UIViewController {
     }
     
     func startLearning(_ dictionaryName: String) {
-        if progressBar.progress > 0 {
-            progressBar.progress = 0
-        }
+        print("count__4 = startLearning = \(count)")
+        
         maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
         fetchedWords = presenter.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName)
+        
+        if count < maxCount {
+            UserDefaults.standard.set(count, forKey: "currentCountWordsInProgress")
+        } else {
+            count = 0
+            UserDefaults.standard.set(count, forKey: "currentCountWordsInProgress")
+        }
         
         guard (fetchedWords?[count]) != nil else { return }
         selectedWord = fetchedWords?[count]
@@ -196,6 +207,7 @@ class MainViewController: UIViewController {
         view.resignFirstResponder()
         guard let selectedWord = self.selectedWord else { return }
         showAnswers("showWordFirst", selectedWord)
+        print("count__5 = handleTapGesture = \(count)")
     }
     
     @objc private func menuButtonTap(sender: UIButton) {
@@ -224,17 +236,18 @@ class MainViewController: UIViewController {
         } else {
             afterButtonPressed(key: "DontKnow", grade: .null)
         }
+        print("count__5.1 = buttonPressed = \(count)")
     }
     
     func afterButtonPressed(key: String, grade: Grade) {
+        print("count__6 = afterButtonPressed = \(count)")
         guard let word = selectedWord?.word else { return }
         guard let wordTranslation = selectedWord?.wordTranslation else { return }
         presenter.saveKeys(word: word, key: key, wordTranslation: wordTranslation, wordShowed: true, wordShowNow: "Yes", grade: grade)
         
         count += 1
-        currentCountWordsInProgress += 1
         
-        if currentCountWordsInProgress == currentAmountOfWords {
+        if count == currentAmountOfWords {
             alertFinishWordsInCurrentDict()
         } else {
             guard (fetchedWords?[count]) != nil else { return }
@@ -242,9 +255,9 @@ class MainViewController: UIViewController {
             guard let selectedWord = self.selectedWord else { return }
             showAnswers("showWordSecond", selectedWord)
         }
+        
         countProgressBar()
         countOfRemainWords = (countOfRemainWords ?? 0) - 1
-
         // MARK: Save remaining words
         presenter.saveCountOfRemainWords(nameOfDictionary: nameOfCurrentDictionary ?? "", remainWords: countOfRemainWords ?? 0)
     }
@@ -255,7 +268,7 @@ class MainViewController: UIViewController {
                 showTopButtonsAndInformation()
                 showFunctionButtonsAndLabels()
             default:
-                if currentAmountOfWords > maxCount {
+                if currentAmountOfWords ?? 0 > maxCount {
                     if count < maxCount {
                         showFunctionButtonsAndLabels()
                         hideFunctionButtonsAndLabels()
@@ -265,7 +278,7 @@ class MainViewController: UIViewController {
                         alertFinish()
                     }
                 } else {
-                    if count < currentAmountOfWords {
+                    if count < currentAmountOfWords ?? 0 {
                         showFunctionButtonsAndLabels()
                         hideFunctionButtonsAndLabels()
                         LabelFirst.text = selectedWord.word
@@ -278,44 +291,59 @@ class MainViewController: UIViewController {
     }
  
     func countProgressBar() {
+        print("count__7 = countProgressBar = \(count)")
         currentAmountOfWords = UserDefaults.standard.integer(forKey: "currentAmountOfWords")
-        if currentAmountOfWords > maxCount {
-            progressCount = Double(currentCountWordsInProgress) / Double(maxCount)
+        print("currentAmountOfWords \(UserDefaults.standard.integer(forKey: "currentAmountOfWords"))")
+        if currentAmountOfWords ?? 0 > maxCount {
+            progressCount = Double(count) / Double(maxCount)
             progressBar.progress = Float(progressCount)
-            countOfLearningWords.text = String(currentCountWordsInProgress) + "/" + String(maxCount)
+            countOfLearningWords.text = String(count) + "/" + String(maxCount)
         } else {
-            progressCount = Double(currentCountWordsInProgress) / Double(currentAmountOfWords)
+            progressCount = Double(count) / Double(currentAmountOfWords ?? 0)
             progressBar.progress = Float(progressCount)
-            countOfLearningWords.text = String(currentCountWordsInProgress) + "/" + String(currentAmountOfWords)
+            countOfLearningWords.text = String(count) + "/" + String(currentAmountOfWords ?? 0)
             UserDefaults.standard.set(currentAmountOfWords, forKey: "currentAmountOfWords")
         }
+        print("count__7.1 = countProgressBar2 = \(count)")
+
     }
     
     private func alertFinish() {
         let alert = UIAlertController(title: "Вы прошли \(maxCount) слов", message: "Показать новые?", preferredStyle: .alert)
+        print("count__8 = alertFinish = \(count)")
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [self] _ in
-            self.count = 0
-            progressBar.progress = 0
-            UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
+
+//            UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
             hideEverything()
             currentDict = UserDefaults.standard.integer(forKey: "currentDictionary")
             guard let namesOfDictionary = presenter.getNamesOfDictionary() else { return }
+            
             startLearning(namesOfDictionary[currentDict ?? 0])
+            count = 0
+            UserDefaults.standard.set(count, forKey: "currentCountWordsInProgress")
+            progressBar.progress = 0
+            print("count__8 = alertFinish_Yes = \(count)")
         }))
         alert.addAction(UIAlertAction(title: "Закончить", style: .default, handler: { [self] _ in
             let dictionaryName = "Base1"
-            self.count = 0
+
             UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
+            
             let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
             navigationController?.pushViewController(dictionaryListVC, animated: true)
+            count = 0
+            currentAmountOfWords = 0
+            progressBar.progress = 0
+            print("count__9 = alertFinish_Finish = \(count)")
         }))
         present(alert,animated: true)
     }
     
     private func alertFinishWordsInCurrentDict() {
         let alert = UIAlertController(title: "Вы прошли все слова", message: "Выберите новый словарь", preferredStyle: .alert)
+        print("count__10 = alertFinishWordsInCurrentDict = \(count)")
         alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [self] _ in
-            let dictionaryName = "Base1"
+            let dictionaryName = ""
             let dictionaryListVC = ModelBuilder.createDictionaryListModule(dictionaryName: dictionaryName)
             navigationController?.pushViewController(dictionaryListVC, animated: true)
         }))

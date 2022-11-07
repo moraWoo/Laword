@@ -74,7 +74,6 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         if currentDictionary?.countOfRemainWords == 0 {
             alertFinishWordsInCurrentDict()
         }
-        
         print("namesOfDicts[indexPath.item] \(namesOfDicts[indexPath.item]) ------ nameOfCurrentDictionary \(nameOfCurrentDictionary)")
         
         if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
