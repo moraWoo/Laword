@@ -8,8 +8,6 @@
 import Foundation
 
 protocol MainViewProtocol: AnyObject { //Output
-//    func getWords()
-//    func getDataFromFile()
 }
 
 protocol MainViewPresenterProtocol: AnyObject { //Input
@@ -50,10 +48,6 @@ class MainPresenter: MainViewPresenterProtocol {
         fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName ?? "5000 Oxford Words")
         //You can add new files of dictionaries with words
         getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000 Oxford Words")
-        
-        //Set default dictionary
-        UserDefaults.standard.set("5000 Oxford Words", forKey: "currentDictionary")
-
         getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "Demo Dictionary")
 
     }

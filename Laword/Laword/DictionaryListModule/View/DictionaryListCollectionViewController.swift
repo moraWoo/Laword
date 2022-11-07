@@ -46,16 +46,13 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     }
     
     @objc func barButtonAction() {
-        print("Button pressed")
         let nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
         let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary)
         
         if currentDictionary?.countOfRemainWords == 0 {
             alertFinishWordsInCurrentDict()
-            print("alertFinishWordsInCurrentDict2")
         }
         _ = navigationController?.popToRootViewController(animated: true)
-        print("alertFinishWordsInCurrentDict2")
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -74,18 +71,13 @@ class DictionaryListCollectionViewController: UICollectionViewController {
         if currentDictionary?.countOfRemainWords == 0 {
             alertFinishWordsInCurrentDict()
         }
-        print("namesOfDicts[indexPath.item] \(namesOfDicts[indexPath.item]) ------ nameOfCurrentDictionary \(nameOfCurrentDictionary)")
         
         if namesOfDicts[indexPath.item] != nameOfCurrentDictionary {
             if currentDictionary?.countOfRemainWords == 0 {
                 alertFinishWordsInCurrentDict()                
-                print("count__1.2 = nameOfCurrentDictionary = \(nameOfCurrentDictionary)")
             } else {
                 UserDefaults.standard.set(namesOfDicts[indexPath.item], forKey: "currentDictionary")
-                
-                let currentCountWordsInProgress = UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
-                print("count__2.2 = nameOfCurrentDictionary = \(nameOfCurrentDictionary)")
-                print("count__3.2 = currentCountWordsInProgress = \(currentCountWordsInProgress)")
+                UserDefaults.standard.set(0, forKey: "currentCountWordsInProgress")
             }
         }
         _ = navigationController?.popToRootViewController(animated: true)

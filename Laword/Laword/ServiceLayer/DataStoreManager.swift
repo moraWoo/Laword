@@ -73,7 +73,7 @@ class DataStoreManager: DataStoreManagerProtocol {
                 )
                 
                 if selectedDictionary.name != nameOfDictionary {
-                    print("ищем другой словарь")
+                    print("take another dictionary")
                 } else {
                     currentDictionary = currentDict
                 }
@@ -103,7 +103,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             try context.save()
         } catch let error as NSError {
-            print("Не могу записать. \(error), \(error.userInfo), \(error.localizedDescription)")
+            print("Can't save. \(error), \(error.userInfo), \(error.localizedDescription)")
         }
     }
 
@@ -136,7 +136,7 @@ class DataStoreManager: DataStoreManagerProtocol {
             fetchedWords = results
             currentCount = results.count
         } catch let error as NSError {
-            print("Не могу получить выборку: \(error), \(error.userInfo)")
+            print("Can't fetch: \(error), \(error.userInfo)")
         }
         
         if context.hasChanges {
@@ -183,7 +183,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         do {
             try context.save()
         } catch let error as NSError {
-            print("Не могу записать. \(error), \(error.userInfo), \(error.localizedDescription)")
+            print("Can't save. \(error), \(error.userInfo), \(error.localizedDescription)")
         }
     }
     

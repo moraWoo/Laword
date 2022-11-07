@@ -45,7 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(10, forKey: "amountOfWords")
         }
         
-        
+        //Set default dictionary
+        UserDefaults.standard.set("5000 Oxford Words", forKey: "currentDictionary")
         
         return true
     }

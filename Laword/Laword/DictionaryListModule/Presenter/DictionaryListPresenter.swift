@@ -25,7 +25,7 @@ class DictionaryListPresenter: DictionaryListViewPresenterProtocol {
     
     var currentDictionary: CurrentDictionary?
     let dataStoreManager: DataStoreManagerProtocol!
-    var dictionaryName = "Base12"
+    var dictionaryName = ""
     var namesOfDicts: [String]?
     
     required init(view: DictionaryListViewProtocol, dataStoreManager: DataStoreManagerProtocol, dictionaryName: String) {
