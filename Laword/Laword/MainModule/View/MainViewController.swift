@@ -159,8 +159,9 @@ class MainViewController: UIViewController {
     }
     
     func startLearning(_ dictionaryName: String) {
-        progressBar.progress = 0
-
+        if progressBar.progress > 0 {
+            progressBar.progress = 0
+        }
         maxCount = UserDefaults.standard.integer(forKey: "amountOfWords")
         fetchedWords = presenter.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName)
         
