@@ -47,8 +47,8 @@ class MainPresenter: MainViewPresenterProtocol {
         
         fetchedWords = dataStoreManager.getWords(showKey: false, currentDateTime: dateTime, dictionaryName: dictionaryName ?? "5000 Oxford Words")
         //You can add new files of dictionaries with words
-        getDataFromFile(nameOfFileDictionary: "wordsdef", nameOfDictionary: "5000 Oxford Words")
-        getDataFromFile(nameOfFileDictionary: "wordsdef_new", nameOfDictionary: "Demo Dictionary")
+        getDataFromFile(nameOfFileDictionary: "oxfordDictionary", nameOfDictionary: "5000 Oxford Words")
+        getDataFromFile(nameOfFileDictionary: "demoDictionary", nameOfDictionary: "Demo Dictionary")
 
     }
     

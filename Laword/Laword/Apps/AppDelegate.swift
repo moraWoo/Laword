@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let theme = UserDefaults.standard.bool(forKey: "dark_mode")
+        let theme = UserDefaults.standard.bool(forKey: "darkMode") 
 
         
         if theme {

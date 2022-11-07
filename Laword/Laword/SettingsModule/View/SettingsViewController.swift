@@ -100,7 +100,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                 
                 switch switchInCell.tag {
                     case 0:
-                        switchInCell.isOn = UserDefaults.standard.bool(forKey: "dark_mode")
+                        switchInCell.isOn = UserDefaults.standard.bool(forKey: "darkMode")
                     default:
                         switchInCell.isOn = UserDefaults.standard.bool(forKey: "leftMode")
                 }
@@ -226,12 +226,12 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         switch tag {
             case 0:
                 if mySwitch.isOn == true {
-                    UserDefaults.standard.set(true, forKey: "dark_mode")
+                    UserDefaults.standard.set(true, forKey: "darkMode")
                     DispatchQueue.main.async {
                         Theme.dark.setActive()
                     }
                 } else {
-                    UserDefaults.standard.set(false, forKey: "dark_mode")
+                    UserDefaults.standard.set(false, forKey: "darkMode")
                     DispatchQueue.main.async {
                         Theme.light.setActive()
                     }

@@ -9,8 +9,6 @@ import Foundation
 
 //input protocol
 protocol SettingsViewProtocol: AnyObject {
-//    func setDictionaryName(dictionaryName: String)
-//    func getNamesOfDictionary() -> [String]?
 }
 //output protocol
 protocol SettingsViewPresenterProtocol: AnyObject {

@@ -12,13 +12,13 @@
 		63225433291503A9002B24F4 /* OnboardingPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63225431291503A9002B24F4 /* OnboardingPageViewController.xib */; };
 		63256F2F28FC331800D2319C /* Word+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256F2B28FC331800D2319C /* Word+CoreDataClass.swift */; };
 		63256F3028FC331800D2319C /* Word+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256F2C28FC331800D2319C /* Word+CoreDataProperties.swift */; };
-		6335B10F28BFC2760023C33A /* wordsdef.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6335B10E28BFC2760023C33A /* wordsdef.plist */; };
+		6335B10F28BFC2760023C33A /* oxfordDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6335B10E28BFC2760023C33A /* oxfordDictionary.plist */; };
 		63547EA028B91FE100A03730 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63547E9F28B91FE100A03730 /* AppDelegate.swift */; };
 		63547EA228B91FE100A03730 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63547EA128B91FE100A03730 /* SceneDelegate.swift */; };
 		63547EA428B91FE100A03730 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63547EA328B91FE100A03730 /* MainViewController.swift */; };
 		63547EAA28B91FE100A03730 /* Laword.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63547EA828B91FE100A03730 /* Laword.xcdatamodeld */; };
 		63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63547EAD28B91FE200A03730 /* LaunchScreen.storyboard */; };
-		635FE2FD290409A700564B7B /* wordsdef_new.plist in Resources */ = {isa = PBXBuildFile; fileRef = 635FE2FC290409A700564B7B /* wordsdef_new.plist */; };
+		635FE2FD290409A700564B7B /* demoDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 635FE2FC290409A700564B7B /* demoDictionary.plist */; };
 		635FE30129046F0800564B7B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FE30029046F0800564B7B /* Colors.swift */; };
 		6372A073290324CC00889958 /* DictionaryListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A072290324CC00889958 /* DictionaryListPresenter.swift */; };
 		6372A0792903258200889958 /* DictionaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */; };
@@ -48,7 +48,7 @@
 		63225431291503A9002B24F4 /* OnboardingPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingPageViewController.xib; sourceTree = "<group>"; };
 		63256F2B28FC331800D2319C /* Word+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+CoreDataClass.swift"; sourceTree = "<group>"; };
 		63256F2C28FC331800D2319C /* Word+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		6335B10E28BFC2760023C33A /* wordsdef.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = wordsdef.plist; sourceTree = "<group>"; };
+		6335B10E28BFC2760023C33A /* oxfordDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = oxfordDictionary.plist; sourceTree = "<group>"; };
 		63547E9C28B91FE100A03730 /* Laword.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Laword.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63547E9F28B91FE100A03730 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63547EA128B91FE100A03730 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 		63547EA928B91FE100A03730 /* Laword.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Laword.xcdatamodel; sourceTree = "<group>"; };
 		63547EAE28B91FE200A03730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63547EB028B91FE200A03730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		635FE2FC290409A700564B7B /* wordsdef_new.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = wordsdef_new.plist; sourceTree = "<group>"; };
+		635FE2FC290409A700564B7B /* demoDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = demoDictionary.plist; sourceTree = "<group>"; };
 		635FE30029046F0800564B7B /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		6372A072290324CC00889958 /* DictionaryListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryListPresenter.swift; sourceTree = "<group>"; };
 		6372A0772903258200889958 /* DictionaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -119,8 +119,8 @@
 				63547EB728B925C600A03730 /* MainModule */,
 				63547EB628B9210900A03730 /* Apps */,
 				63547EA828B91FE100A03730 /* Laword.xcdatamodeld */,
-				6335B10E28BFC2760023C33A /* wordsdef.plist */,
-				635FE2FC290409A700564B7B /* wordsdef_new.plist */,
+				6335B10E28BFC2760023C33A /* oxfordDictionary.plist */,
+				635FE2FC290409A700564B7B /* demoDictionary.plist */,
 			);
 			path = Laword;
 			sourceTree = "<group>";
@@ -323,8 +323,8 @@
 				6316D44528D77D650022C373 /* MainViewController.xib in Resources */,
 				63547EAF28B91FE200A03730 /* LaunchScreen.storyboard in Resources */,
 				6372A07E290325BC00889958 /* DictionaryListCollectionViewController.xib in Resources */,
-				635FE2FD290409A700564B7B /* wordsdef_new.plist in Resources */,
-				6335B10F28BFC2760023C33A /* wordsdef.plist in Resources */,
+				635FE2FD290409A700564B7B /* demoDictionary.plist in Resources */,
+				6335B10F28BFC2760023C33A /* oxfordDictionary.plist in Resources */,
 				63DE1E2B2916A80700961D7D /* Assets.xcassets in Resources */,
 				63A5FA7D291464CC006ED7D3 /* OnboardingViewController.xib in Resources */,
 			);
