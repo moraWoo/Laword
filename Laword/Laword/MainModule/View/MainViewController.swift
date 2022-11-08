@@ -531,15 +531,21 @@ extension MainViewController {
     private func conditionsOfScreenSize() {
         if screenHeight < 740 {
             NSLayoutConstraint.activate([
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -36.0),
-                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+                stackOfButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                       constant: -36.0),
+                stackOfButtons.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                         constant: -16),
+                stackOfButtons.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                                                        constant: 16)
             ])
         } else {
             NSLayoutConstraint.activate([
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -94.0),
-                stackOfButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                stackOfButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+                stackOfButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                       constant: -94.0),
+                stackOfButtons.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                         constant: -16),
+                stackOfButtons.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                                                        constant: 16)
             ])
         }
     }
