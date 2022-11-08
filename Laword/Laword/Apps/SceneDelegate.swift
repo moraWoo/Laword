@@ -24,7 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowsScene
 
         if launchBefore {
-
             let mainVC = ModelBuilder.createMainModule()
             let navBar = UINavigationController(rootViewController: mainVC)
             let appearance = UINavigationBarAppearance()
@@ -33,14 +32,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             navBar.navigationBar.scrollEdgeAppearance = appearance
             window?.rootViewController = navBar
             window?.makeKeyAndVisible()
-
         } else {
-
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             let mainVC = ModelBuilder.createOnboardingPageVC()
             window?.rootViewController = mainVC
             window?.makeKeyAndVisible()
-
         }
     }
 }

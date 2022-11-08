@@ -90,7 +90,6 @@ class MainViewController: UIViewController, MainViewProtocol {
     }()
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
         addButtonsAndLabelsToNavigatorBar()
         progressBar.progress = 0
@@ -128,7 +127,7 @@ class MainViewController: UIViewController, MainViewProtocol {
         nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
 
         let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary ?? "")
-        // Check each dictionary Is there any new word
+        // Check each dictionary. Is there any new word?
         if currentDictionary?.countOfRemainWords == 0 {
             alertFinishWordsInCurrentDict()
             return
@@ -211,6 +210,7 @@ class MainViewController: UIViewController, MainViewProtocol {
             afterButtonPressed(key: "DontKnow", grade: .null)
         }
     }
+
     func afterButtonPressed(key: String, grade: Grade) {
         guard let word = selectedWord?.word else { return }
         guard let wordTranslation = selectedWord?.wordTranslation else { return }
@@ -543,11 +543,13 @@ extension MainViewController {
             ])
         }
     }
+
     private func addArrangeSubviewsOfStackOfButtons() {
         stackOfButtons.addArrangedSubview(viewOfEasyButton)
         stackOfButtons.addArrangedSubview(viewOfDifficultButton)
         stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
     }
+
     private func configureStackOfButtons() {
         // MARK: Configure stackOfButtons
         stackOfButtons.axis = NSLayoutConstraint.Axis.vertical
@@ -555,6 +557,7 @@ extension MainViewController {
         stackOfButtons.spacing = 20
 
     }
+
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
     }

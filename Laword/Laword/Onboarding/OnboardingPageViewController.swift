@@ -22,13 +22,11 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
         let page2 = OnboardingViewControllerPage2()
         let page3 = OnboardingViewControllerPage3()
 
-        // add the individual viewControllers to the pageViewController
         self.pages.append(page1)
         self.pages.append(page2)
         self.pages.append(page3)
         setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
 
-        // pageControl
         self.pageControl.frame = CGRect()
         self.pageControl.currentPageIndicatorTintColor = UIColor.black
         self.pageControl.pageIndicatorTintColor = UIColor.lightGray
@@ -69,7 +67,6 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
 
     func launchApp() {
         let launchApp = ModelBuilder.createMainModule()
-
         launchApp.modalPresentationStyle = .fullScreen
 
         let navBar = UINavigationController(rootViewController: launchApp)
@@ -84,9 +81,7 @@ class OnboardingPageViewController: UIPageViewController, UIPageViewControllerDa
 
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController) -> UIViewController? {
-
         if let viewControllerIndex = self.pages.firstIndex(of: viewController) {
-
             if viewControllerIndex != 0 {
                 return self.pages[viewControllerIndex - 1]
             }

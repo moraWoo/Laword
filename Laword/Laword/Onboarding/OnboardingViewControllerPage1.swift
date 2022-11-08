@@ -12,7 +12,6 @@ extension UIColor {
 }
 
 class OnboardingViewControllerPage1: UIViewController {
-
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         let profile = UIImage(named: "imageOB1")
@@ -62,6 +61,7 @@ class OnboardingViewControllerPage1: UIViewController {
 
         return textView
     }()
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -70,6 +70,7 @@ class OnboardingViewControllerPage1: UIViewController {
         setupLayout()
 
     }
+
     private func setupLayout() {
         let topImageContainerView = UIView()
         view.addSubview(topImageContainerView)

@@ -65,7 +65,6 @@ class DataStoreManager: DataStoreManagerProtocol {
 
     // MARK: Get array with name, all words, remain words from CoreData
     func getCurrentDictionary(nameOfDictionary: String) -> CurrentDictionary? {
-
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Dictionary> = Dictionary.fetchRequest()
 
@@ -90,6 +89,7 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
         return currentDictionary
     }
+
     // MARK: Update values of remaining words in each Dictionary
     func saveCountOfRemainWords(nameOfDictionary: String, remainWords: Int) {
         let context = persistentContainer.viewContext
@@ -283,7 +283,6 @@ class DataStoreManager: DataStoreManagerProtocol {
         }
 
         guard records == 0 else { return }
-
         guard let entityDictionary = NSEntityDescription.entity(forEntityName: "Dictionary",
                                                                 in: context) else { return }
         let selectedDict = NSManagedObject(entity: entityDictionary, insertInto: context) as? Dictionary
@@ -305,28 +304,23 @@ class DataStoreManager: DataStoreManagerProtocol {
             selectedWord?.dictionary = selectedDict
             countWords += 1
         }
-
         selectedDict?.countAllWords = Int16(countWords)
         selectedDict?.countRemainWords = Int16(countWords)
     }
     // MARK: - Core Data stack
     var persistentContainer: NSPersistentContainer = {
-
         let container = NSPersistentContainer(name: "Laword")
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-
         return container
     }()
 
     // MARK: - CRUD
     func saveContext () {
-
         let context = persistentContainer.viewContext
-
         if context.hasChanges {
             do {
                 try context.save()

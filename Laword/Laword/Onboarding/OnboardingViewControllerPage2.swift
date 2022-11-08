@@ -8,7 +8,6 @@
 import UIKit
 
 class OnboardingViewControllerPage2: UIViewController {
-
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         let profile = UIImage(named: "imageOB2")

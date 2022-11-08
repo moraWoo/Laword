@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 
 extension Dictionary {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Dictionary> {
         return NSFetchRequest<Dictionary>(entityName: "Dictionary")
     }
@@ -23,12 +22,10 @@ extension Dictionary {
     @NSManaged public var name: String?
     @NSManaged public var pic: Data?
     @NSManaged public var word: NSSet?
-
 }
 
 // MARK: Generated accessors for word
 extension Dictionary {
-
     @objc(addWordObject:)
     @NSManaged public func addToWord(_ value: Word)
 
@@ -40,7 +37,6 @@ extension Dictionary {
 
     @objc(removeWord:)
     @NSManaged public func removeFromWord(_ values: NSSet)
-
 }
 
 extension Dictionary: Identifiable {

@@ -8,7 +8,6 @@
 import UIKit
 
 class OnboardingViewControllerPage3: UIViewController {
-
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         let profile = UIImage(named: "imageOB3")
@@ -67,14 +66,15 @@ class OnboardingViewControllerPage3: UIViewController {
 
         return textView
     }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(descriptionTextView)
         view.backgroundColor = UIColor.white
         setupLayout()
     }
-    private func setupLayout() {
 
+    private func setupLayout() {
         let topImageContainerView = UIView()
         view.addSubview(topImageContainerView)
         topImageContainerView.translatesAutoresizingMaskIntoConstraints = false

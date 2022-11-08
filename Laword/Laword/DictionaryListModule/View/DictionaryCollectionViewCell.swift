@@ -8,9 +8,7 @@
 import UIKit
 
 class DictionaryCollectionViewCell: UICollectionViewCell {
-
     @IBOutlet var nameOfDictionary: UILabel!
     @IBOutlet var countOfWordsInCurrentDictionary: UILabel!
     @IBOutlet var photosImageView: UIImageView!
-
 }

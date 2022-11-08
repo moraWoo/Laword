@@ -14,7 +14,6 @@ enum Theme: Int, CaseIterable {
 }
 
 extension Theme {
-
     @Persist(key: "app_theme", defaultValue: Theme.light.rawValue)
     private static var appTheme: Int
 
@@ -29,7 +28,6 @@ extension Theme {
 
 extension Theme {
     var userInterfaceStyle: UIUserInterfaceStyle {
-
         switch self {
         case .light:
                 return .light

@@ -15,7 +15,6 @@ protocol SettingsViewPresenterProtocol: AnyObject {
 }
 
 class SettingsPresenter: SettingsViewPresenterProtocol {
-
     weak var view: SettingsViewProtocol!
     let dataStoreManager: DataStoreManagerProtocol!
 

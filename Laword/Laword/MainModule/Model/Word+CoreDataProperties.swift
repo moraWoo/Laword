@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 
 extension Word {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Word> {
         return NSFetchRequest<Word>(entityName: "Word")
     }
@@ -27,7 +26,6 @@ extension Word {
     @NSManaged public var wordShowedNow: String?
     @NSManaged public var wordTranslation: String?
     @NSManaged public var dictionary: Dictionary?
-
 }
 
 extension Word: Identifiable {

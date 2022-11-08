@@ -50,7 +50,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
     }
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
 
         self.title = "Настройки"
@@ -187,6 +186,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             headerView.contentConfiguration = configuration
 
         }
+
         let footerRegistration
         = UICollectionView.SupplementaryRegistration
         <UICollectionViewListCell>(
@@ -207,6 +207,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
 
             footerView.contentConfiguration = configuration
         }
+
         // MARK: Define supplementary view provider
         dataSource.supplementaryViewProvider = { [unowned self] (collectionView, elementKind, indexPath)
             -> UICollectionReusableView? in
@@ -234,19 +235,15 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         }
 
         dataSource.apply(dataSourceSnapshot, animatingDifferences: false)
-
     }
 
     @objc func stepperChanged(stepper: UIStepper) {
-
         labelForCell.text = String(Int(stepper.value))
         let value = stepper.value
         UserDefaults.standard.set(value, forKey: "amountOfWords")
-
     }
 
     @objc func switchChanged(mySwitch: UISwitch) {
-
         let tag = mySwitch.tag
 
         switch tag {
@@ -275,7 +272,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
     }
 
     @objc func launchAppWithOnboarding(mySwitch: UISwitch) {
-
         if mySwitch.isOn == true {
             // Onboarding is switch off
             UserDefaults.standard.set(false, forKey: "launchedBefore")
@@ -283,11 +279,9 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
             // Onboarding is switch on
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
-
     }
 
     func registerSettingsBundle() {
-
         let appDefaults = [String: AnyObject]()
         UserDefaults.standard.register(defaults: appDefaults)
     }

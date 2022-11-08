@@ -20,7 +20,6 @@ class DictionaryListCollectionViewController: UICollectionViewController {
     var namesOfDicts: [String] = []
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
 
         navigationItem.title = "Список словарей"
@@ -92,7 +91,6 @@ class DictionaryListCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "dictionaryCell",
             for: indexPath) as? DictionaryCollectionViewCell
@@ -151,7 +149,6 @@ extension DictionaryListCollectionViewController: UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
-
         guard let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: HeaderCollectionReusableView.identifier,
@@ -162,7 +159,6 @@ extension DictionaryListCollectionViewController: UICollectionViewDelegateFlowLa
         } else {
             header.configure(labelOfSection[indexPath.section])
         }
-
         return header
     }
 
@@ -182,9 +178,7 @@ extension DictionaryListCollectionViewController: DictionaryListViewProtocol {
 }
 
 extension DictionaryListCollectionViewController {
-
     private func alertFinishWordsInCurrentDict() {
-
         let alert = UIAlertController(
             title: "Вы прошли все слова",
             message: "Выберите другой словарь словарь",
