@@ -6,6 +6,6 @@ The list of words in the base dictionary is almost 5000 words obtained by comput
 
 App is available in AppStore: https://apps.apple.com/kz/app/laword/id6444231873
 
-![image](https://github.com/moraWoo/Laword/blob/main/Simulator%20Screen%20Recording%20-%20iPhone%2013%20-%202022-11-07%20at%2020.31.01.gif)
+![image](https://github.com/moraWoo/Laword/blob/main/ScrRec_Laword_Iphone13.gif)
 
 
