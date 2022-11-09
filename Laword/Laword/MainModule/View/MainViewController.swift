@@ -8,6 +8,11 @@
 import UIKit
 import CoreData
 
+enum CurrentOrientation {
+    case portrait
+    case landscape
+}
+
 class MainViewController: UIViewController, MainViewProtocol {
 
     @IBOutlet var labelFirst: UILabel!
@@ -79,6 +84,16 @@ class MainViewController: UIViewController, MainViewProtocol {
     let dateTime = Date().timeIntervalSince1970
     var nameOfCurrentDictionary: String?
 
+    let sizeOfBorder: CGFloat = 16
+
+    var screenHeightInPortrait: CGFloat?
+    var screenHeightInLandscape: CGFloat?
+
+    var topbarHeight: CGFloat {
+        return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
+            (self.navigationController?.navigationBar.frame.height ?? 0.0)
+    }
+
     lazy var titleStackView: UIStackView = {
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 16)
@@ -91,6 +106,12 @@ class MainViewController: UIViewController, MainViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let frame = view.safeAreaLayoutGuide.layoutFrame.size
+        print("QQQ2 frame = \(frame)")
+        print("QQQ2 frame.height = \(frame.height)")
+        print("QQQ2 frame.width = \(frame.width)")
+
         addButtonsAndLabelsToNavigatorBar()
         progressBar.progress = 0
         hideEverything()
@@ -101,15 +122,12 @@ class MainViewController: UIViewController, MainViewProtocol {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
 
-        if screenHeight < 740 {
-            stackViewLabelWords.spacing = 30
-        } else {
-            stackViewLabelWords.spacing = 120
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        print("QQQ2 screenHeight = \(screenHeight), screenWidth = \(screenWidth)")
 
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
@@ -152,8 +170,54 @@ class MainViewController: UIViewController, MainViewProtocol {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
         let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-        changeConstraintsOfStackButtons(leftMode: leftRightMode)
+        generalConfig(leftMode: leftRightMode)
+
         labelFirst.isHidden = false
+    }
+
+    override func willTransition(to newCollection: UITraitCollection,
+                                 with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
+        generalConfig(leftMode: leftRightMode)
+    }
+
+    func generalConfig(leftMode: Bool) {
+        print("QQQ1 screenHeight = \(screenHeight), screenWidth = \(screenWidth)")
+
+
+//        if UIDevice.current.orientation.isLandscape {
+//            let height = self.view.frame.height
+//            gameBoard.widthAnchor.constraint(equalToConstant: height).isActive = true
+//            gameBoard.heightAnchor.constraint(equalToConstant: height).isActive = true
+//        } else if UIDevice.current.orientation.isPortrait {
+//            let width = self.view.frame.width
+//            gameBoard.widthAnchor.constraint(equalToConstant: width).isActive = true
+//            gameBoard.heightAnchor.constraint(equalToConstant: width).isActive = true
+//        }
+
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft {
+            screenHeightInLandscape = view.frame.width
+            print("QQQ left screenHeightInLandscape = \(screenHeightInLandscape)")
+            configureElementsOnScreen(leftMode: leftMode,
+                                      isLandscape: true,
+                                      size: screenHeightInLandscape ?? 0
+            )
+        } else if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            screenHeightInLandscape = view.frame.width
+            print("QQQ right screenHeightInLandscape = \(screenHeightInLandscape)")
+            configureElementsOnScreen(leftMode: leftMode,
+                                      isLandscape: true,
+                                      size: screenHeightInLandscape ?? 0
+            )
+        } else if UIDevice.current.orientation == UIDeviceOrientation.portrait {
+            screenHeightInPortrait = view.frame.height
+            print("QQQ right screenHeightInPortrait = \(screenHeightInPortrait)")
+            configureElementsOnScreen(leftMode: leftMode,
+                                      isLandscape: false,
+                                      size: screenHeightInPortrait ?? 0
+            )
+        }
     }
 
     func startLearning(_ dictionaryName: String) {
@@ -324,251 +388,8 @@ class MainViewController: UIViewController, MainViewProtocol {
     }
 }
 
-extension MainViewController {
-    func hideEverything() {
-        labelFirst.isHidden = true
-        labelSecond.isHidden = true
-
-        easyButton.isHidden = true
-        difficultButton.isHidden = true
-        dontKnowButton.isHidden = true
-
-        easyLabel.isHidden = true
-        easySecondLabel.isHidden = true
-        difficultLabel.isHidden = true
-        difficultSecondLabel.isHidden = true
-        dontKnowLabel.isHidden = true
-        dontKnowSecondLabel.isHidden = true
-
-        wordTranscription.isHidden = true
-        countOfLearningWords.isHidden = true
-        progressBar.isHidden = true
-    }
-
-    func showTopButtonsAndInformation() {
-        labelFirst.isHidden = false
-        labelStart.isHidden = true
-        progressBar.isHidden = false
-        countOfLearningWords.isHidden = false
-    }
-
-    func hideFunctionButtonsAndLabels() {
-        easyButton.isHidden = true
-        difficultButton.isHidden = true
-        dontKnowButton.isHidden = true
-
-        easyLabel.isHidden = true
-        easySecondLabel.isHidden = true
-        difficultLabel.isHidden = true
-        difficultSecondLabel.isHidden = true
-        dontKnowLabel.isHidden = true
-        dontKnowSecondLabel.isHidden = true
-        labelSecond.isHidden = true
-
-    }
-
-    func showFunctionButtonsAndLabels() {
-        labelSecond.isHidden = false
-
-        easyButton.isHidden = false
-        difficultButton.isHidden = false
-        dontKnowButton.isHidden = false
-
-        easyLabel.isHidden = false
-        easySecondLabel.isHidden = false
-        difficultLabel.isHidden = false
-        difficultSecondLabel.isHidden = false
-        dontKnowLabel.isHidden = false
-        dontKnowSecondLabel.isHidden = false
-    }
-}
-
 extension UIWindow {
     func initTheme() {
         overrideUserInterfaceStyle = Theme.current.userInterfaceStyle
-    }
-}
-
-// MARK: Change stackView withbuttons to the left or to the right side
-extension MainViewController {
-    func changeConstraintsOfStackButtons(leftMode: Bool) {
-        translatesAutoresizingMaskIntoConstr()
-        addSubviewsStacksAndLabels()
-        if leftMode {
-            configureStackOfButtons()
-            stackOfButtons.alignment = UIStackView.Alignment.leading
-            addSubviewsButtonsLeft()
-            addArrangeSubviewsOfStackOfButtons()
-            configurationStackViews()
-            configurationOfViewsButtons()
-            conditionsOfScreenSize()
-            configureStackViewWithText()
-            stackViewWithEasyText.alignment = UIStackView.Alignment.leading
-            stackViewWithDifText.alignment = UIStackView.Alignment.leading
-            stackViewWithDontText.alignment = UIStackView.Alignment.leading
-
-        } else {
-            configureStackOfButtons()
-            stackOfButtons.alignment = UIStackView.Alignment.trailing
-            addSubviewsButtonsRight()
-
-            addArrangeSubviewsOfStackOfButtons()
-            configurationStackViews()
-            configurationOfViewsButtons()
-            conditionsOfScreenSize()
-
-            configureStackViewWithText()
-            stackViewWithEasyText.alignment = UIStackView.Alignment.trailing
-            stackViewWithDifText.alignment = UIStackView.Alignment.trailing
-            stackViewWithDontText.alignment = UIStackView.Alignment.trailing
-        }
-    }
-
-    private func configureStackViewWithText() {
-        // MARK: Configure stackViews with labels
-        stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithEasyText.spacing = 10
-
-        stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithDifText.spacing = 10
-
-        stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithDontText.spacing = 10
-    }
-
-    private func translatesAutoresizingMaskIntoConstr() {
-        stackOfButtons.translatesAutoresizingMaskIntoConstraints = false
-        easyLabel.translatesAutoresizingMaskIntoConstraints = false
-        easySecondLabel.translatesAutoresizingMaskIntoConstraints = false
-        difficultLabel.translatesAutoresizingMaskIntoConstraints = false
-        difficultSecondLabel.translatesAutoresizingMaskIntoConstraints = false
-        dontKnowLabel.translatesAutoresizingMaskIntoConstraints = false
-        dontKnowSecondLabel.translatesAutoresizingMaskIntoConstraints = false
-        stackViewWithEasyText.translatesAutoresizingMaskIntoConstraints = false
-        stackViewWithDifText.translatesAutoresizingMaskIntoConstraints = false
-        stackViewWithDontText.translatesAutoresizingMaskIntoConstraints = false
-        easyButton.translatesAutoresizingMaskIntoConstraints = false
-        difficultButton.translatesAutoresizingMaskIntoConstraints = false
-        dontKnowButton.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    private func addSubviewsStacksAndLabels() {
-        view.addSubview(stackOfButtons)
-
-        // MARK: Add 3 view to StackView (stackOfButtons)
-        stackOfButtons.addArrangedSubview(viewOfEasyButton)
-        stackOfButtons.addArrangedSubview(viewOfDifficultButton)
-        stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
-
-        // MARK: Add Labels to StackView
-        stackViewWithEasyText.addArrangedSubview(easyLabel)
-        stackViewWithEasyText.addArrangedSubview(easySecondLabel)
-        stackViewWithDifText.addArrangedSubview(difficultLabel)
-        stackViewWithDifText.addArrangedSubview(difficultSecondLabel)
-        stackViewWithDontText.addArrangedSubview(dontKnowLabel)
-        stackViewWithDontText.addArrangedSubview(dontKnowSecondLabel)
-    }
-
-    func addSubviewsButtonsLeft() {
-        // MARK: Add buttons and stackviews with label to views
-        viewOfEasyButton.addArrangedSubview(easyButton)
-        viewOfEasyButton.addArrangedSubview(stackViewWithEasyText)
-        viewOfDifficultButton.addArrangedSubview(difficultButton)
-        viewOfDifficultButton.addArrangedSubview(stackViewWithDifText)
-        viewOfDontKnowButton.addArrangedSubview(dontKnowButton)
-        viewOfDontKnowButton.addArrangedSubview(stackViewWithDontText)
-    }
-
-    func addSubviewsButtonsRight() {
-        // MARK: Add buttons and stackviews with label to views
-        viewOfEasyButton.addArrangedSubview(stackViewWithEasyText)
-        viewOfEasyButton.addArrangedSubview(easyButton)
-        viewOfDifficultButton.addArrangedSubview(stackViewWithDifText)
-        viewOfDifficultButton.addArrangedSubview(difficultButton)
-        viewOfDontKnowButton.addArrangedSubview(stackViewWithDontText)
-        viewOfDontKnowButton.addArrangedSubview(dontKnowButton)
-    }
-
-    private func configurationStackViews() {
-        // MARK: Configure StackViews with labels
-        stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithEasyText.alignment = UIStackView.Alignment.center
-        stackViewWithEasyText.spacing = 10
-
-        stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithDifText.alignment = UIStackView.Alignment.center
-        stackViewWithDifText.spacing = 10
-
-        stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithDontText.alignment = UIStackView.Alignment.center
-        stackViewWithDontText.spacing = 10
-    }
-
-    private func configurationOfViewsButtons() {
-        // MARK: Configure stackViews with buttons and labels
-        viewOfEasyButton.axis = NSLayoutConstraint.Axis.horizontal
-        viewOfEasyButton.distribution = UIStackView.Distribution.equalSpacing
-        viewOfEasyButton.alignment = UIStackView.Alignment.center
-        viewOfEasyButton.spacing = 10
-
-        viewOfDifficultButton.axis = NSLayoutConstraint.Axis.horizontal
-        viewOfDifficultButton.distribution = UIStackView.Distribution.equalSpacing
-        viewOfDifficultButton.alignment = UIStackView.Alignment.center
-        viewOfDifficultButton.spacing = 10
-
-        viewOfDontKnowButton.axis = NSLayoutConstraint.Axis.horizontal
-        viewOfDontKnowButton.distribution = UIStackView.Distribution.equalSpacing
-        viewOfDontKnowButton.alignment = UIStackView.Alignment.center
-        viewOfDontKnowButton.spacing = 10
-    }
-
-    private func conditionsOfScreenSize() {
-        if screenHeight < 740 {
-            NSLayoutConstraint.activate([
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                       constant: -36.0),
-                stackOfButtons.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                         constant: -16),
-                stackOfButtons.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                        constant: 16)
-            ])
-        } else {
-            NSLayoutConstraint.activate([
-                stackOfButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                       constant: -94.0),
-                stackOfButtons.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                         constant: -16),
-                stackOfButtons.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                        constant: 16)
-            ])
-        }
-    }
-
-    private func addArrangeSubviewsOfStackOfButtons() {
-        stackOfButtons.addArrangedSubview(viewOfEasyButton)
-        stackOfButtons.addArrangedSubview(viewOfDifficultButton)
-        stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
-    }
-
-    private func configureStackOfButtons() {
-        // MARK: Configure stackOfButtons
-        stackOfButtons.axis = NSLayoutConstraint.Axis.vertical
-        stackOfButtons.distribution = UIStackView.Distribution.equalSpacing
-        stackOfButtons.spacing = 20
-
-    }
-
-    public var screenWidth: CGFloat {
-        return UIScreen.main.bounds.width
-    }
-
-    public var screenHeight: CGFloat {
-        return UIScreen.main.bounds.height
     }
 }
