@@ -21,6 +21,7 @@
                 <outlet property="easyButton" destination="VRu-Xe-83B" id="s5j-FB-BBp"/>
                 <outlet property="easyLabel" destination="9zh-pr-aYk" id="UpK-af-EDk"/>
                 <outlet property="easySecondLabel" destination="WST-xi-WF2" id="6Pj-Iv-er2"/>
+                <outlet property="innerStackViewLabelWords" destination="N53-Ug-eNn" id="zhc-cP-6xF"/>
                 <outlet property="labelFirst" destination="Nva-hP-dO3" id="8l6-Hj-5iG"/>
                 <outlet property="labelSecond" destination="LqF-vY-8rC" id="WyO-1a-WrI"/>
                 <outlet property="labelStart" destination="8g3-KT-w1v" id="OBK-Zf-j9d"/>
@@ -43,26 +44,31 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="spe-Ls-V3J">
-                    <rect key="frame" x="107.66666666666667" y="99" width="177.66666666666666" height="274.66666666666669"/>
+                    <rect key="frame" x="107.66666666666667" y="99" width="177.66666666666666" height="272.66666666666669"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vocabulary" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-hP-dO3">
-                            <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="43"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vəˈkæbjəlerɪ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5n-G6-3vt">
-                            <rect key="frame" x="0.0" y="123.00000000000001" width="177.66666666666666" height="28.666666666666671"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                            <color key="textColor" red="0.69411764705882351" green="0.69411764705882351" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="запас слов" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LqF-vY-8rC">
-                            <rect key="frame" x="0.0" y="231.66666666666666" width="177.66666666666666" height="42.999999999999972"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="79" translatesAutoresizingMaskIntoConstraints="NO" id="N53-Ug-eNn">
+                            <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="272.66666666666669"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vocabulary" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-hP-dO3">
+                                    <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="43"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vəˈkæbjəlerɪ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5n-G6-3vt">
+                                    <rect key="frame" x="0.0" y="122.00000000000001" width="177.66666666666666" height="28.666666666666671"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <color key="textColor" red="0.69411764705882351" green="0.69411764705882351" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="запас слов" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LqF-vY-8rC">
+                                    <rect key="frame" x="0.0" y="229.66666666666666" width="177.66666666666666" height="42.999999999999972"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                 </stackView>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-Df-QA6">

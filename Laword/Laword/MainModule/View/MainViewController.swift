@@ -20,6 +20,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     @IBOutlet var wordTranscription: UILabel!
 
     @IBOutlet var stackViewLabelWords: UIStackView!
+    @IBOutlet var innerStackViewLabelWords: UIStackView!
 
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
@@ -108,9 +109,6 @@ class MainViewController: UIViewController, MainViewProtocol {
         super.viewDidLoad()
 
         let frame = view.safeAreaLayoutGuide.layoutFrame.size
-        print("QQQ2 frame = \(frame)")
-        print("QQQ2 frame.height = \(frame.height)")
-        print("QQQ2 frame.width = \(frame.width)")
 
         addButtonsAndLabelsToNavigatorBar()
         progressBar.progress = 0
@@ -121,13 +119,10 @@ class MainViewController: UIViewController, MainViewProtocol {
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        print("QQQ2 screenHeight = \(screenHeight), screenWidth = \(screenWidth)")
 
         if view.traitCollection.horizontalSizeClass == .compact {
             titleStackView.axis = .vertical
@@ -169,6 +164,7 @@ class MainViewController: UIViewController, MainViewProtocol {
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+
         let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
         generalConfig(leftMode: leftRightMode)
 
@@ -183,36 +179,22 @@ class MainViewController: UIViewController, MainViewProtocol {
     }
 
     func generalConfig(leftMode: Bool) {
-        print("QQQ1 screenHeight = \(screenHeight), screenWidth = \(screenWidth)")
-
-
-//        if UIDevice.current.orientation.isLandscape {
-//            let height = self.view.frame.height
-//            gameBoard.widthAnchor.constraint(equalToConstant: height).isActive = true
-//            gameBoard.heightAnchor.constraint(equalToConstant: height).isActive = true
-//        } else if UIDevice.current.orientation.isPortrait {
-//            let width = self.view.frame.width
-//            gameBoard.widthAnchor.constraint(equalToConstant: width).isActive = true
-//            gameBoard.heightAnchor.constraint(equalToConstant: width).isActive = true
-//        }
+        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
 
         if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft {
             screenHeightInLandscape = view.frame.width
-            print("QQQ left screenHeightInLandscape = \(screenHeightInLandscape)")
             configureElementsOnScreen(leftMode: leftMode,
                                       isLandscape: true,
                                       size: screenHeightInLandscape ?? 0
             )
         } else if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
             screenHeightInLandscape = view.frame.width
-            print("QQQ right screenHeightInLandscape = \(screenHeightInLandscape)")
             configureElementsOnScreen(leftMode: leftMode,
                                       isLandscape: true,
                                       size: screenHeightInLandscape ?? 0
             )
         } else if UIDevice.current.orientation == UIDeviceOrientation.portrait {
             screenHeightInPortrait = view.frame.height
-            print("QQQ right screenHeightInPortrait = \(screenHeightInPortrait)")
             configureElementsOnScreen(leftMode: leftMode,
                                       isLandscape: false,
                                       size: screenHeightInPortrait ?? 0
