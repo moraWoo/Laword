@@ -63,12 +63,10 @@ class OnboardingViewControllerPage1: UIViewController {
     }()
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         view.addSubview(descriptionTextView)
         setupLayout()
-
     }
 
     private func setupLayout() {

@@ -22,7 +22,7 @@ class OnboardingViewControllerPage3: UIViewController {
         """
         \nВ начале показывается слово из выбранного словаря.
 
-        ・В уме переводите слово.
+        ・Переводите слово.
         ・Тапаете по экрану.
         ・Показывается перевод.
         ・Делаете анализ на сколько вы знаете слово.
@@ -103,7 +103,6 @@ class OnboardingViewControllerPage3: UIViewController {
             profileImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
             profileImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         }
-
         descriptionTextView.topAnchor.constraint(equalTo: topImageContainerView.bottomAnchor).isActive = true
         descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24).isActive = true
         descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24).isActive = true

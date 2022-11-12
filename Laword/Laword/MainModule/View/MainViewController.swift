@@ -20,35 +20,27 @@ enum OrientationOfScreen: Int {
 
 class MainViewController: UIViewController, MainViewProtocol {
 
-    @IBOutlet var labelFirst: UILabel!
-    @IBOutlet var labelSecond: UILabel!
-    @IBOutlet var wordTranscription: UILabel!
-
+    // Outlets for label for words and translations
     @IBOutlet var stackViewLabelWords: UIStackView!
-    @IBOutlet var innerStackViewLabelWords: UIStackView!
 
+    @IBOutlet var labelFirst: UILabel!
+    @IBOutlet var wordTranscription: UILabel!
+    @IBOutlet var labelSecond: UILabel!
+
+    // Outlets for navbar block
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var nameOfVocabulary: UILabel!
     @IBOutlet weak var countOfWords: UILabel!
 
-    @IBOutlet var labelStart: UILabel!
-
-    @IBOutlet var easyButton: UIButton!
-    @IBOutlet var difficultButton: UIButton!
-    @IBOutlet var dontKnowButton: UIButton!
-
+    // Outlets for footer
     @IBOutlet var progressBar: UIProgressView!
     @IBOutlet weak var countOfLearningWords: UILabel!
 
-    @IBOutlet var easyLabel: UILabel!
-    @IBOutlet var easySecondLabel: UILabel!
-
-    @IBOutlet var difficultLabel: UILabel!
-    @IBOutlet var difficultSecondLabel: UILabel!
-
-    @IBOutlet var dontKnowLabel: UILabel!
-    @IBOutlet var dontKnowSecondLabel: UILabel!
+    // Outlets for buttons block
+    @IBOutlet var easyButton: UIButton!
+    @IBOutlet var difficultButton: UIButton!
+    @IBOutlet var dontKnowButton: UIButton!
 
     @IBOutlet var stackOfButtons: UIStackView!
 
@@ -59,6 +51,15 @@ class MainViewController: UIViewController, MainViewProtocol {
     @IBOutlet var stackViewWithEasyText: UIStackView!
     @IBOutlet var stackViewWithDifText: UIStackView!
     @IBOutlet var stackViewWithDontText: UIStackView!
+
+    @IBOutlet var easyLabel: UILabel!
+    @IBOutlet var easySecondLabel: UILabel!
+
+    @IBOutlet var difficultLabel: UILabel!
+    @IBOutlet var difficultSecondLabel: UILabel!
+
+    @IBOutlet var dontKnowLabel: UILabel!
+    @IBOutlet var dontKnowSecondLabel: UILabel!
 
     var stackOfButtonsConstraints: NSLayoutConstraint?
     let titleLabel = UILabel()
@@ -167,6 +168,7 @@ class MainViewController: UIViewController, MainViewProtocol {
         nameOfCurrentDictionary = UserDefaults.standard.object(forKey: "currentDictionary") as? String ?? ""
 
         let currentDictionary = presenter.getCurrentDictionary(nameOfDictionary: nameOfCurrentDictionary ?? "")
+
         // Check each dictionary. Is there any new word?
         if currentDictionary?.countOfRemainWords == 0 {
             alertFinishWordsInCurrentDict()
@@ -195,6 +197,7 @@ class MainViewController: UIViewController, MainViewProtocol {
         let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
         changeConstraintsOfStackButtons(leftMode: leftRightMode)
         labelFirst.isHidden = false
+
     }
 
     func startLearning(_ dictionaryName: String) {

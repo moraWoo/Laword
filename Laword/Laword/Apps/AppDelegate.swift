@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Set default dictionary
         UserDefaults.standard.set("5000 Oxford Words", forKey: "currentDictionary")
+        UserDefaults.standard.set(true, forKey: "switchOfLeftModeIsActive")
         return true
     }
 }

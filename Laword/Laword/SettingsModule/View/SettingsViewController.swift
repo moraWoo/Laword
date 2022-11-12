@@ -45,8 +45,8 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         configuration.image = symbolItem.image
 
         configuration.text = symbolItem.name
-        cell.contentConfiguration = configuration
 
+        cell.contentConfiguration = configuration
     }
 
     override func viewDidLoad() {
@@ -104,12 +104,20 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                     switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
                     switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
                 ])
+
                 switch switchInCell.tag {
                 case 0:
                         switchInCell.isOn = UserDefaults.standard.bool(forKey: "darkMode")
                 default:
-                        switchInCell.isOn = UserDefaults.standard.bool(forKey: "leftMode")
-
+                        let switchOfLeftModeIsActive = UserDefaults.standard.bool(forKey: "switchOfLeftModeIsActive")
+                            if switchOfLeftModeIsActive {
+                                switchInCell.isEnabled = true
+                            } else {
+                                switchInCell.isOn = false
+                                switchInCell.isEnabled = false
+                                UserDefaults.standard.set(false, forKey: "leftMode")
+                            }
+                            switchInCell.isOn = UserDefaults.standard.bool(forKey: "leftMode")
                 }
 
             } else if sections.title == "Обучение" {
@@ -160,7 +168,6 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
                     switchInCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -10.0),
                     switchInCell.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0.0)
                 ])
-
                 launchBefore.toggle()
                 switchInCell.isOn = launchBefore
         }

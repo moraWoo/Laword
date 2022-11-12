@@ -31,7 +31,7 @@ extension MainViewController {
 
     func showTopButtonsAndInformation() {
         labelFirst.isHidden = false
-        labelStart.isHidden = true
+//        labelStart.isHidden = true
         progressBar.isHidden = false
         countOfLearningWords.isHidden = false
     }
