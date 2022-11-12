@@ -10,385 +10,43 @@ import UIKit
 
 // MARK: Change stackView withbuttons to the left or to the right side
 extension MainViewController {
-    func configureElementsOnScreen(leftMode: Bool, isLandscape: Bool, size: CGFloat) {
+    func changeConstraintsOfStackButtons(leftMode: Bool) {
         translatesAutoresizingMaskIntoConstr()
-        if isLandscape {
-            landscapeMode(leftMode: leftMode, size: size)
+        addSubviewsStacksAndLabels()
+
+        if leftMode {
+            configureStackOfButtons()
+            stackOfButtons.alignment = UIStackView.Alignment.leading
+            addSubviewsButtonsLeft()
+            addArrangeSubviewsOfStackOfButtons()
+            configurationStackViews()
+            configurationOfViewsButtons()
+
+            setupConstraints()
+
+            layoutTrait(traitCollection: UIScreen.main.traitCollection)
+
+            configureStackViewWithText()
+            stackViewWithEasyText.alignment = UIStackView.Alignment.leading
+            stackViewWithDifText.alignment = UIStackView.Alignment.leading
+            stackViewWithDontText.alignment = UIStackView.Alignment.leading
         } else {
-            portraitMode(leftMode: leftMode, size: size)
-        }
-        stackViewLabelWords.addArrangedSubview(innerStackViewLabelWords)
-    }
+            configureStackOfButtons()
+            stackOfButtons.alignment = UIStackView.Alignment.trailing
+            addSubviewsButtonsRight()
 
-    func portraitMode(leftMode: Bool, size: CGFloat) {
-        addSubviewsStacksAndLabels()
-        configurationStackViews()
-        stackOfButtons.backgroundColor = .blue
-        stackViewLabelWords.backgroundColor = .mainPink
-        switch leftMode {
-        case true:
-                addSubviewsButtonsLeft()
-                stackOfButtons.alignment = UIStackView.Alignment.leading
-                stackViewWithEasyText.alignment = UIStackView.Alignment.leading
-                stackViewWithDifText.alignment = UIStackView.Alignment.leading
-                stackViewWithDontText.alignment = UIStackView.Alignment.leading
-                switch size {
-                case 0...568:
-                        print("QQQ case 0...568. leftMode. isLandscape=false")
-                        var manageStackViewLabelWordsConstraint: NSLayoutConstraint?
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.topAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.topAnchor,
-                            constant: topbarHeight
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
+            addArrangeSubviewsOfStackOfButtons()
+            configurationStackViews()
+            configurationOfViewsButtons()
 
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
+            setupConstraints()
 
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
+            layoutTrait(traitCollection: UIScreen.main.traitCollection)
 
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.bottomAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                            constant: topbarHeight * -1
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                        )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-                case 568...667:
-                        print("QQQ case 568...667. leftMode. isLandscape=false")
-                case 667...812:
-                        print("QQQ case 667...812. leftMode. isLandscape=false")
-                default:
-                        print("QQQ case 812 >. leftMode. isLandscape=false")
-
-                        var manageStackViewLabelWordsConstraint: NSLayoutConstraint?
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.topAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.topAnchor,
-                            constant: topbarHeight
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.bottomAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                            constant: topbarHeight * -1
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                        )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-//                        NSLayoutConstraint.activate([
-//                            stackOfButtons.bottomAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-//                                constant: topbarHeight * -1
-//                            ),
-//                            stackOfButtons.trailingAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-//                                constant: -16
-//                            ),
-//                            stackOfButtons.leadingAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-//                                constant: 16
-//                            )
-//                        ])
-                }
-        case false:
-                stackOfButtons.alignment = UIStackView.Alignment.trailing
-                stackViewWithEasyText.alignment = UIStackView.Alignment.trailing
-                stackViewWithDifText.alignment = UIStackView.Alignment.trailing
-                stackViewWithDontText.alignment = UIStackView.Alignment.trailing
-                addSubviewsButtonsRight()
-                switch size {
-                case 0...568:
-                        print("QQQ case 0...568. rightMode. isLandscape=false")
-                        var manageStackViewLabelWordsConstraint: NSLayoutConstraint?
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.topAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.topAnchor,
-                            constant: topbarHeight
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.bottomAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                            constant: topbarHeight * -1
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                        )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-                case 568...667:
-                        print("QQQ case 568...667. rightMode. isLandscape=false")
-                case 667...812:
-                        print("QQQ case 667...812. rightMode. isLandscape=false")
-                default:
-                        print("QQQ case 812 >. rightMode. isLandscape=false")
-                        var manageStackViewLabelWordsConstraint: NSLayoutConstraint?
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.topAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.topAnchor,
-                            constant: topbarHeight
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackViewLabelWords.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.bottomAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                            constant: topbarHeight * -1
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.trailingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                            constant: -16
-                            )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-
-                        manageStackViewLabelWordsConstraint = stackOfButtons.leadingAnchor.constraint(
-                            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                            constant: 16
-                        )
-                        manageStackViewLabelWordsConstraint?.isActive = true
-                        manageStackViewLabelWordsConstraint?.priority = UILayoutPriority(rawValue: 999)
-//                        NSLayoutConstraint.activate([
-//                            stackViewLabelWords.topAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.topAnchor,
-//                                constant: topbarHeight
-//                            ),
-//                            stackViewLabelWords.trailingAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-//                                constant: -16
-//                            ),
-//                            stackViewLabelWords.leadingAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-//                                constant: 16
-//                            )
-//                        ])
-//                        NSLayoutConstraint.activate([
-//                            stackOfButtons.bottomAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-//                                constant: topbarHeight * -1
-//                            ),
-//                            stackOfButtons.trailingAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-//                                constant: -16
-//                            ),
-//                            stackOfButtons.leadingAnchor.constraint(
-//                                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-//                                constant: 16
-//                            )
-//                        ])
-                }
-        }
-    }
-
-    func landscapeMode(leftMode: Bool, size: CGFloat) {
-        addSubviewsStacksAndLabels()
-        configurationStackViews()
-        stackOfButtons.backgroundColor = .blue
-        stackViewLabelWords.backgroundColor = .mainPink
-        switch leftMode {
-        case true:
-                stackOfButtons.alignment = UIStackView.Alignment.leading
-                stackViewWithEasyText.alignment = UIStackView.Alignment.leading
-                stackViewWithDifText.alignment = UIStackView.Alignment.leading
-                stackViewWithDontText.alignment = UIStackView.Alignment.leading
-                addSubviewsButtonsLeft()
-                switch size {
-                case 0...568:
-                        print("QQQ case 0...568. leftMode. isLandscape=true")
-                case 568...667:
-                        print("QQQ case 568...667. leftMode. isLandscape=true")
-                case 667...812:
-                        print("QQQ case 667...812. leftMode. isLandscape=true")
-                default:
-                        print("QQQlm case 812 >. leftMode. isLandscape=true")
-
-                        let widthOfStackViewLabelWord = stackViewLabelWords.frame.width
-                        let heightOfStackViewLabelWord = stackViewLabelWords.frame.height
-
-                        let leadingFromViewToStackViewLabelWord =
-                        (view.frame.width - stackViewLabelWords.frame.width) / 2
-
-                        NSLayoutConstraint.activate([
-                            innerStackViewLabelWords.topAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                constant: topbarHeight
-                            ),
-                            innerStackViewLabelWords.trailingAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.centerXAnchor,
-                                constant: leadingFromViewToStackViewLabelWord
-                            )
-                        ])
-
-                        NSLayoutConstraint.activate([
-                            stackOfButtons.centerYAnchor.constraint(
-                                equalTo: view.centerYAnchor),
-                            stackOfButtons.leadingAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                constant: 16)
-                        ])
-                }
-        case false:
-                addSubviewsButtonsRight()
-                stackOfButtons.alignment = UIStackView.Alignment.trailing
-                stackViewWithEasyText.alignment = UIStackView.Alignment.trailing
-                stackViewWithDifText.alignment = UIStackView.Alignment.trailing
-                stackViewWithDontText.alignment = UIStackView.Alignment.trailing
-                let widthOfStackOfButtons = stackOfButtons.frame.width
-                let widthOfStackViewLabelWord = (view.frame.width - widthOfStackOfButtons)
-                let leadingFromViewToStackViewLabelWord = widthOfStackViewLabelWord / 2
-                switch size {
-                case 0...568:
-                        print("QQQ case 0...568. rightMode. isLandscape=true")
-                        NSLayoutConstraint.activate([
-                            stackViewLabelWords.topAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                constant: topbarHeight
-                            ),
-                            stackViewLabelWords.leadingAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.centerXAnchor,
-                                constant: leadingFromViewToStackViewLabelWord * -1
-                            ),
-                            stackViewLabelWords.widthAnchor.constraint(equalToConstant: widthOfStackViewLabelWord / 2)
-                        ])
-                        NSLayoutConstraint.activate([
-                            stackOfButtons.centerYAnchor.constraint(
-                                equalTo: view.centerYAnchor),
-                            stackOfButtons.trailingAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                constant: -16)
-
-                        ])
-                case 568...667:
-                        print("QQQ case 568...667. rightMode. isLandscape=true")
-                case 667...812:
-                        print("QQQ case 667...812. rightMode. isLandscape=true")
-                default:
-
-                        print("QQQ widthOfStackOfButtons = \(widthOfStackOfButtons)")
-                        print("QQQ widthOfStackViewLabelWord = \(widthOfStackViewLabelWord)")
-                        print("QQQ leadingFromViewToStackViewLabelWord = \(leadingFromViewToStackViewLabelWord)")
-
-                        print("QQQ leadingFromViewToStackViewLabelWord \(leadingFromViewToStackViewLabelWord)")
-                        print("QQQ widthOfStackViewLabelWord \(widthOfStackViewLabelWord)")
-
-                        print("QQQ case 812 >. rightMode. isLandscape=true")
-
-                        NSLayoutConstraint.activate([
-                            stackViewLabelWords.topAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                constant: topbarHeight
-                            ),
-                            stackViewLabelWords.leadingAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.centerXAnchor,
-                                constant: leadingFromViewToStackViewLabelWord * -1
-                            ),
-                            stackViewLabelWords.widthAnchor.constraint(equalToConstant: widthOfStackViewLabelWord / 2)
-                        ])
-                        NSLayoutConstraint.activate([
-                            stackOfButtons.centerYAnchor.constraint(
-                                equalTo: view.centerYAnchor),
-                            stackOfButtons.trailingAnchor.constraint(
-                                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                constant: -16)
-
-                        ])
-                }
+            configureStackViewWithText()
+            stackViewWithEasyText.alignment = UIStackView.Alignment.trailing
+            stackViewWithDifText.alignment = UIStackView.Alignment.trailing
+            stackViewWithDontText.alignment = UIStackView.Alignment.trailing
         }
     }
 
@@ -411,6 +69,38 @@ extension MainViewController {
         labelSecond.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    private func configureStackViewWithText() {
+        // MARK: Configure stackViews with labels
+        stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
+        stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
+        stackViewWithEasyText.spacing = 10
+
+        stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
+        stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
+        stackViewWithDifText.spacing = 10
+
+        stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
+        stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
+        stackViewWithDontText.spacing = 10
+    }
+
+    private func addSubviewsStacksAndLabels() {
+        view.addSubview(stackOfButtons)
+
+        // MARK: Add 3 view to StackView (stackOfButtons)
+        stackOfButtons.addArrangedSubview(viewOfEasyButton)
+        stackOfButtons.addArrangedSubview(viewOfDifficultButton)
+        stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
+
+        // MARK: Add Labels to StackView
+        stackViewWithEasyText.addArrangedSubview(easyLabel)
+        stackViewWithEasyText.addArrangedSubview(easySecondLabel)
+        stackViewWithDifText.addArrangedSubview(difficultLabel)
+        stackViewWithDifText.addArrangedSubview(difficultSecondLabel)
+        stackViewWithDontText.addArrangedSubview(dontKnowLabel)
+        stackViewWithDontText.addArrangedSubview(dontKnowSecondLabel)
+    }
+
     func addSubviewsButtonsLeft() {
         // MARK: Add buttons and stackviews with label to views
         viewOfEasyButton.addArrangedSubview(easyButton)
@@ -431,27 +121,6 @@ extension MainViewController {
         viewOfDontKnowButton.addArrangedSubview(dontKnowButton)
     }
 
-    private func addSubviewsStacksAndLabels() {
-        view.addSubview(stackOfButtons)
-
-        // MARK: Add 3 view to StackView (stackOfButtons)
-        stackOfButtons.addArrangedSubview(viewOfEasyButton)
-        stackOfButtons.addArrangedSubview(viewOfDifficultButton)
-        stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
-
-        // MARK: Add Labels to StackView
-        stackViewWithEasyText.addArrangedSubview(easyLabel)
-        stackViewWithEasyText.addArrangedSubview(easySecondLabel)
-        stackViewWithDifText.addArrangedSubview(difficultLabel)
-        stackViewWithDifText.addArrangedSubview(difficultSecondLabel)
-        stackViewWithDontText.addArrangedSubview(dontKnowLabel)
-        stackViewWithDontText.addArrangedSubview(dontKnowSecondLabel)
-
-        stackOfButtons.addArrangedSubview(viewOfEasyButton)
-        stackOfButtons.addArrangedSubview(viewOfDifficultButton)
-        stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
-    }
-
     private func configurationStackViews() {
         // MARK: Configure StackViews with labels
         stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
@@ -468,20 +137,9 @@ extension MainViewController {
         stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
         stackViewWithDontText.alignment = UIStackView.Alignment.center
         stackViewWithDontText.spacing = 10
+    }
 
-        // MARK: Configure stackViews with labels
-        stackViewWithEasyText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithEasyText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithEasyText.spacing = 10
-
-        stackViewWithDifText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithDifText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithDifText.spacing = 10
-
-        stackViewWithDontText.axis = NSLayoutConstraint.Axis.vertical
-        stackViewWithDontText.distribution = UIStackView.Distribution.equalSpacing
-        stackViewWithDontText.spacing = 10
-
+    private func configurationOfViewsButtons() {
         // MARK: Configure stackViews with buttons and labels
         viewOfEasyButton.axis = NSLayoutConstraint.Axis.horizontal
         viewOfEasyButton.distribution = UIStackView.Distribution.equalSpacing
@@ -497,10 +155,20 @@ extension MainViewController {
         viewOfDontKnowButton.distribution = UIStackView.Distribution.equalSpacing
         viewOfDontKnowButton.alignment = UIStackView.Alignment.center
         viewOfDontKnowButton.spacing = 10
+    }
 
+    private func addArrangeSubviewsOfStackOfButtons() {
+        stackOfButtons.addArrangedSubview(viewOfEasyButton)
+        stackOfButtons.addArrangedSubview(viewOfDifficultButton)
+        stackOfButtons.addArrangedSubview(viewOfDontKnowButton)
+    }
+
+    private func configureStackOfButtons() {
         // MARK: Configure stackOfButtons
         stackOfButtons.axis = NSLayoutConstraint.Axis.vertical
         stackOfButtons.distribution = UIStackView.Distribution.equalSpacing
+        stackOfButtons.spacing = 20
+
     }
 
     public var screenWidth: CGFloat {
@@ -509,5 +177,61 @@ extension MainViewController {
 
     public var screenHeight: CGFloat {
         return UIScreen.main.bounds.height
+    }
+
+    func setupConstraints() {
+        let safeArea = view.safeAreaLayoutGuide
+        compactConstraints.append(contentsOf: [
+            stackViewLabelWords.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            stackViewLabelWords.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            stackViewLabelWords.widthAnchor.constraint(equalTo: safeArea.widthAnchor),
+            stackViewLabelWords.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.5),
+
+            stackOfButtons.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            stackOfButtons.widthAnchor.constraint(equalTo: safeArea.widthAnchor),
+            stackOfButtons.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -30)
+        ])
+
+        regularConstraints.append(contentsOf: [
+            stackViewLabelWords.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackViewLabelWords.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            stackViewLabelWords.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.5),
+
+            stackOfButtons.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackOfButtons.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: border * -1)
+
+
+        ])
+    }
+
+    func layoutTrait(traitCollection: UITraitCollection) {
+        switch orientationScreen {
+        case .landscapeRight:
+                print("landscapeRight")
+        case .portrait:
+                print("portrait")
+        case .landscapeLeft:
+                print("landscapeLeft")
+        case .unknown:
+                print("Unknown orientation")
+        case .faceDown:
+                print("FaceDown orientation")
+        case .faceUp:
+                print("FaceUp orientation")
+        default:
+                print("PortraitUpsideDown orientation")
+        }
+
+        if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular {
+            if regularConstraints.count > 0 && regularConstraints[0].isActive {
+                NSLayoutConstraint.deactivate(regularConstraints)
+            }
+            NSLayoutConstraint.activate(compactConstraints)
+        } else {
+            if compactConstraints.count > 0 && compactConstraints[0].isActive {
+                NSLayoutConstraint.deactivate(compactConstraints)
+            }
+            NSLayoutConstraint.activate(regularConstraints)
+        }
     }
 }

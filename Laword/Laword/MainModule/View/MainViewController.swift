@@ -8,9 +8,14 @@
 import UIKit
 import CoreData
 
-enum CurrentOrientation {
+enum OrientationOfScreen: Int {
+    case unknown
     case portrait
-    case landscape
+    case portraitUpsideDown
+    case landscapeLeft
+    case landscapeRight
+    case faceUp
+    case faceDown
 }
 
 class MainViewController: UIViewController, MainViewProtocol {
@@ -90,6 +95,14 @@ class MainViewController: UIViewController, MainViewProtocol {
     var screenHeightInPortrait: CGFloat?
     var screenHeightInLandscape: CGFloat?
 
+    var compactConstraints: [NSLayoutConstraint] = []
+    var regularConstraints: [NSLayoutConstraint] = []
+
+    var orientationScreen: OrientationOfScreen!
+
+    var indexOfOrientation = 0
+    let border: CGFloat = 16
+
     var topbarHeight: CGFloat {
         return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
             (self.navigationController?.navigationBar.frame.height ?? 0.0)
@@ -108,8 +121,6 @@ class MainViewController: UIViewController, MainViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let frame = view.safeAreaLayoutGuide.layoutFrame.size
-
         addButtonsAndLabelsToNavigatorBar()
         progressBar.progress = 0
         hideEverything()
@@ -119,6 +130,22 @@ class MainViewController: UIViewController, MainViewProtocol {
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapRecognizer)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(orientationChanged),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+    }
+
+    @objc func orientationChanged(_ notification: NSNotification) {
+        indexOfOrientation = UIDevice.current.orientation.rawValue
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        layoutTrait(traitCollection: traitCollection)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -166,40 +193,8 @@ class MainViewController: UIViewController, MainViewProtocol {
         view.addGestureRecognizer(tapRecognizer)
 
         let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-        generalConfig(leftMode: leftRightMode)
-
+        changeConstraintsOfStackButtons(leftMode: leftRightMode)
         labelFirst.isHidden = false
-    }
-
-    override func willTransition(to newCollection: UITraitCollection,
-                                 with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-        generalConfig(leftMode: leftRightMode)
-    }
-
-    func generalConfig(leftMode: Bool) {
-        let leftRightMode = UserDefaults.standard.bool(forKey: "leftMode")
-
-        if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft {
-            screenHeightInLandscape = view.frame.width
-            configureElementsOnScreen(leftMode: leftMode,
-                                      isLandscape: true,
-                                      size: screenHeightInLandscape ?? 0
-            )
-        } else if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
-            screenHeightInLandscape = view.frame.width
-            configureElementsOnScreen(leftMode: leftMode,
-                                      isLandscape: true,
-                                      size: screenHeightInLandscape ?? 0
-            )
-        } else if UIDevice.current.orientation == UIDeviceOrientation.portrait {
-            screenHeightInPortrait = view.frame.height
-            configureElementsOnScreen(leftMode: leftMode,
-                                      isLandscape: false,
-                                      size: screenHeightInPortrait ?? 0
-            )
-        }
     }
 
     func startLearning(_ dictionaryName: String) {
